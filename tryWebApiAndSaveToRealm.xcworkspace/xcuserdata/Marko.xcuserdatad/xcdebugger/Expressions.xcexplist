@@ -10,5 +10,33 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "closure #1 in RoomViewModel.bindInput():RoomViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "strongSelf.rooms">
+            </PersistentString>
+            <PersistentString
+               value = "strongSelf.selectedRoomId">
+            </PersistentString>
+            <PersistentString
+               value = "rooms">
+            </PersistentString>
+            <PersistentString
+               value = "strongSelf.rooms.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlocksVC.bindUI():BlocksVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "blockViewModel.oBlocks">
+            </PersistentString>
+            <PersistentString
+               value = "blockViewModel">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
