@@ -34,28 +34,33 @@ class BlocksVC: UIViewController {
     
     private func bindUI() {
         
-        // implementiraj sestions + rowHeight za section and row...
+        // tableView dataSource
         
         let dataSource = RxTableViewRealmDataSource<RealmBlock>(cellIdentifier:
         "cell", cellType: UITableViewCell.self) { cell, _, rRoom in
             cell.textLabel?.text = rRoom.starts_at + rRoom.name
         }
         
+        
         blockViewModel.oBlocks
             .bind(to: tableView.rx.realmChanges(dataSource))
             .disposed(by: disposeBag)
+        
+        
+        
+        // tableView didSelect
+        tableView.rx.itemSelected // (**)
+            .subscribe(onNext: { [weak self] ip in
+                guard let strongSelf = self else {return}
+                let selectedBlock = strongSelf.blockViewModel.blocks[ip.item]
+                strongSelf.selRealmBlock.onNext(selectedBlock)
+                strongSelf.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        
     }
 
 }
 
-extension BlocksVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let selectedBlock = blockViewModel.blocks[indexPath.item]
-
-        selRealmBlock.onNext(selectedBlock)
-
-        dismiss(animated: true)
-        
-    }
-}
+extension BlocksVC: UITableViewDelegate {} // bez ovog puca app, (**)

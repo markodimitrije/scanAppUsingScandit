@@ -28,25 +28,21 @@ class SettingsViewModel {
     
     private(set) var oBlocks: Observable<(AnyRealmCollection<RealmBlock>, RealmChangeset?)>!
     
+    // MARK:- Privates
+    
     private func bindOutput() { // hook-up se za Realm, sada su Rooms synced sa bazom
         
-        guard let roomSelected = roomSelected else {
+        guard roomSelected != nil else {
             print("show alert, please select Room first")
             return
         }
         
         guard let realm = try? Realm() else { return }
         
-        print("implement me, filter by roomId \(roomSelected)")
-        
         // ovde mi treba jos da su od odgovarajuceg Room-a
         let blocks = realm.objects(RealmBlock.self).filter("type = 'Oral'")
         
         oBlocks = Observable.changeset(from: blocks)
-        
-    }
-    
-    private func bindInput() {
         
     }
     

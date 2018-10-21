@@ -12,13 +12,9 @@ import Realm
 import RealmSwift
 import RxRealmDataSources
 
-class SettingsVC: UIViewController {
+//class SettingsVC: UIViewController {
+class SettingsVC: UITableViewController {
 
-    @IBAction func selectSessionTapped(_ sender: UIButton) {
-        guard let roomId = roomId else {return}
-        navigateToSessionVCAndSubscribeForSelectedSession(roomId: roomId)
-    }
-    
     @IBOutlet weak var roomLbl: UILabel!
     @IBOutlet weak var sessionLbl: UILabel!
     
@@ -38,21 +34,17 @@ class SettingsVC: UIViewController {
     private func bindUI() { // glue code for selected Room
         
         roomSelected
-        .map { (realmRoom) -> String in
-            print("vracam za ime = \(realmRoom.name)")
-            return realmRoom.name
-        }
-        .bind(to: roomLbl.rx.text)
-        .disposed(by: disposeBag)
+            .map { $0.name }
+            .bind(to: roomLbl.rx.text)
+            .disposed(by: disposeBag)
 
         sessionSelected
-            .map { (realmBlock) -> String in
-                print("vracam za ime session-a = \(realmBlock?.name ?? "Select session")")
-                return realmBlock?.name ?? "Select session"
+            .map {
+                guard let session = $0 else { return "Select session" }
+                return session.starts_at + " " + session.name
             }
             .bind(to: sessionLbl.rx.text)
             .disposed(by: disposeBag)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -114,6 +106,16 @@ class SettingsVC: UIViewController {
             .bind(to: sessionLbl.rx.text)
             .disposed(by: disposeBag)
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0: print("automatski segue ka rooms...")
+        case 1:
+            guard let roomId = roomId else {return}
+            navigateToSessionVCAndSubscribeForSelectedSession(roomId: roomId)
+        default: break
+        }
     }
     
 }
