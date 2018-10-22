@@ -12,6 +12,7 @@ import RxCocoa
 import Realm
 import RealmSwift
 import RxRealmDataSources
+import RxDataSources // ovaj ima rx Sectioned TableView
 
 class BlocksVC: UIViewController {
 
@@ -34,19 +35,20 @@ class BlocksVC: UIViewController {
     
     private func bindUI() {
         
-        // tableView dataSource
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionOfCustomData>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+                cell.textLabel?.text = item
+                return cell
+        })
         
-        let dataSource = RxTableViewRealmDataSource<RealmBlock>(cellIdentifier:
-        "cell", cellType: UITableViewCell.self) { cell, _, rRoom in
-            cell.textLabel?.text = rRoom.starts_at + rRoom.name
+        dataSource.titleForHeaderInSection = { dataSource, index in
+            return dataSource.sectionModels[index].header
         }
         
-        
-        blockViewModel.oBlocks
-            .bind(to: tableView.rx.realmChanges(dataSource))
+        Observable.just(blockViewModel.sectionsHeadersAndItems) // imas data u svom viewmodel
+            .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
-        
         
         // tableView didSelect
         tableView.rx.itemSelected // (**)
@@ -58,9 +60,6 @@ class BlocksVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        
     }
 
 }
-
-extension BlocksVC: UITableViewDelegate {} // bez ovog puca app, (**)

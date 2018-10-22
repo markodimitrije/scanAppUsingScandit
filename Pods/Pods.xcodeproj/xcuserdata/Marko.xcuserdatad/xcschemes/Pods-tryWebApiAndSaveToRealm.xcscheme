@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C1040034F4AA955B8682D4B1E802F2D6"
+               BlueprintIdentifier = "F816F6CCB3E40CC32FBF41759D3021DB"
                BuildableName = "Pods_tryWebApiAndSaveToRealm.framework"
                BlueprintName = "Pods-tryWebApiAndSaveToRealm"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C1040034F4AA955B8682D4B1E802F2D6"
+            BlueprintIdentifier = "F816F6CCB3E40CC32FBF41759D3021DB"
             BuildableName = "Pods_tryWebApiAndSaveToRealm.framework"
             BlueprintName = "Pods-tryWebApiAndSaveToRealm"
             ReferencedContainer = "container:Pods.xcodeproj">

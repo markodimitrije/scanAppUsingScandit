@@ -10,5 +10,6 @@ target 'tryWebApiAndSaveToRealm' do
     pod 'SwiftyJSON'
     pod 'RealmSwift'
     pod 'RxRealmDataSources'
+    pod 'RxDataSources'
 
 end

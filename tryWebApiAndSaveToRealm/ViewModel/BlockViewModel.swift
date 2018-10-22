@@ -18,6 +18,13 @@ class BlockViewModel {
     
     private (set) var blocks: Results<RealmBlock>!
     
+    // output
+    
+    var sectionsHeadersAndItems = [SectionOfCustomData]()
+    var oSectionsHeadersAndItems: Observable<[SectionOfCustomData]> {
+        return Observable.just(sectionsHeadersAndItems)
+    }
+    
     let roomId: Int
     
     // 1 - dependencies-init
@@ -43,7 +50,34 @@ class BlockViewModel {
         
         oBlocks = Observable.changeset(from: blocks)
         
+        let blocksByDay = sortBlocksByDay(blocksArray: blocks.toArray()) // private helper
+        
+        sectionsHeadersAndItems = blocksByDay.map({ (blocks) -> SectionOfCustomData in
+            let sectionName = blocks.first?.starts_at.components(separatedBy: " ").first ?? ""
+            let items = blocks.map {$0.starts_at + " " + $0.name}
+            return SectionOfCustomData.init(header: sectionName, items: items)
+        })
+        
+    }
+    
+    private func sortBlocksByDay(blocksArray:[RealmBlock]) -> [[RealmBlock]] {
+        
+        if blocksArray.isEmpty { return [] }
+        
+        let inputArray = blocksArray.sorted { Date.parse($0.starts_at) < Date.parse($1.starts_at) }
+        
+        var resultArray = [[inputArray[0]]]
+        
+        let calendar = Calendar(identifier: .gregorian)
+        for (prevBlock, nextBlock) in zip(inputArray, inputArray.dropFirst()) {
+            let prevDate = Date.parse(prevBlock.starts_at)
+            let nextDate = Date.parse(nextBlock.starts_at)
+            if !calendar.isDate(prevDate, equalTo: nextDate, toGranularity: .day) {
+                resultArray.append([]) // Start new row
+            }
+            resultArray[resultArray.count - 1].append(nextBlock)
+        }
+        return resultArray
     }
     
 }
-

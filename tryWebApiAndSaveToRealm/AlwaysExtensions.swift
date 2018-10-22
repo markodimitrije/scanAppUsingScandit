@@ -67,7 +67,7 @@ extension String {
     }
 }
 
-extension Date {
+extension Date { // (*)
     
     func toString(format:String) -> String? {
         return DateFormatter(format: format).string(from: self)
@@ -76,3 +76,12 @@ extension Date {
     static var defaultFormatString = "yyyy-MM-dd HH:mm:ss"
 }
 
+extension Date { // (*)
+    
+    static func parse(_ string: String, format: String = "yyyy-MM-dd HH:mm:ss") -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = format
+        return dateFormatter.date(from: string)!
+    }
+}
