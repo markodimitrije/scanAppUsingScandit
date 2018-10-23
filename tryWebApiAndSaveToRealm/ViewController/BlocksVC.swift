@@ -56,7 +56,7 @@ class BlocksVC: UIViewController {
                 guard let strongSelf = self else {return}
                 let selectedBlock = strongSelf.blockViewModel.blocks[ip.item]
                 strongSelf.selRealmBlock.onNext(selectedBlock)
-                strongSelf.dismiss(animated: true)
+                strongSelf.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
         

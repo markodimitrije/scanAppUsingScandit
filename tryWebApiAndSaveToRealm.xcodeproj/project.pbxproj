@@ -19,10 +19,13 @@
 		AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */; };
 		AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFF9217DCDEA003CEDD0 /* Room.swift */; };
 		AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFB217DCE27003CEDD0 /* Block.swift */; };
+		AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */; };
+		AD80F002217DE65C003CEDD0 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80F001217DE65C003CEDD0 /* ModelData.swift */; };
 		AD993AAF217B9D2000803BE2 /* BlocksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AAE217B9D2000803BE2 /* BlocksVC.swift */; };
 		AD993AB3217BAA8800803BE2 /* BlockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */; };
 		AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB4217BC6C000803BE2 /* SettingsVC.swift */; };
 		AD993AB7217BC79400803BE2 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */; };
+		ADB64DA1217E23C00094EC45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ADB64DA0217E23C00094EC45 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,10 +45,13 @@
 		AD53A020217B577500A3F9FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD80EFF9217DCDEA003CEDD0 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		AD80EFFB217DCE27003CEDD0 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
+		AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
+		AD80F001217DE65C003CEDD0 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		AD993AAE217B9D2000803BE2 /* BlocksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksVC.swift; sourceTree = "<group>"; };
 		AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockViewModel.swift; sourceTree = "<group>"; };
 		AD993AB4217BC6C000803BE2 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		ADB64DA0217E23C00094EC45 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,8 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */,
-				AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */,
 				AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */,
+				AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -82,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				AD29521F217B5B23002DDE32 /* RoomsVC.swift */,
+				AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */,
 				AD993AAE217B9D2000803BE2 /* BlocksVC.swift */,
 				AD993AB4217BC6C000803BE2 /* SettingsVC.swift */,
 			);
@@ -127,6 +134,7 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
+				AD80F000217DE651003CEDD0 /* ModelData */,
 				AD29522B217B5E98002DDE32 /* Model */,
 				AD29522A217B5E8A002DDE32 /* APIController */,
 				AD295229217B5E77002DDE32 /* ViewController */,
@@ -137,8 +145,17 @@
 				AD295226217B5C64002DDE32 /* Main.storyboard */,
 				AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */,
 				AD53A020217B577500A3F9FC /* Info.plist */,
+				ADB64DA0217E23C00094EC45 /* Localizable.strings */,
 			);
 			path = tryWebApiAndSaveToRealm;
+			sourceTree = "<group>";
+		};
+		AD80F000217DE651003CEDD0 /* ModelData */ = {
+			isa = PBXGroup;
+			children = (
+				AD80F001217DE65C003CEDD0 /* ModelData.swift */,
+			);
+			path = ModelData;
 			sourceTree = "<group>";
 		};
 		C144544588EC78E4B476DBC2 /* Pods */ = {
@@ -211,6 +228,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD295227217B5C64002DDE32 /* Main.storyboard in Resources */,
+				ADB64DA1217E23C00094EC45 /* Localizable.strings in Resources */,
 				AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */,
 				AD53A01C217B577500A3F9FC /* Assets.xcassets in Resources */,
 			);
@@ -289,7 +307,9 @@
 				AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */,
 				AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */,
 				AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */,
+				AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */,
 				AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */,
+				AD80F002217DE65C003CEDD0 /* ModelData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

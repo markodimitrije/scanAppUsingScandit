@@ -18,6 +18,9 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var roomLbl: UILabel!
     @IBOutlet weak var sessionLbl: UILabel!
     
+    @IBOutlet weak var saveSettingsAndExitBtn: UIButton!
+    @IBOutlet weak var cancelSettingsBtn: UIBarButtonItem!
+    
     let disposeBag = DisposeBag()
     
     // output
@@ -26,25 +29,62 @@ class SettingsVC: UITableViewController {
     let sessionSelected = PublishSubject<RealmBlock?>.init()
     
     fileprivate let roomViewModel = RoomViewModel()
+    //var settingsViewModel = SettingsViewModel(unsyncedConnections: 0)
+    lazy var settingsViewModel = SettingsViewModel(unsyncedConnections: 0, saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside), cancelSettings: cancelSettingsBtn.rx.tap)
     
     override func viewDidLoad() { super.viewDidLoad()
         bindUI()
+        bindControlEvents()
     }
     
     private func bindUI() { // glue code for selected Room
         
-        roomSelected
+        roomSelected // ROOM
             .map { $0.name }
             .bind(to: roomLbl.rx.text)
             .disposed(by: disposeBag)
 
-        sessionSelected
+        sessionSelected // SESSION
             .map {
                 guard let session = $0 else { return "Select session" }
                 return session.starts_at + " " + session.name
             }
             .bind(to: sessionLbl.rx.text)
             .disposed(by: disposeBag)
+        
+    }
+    
+    private func bindControlEvents() {
+        // ova 2 su INPUT za settingsViewModel - start
+        roomSelected
+            .subscribe(onNext: { [weak self] (selectedRoom) in
+                guard let strongSelf = self else {return}
+                strongSelf.settingsViewModel.roomSelected.onNext(selectedRoom)
+            })
+            .disposed(by: disposeBag)
+        
+        sessionSelected
+            .subscribe(onNext: { [weak self] (sessionSelected) in
+                guard let strongSelf = self else {return}
+                strongSelf.settingsViewModel.sessionSelected.onNext(sessionSelected)
+            })
+            .disposed(by: disposeBag)
+        // ova 2 su INPUT za settingsViewModel - end
+        
+        settingsViewModel.shouldCloseSettingsVC
+            .subscribe(onNext: {
+                if $0 {
+                    print("uradi dismiss koji treba....")
+                    self.dismiss(animated: true)
+                } else {
+                    print("prikazi alert da izabere room....")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,8 +96,7 @@ class SettingsVC: UITableViewController {
     private func hookUpIfRoomSegue(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let name = segue.identifier, name == "segueShowRooms",
-            let navVC = segue.destination as? UINavigationController,
-            let roomsVC = navVC.children.first as? RoomsVC else { return }
+            let roomsVC = segue.destination as? RoomsVC else { return }
         
         roomsVC.selectedRealmRoom
             .subscribe(onNext: { [weak self] (room) in
@@ -73,11 +112,10 @@ class SettingsVC: UITableViewController {
     
     private func navigateToSessionVCAndSubscribeForSelectedSession(roomId: Int) {
         
-        guard let navVC = storyboard?.instantiateViewController(withIdentifier: "NavVcForBocks") as? UINavigationController,
-         let blocksVC = navVC.children.first as? BlocksVC else {return}
+        guard let blocksVC = storyboard?.instantiateViewController(withIdentifier: "BlocksVC") as? BlocksVC else {return}
         
         blocksVC.selectedRoomId = roomId
-        self.present(navVC, animated: true)
+        navigationController?.pushViewController(blocksVC, animated: true)
     
         blocksVC.selectedRealmBlock
             .subscribe(onNext: { [weak self] block in
@@ -88,34 +126,18 @@ class SettingsVC: UITableViewController {
         
     }
     
-    private func updateUI() {
-     
-        roomSelected
-            .map { (realmRoom) -> String in
-                print("vracam za ime = \(realmRoom.name)")
-                return realmRoom.name
-            }
-            .bind(to: roomLbl.rx.text)
-            .disposed(by: disposeBag)
-        
-        sessionSelected
-            .map { (realmBlock) -> String in
-                print("vracam za ime session-a = \(realmBlock?.name ?? "Select session")")
-                return realmBlock?.name ?? "Select session"
-            }
-            .bind(to: sessionLbl.rx.text)
-            .disposed(by: disposeBag)
-        
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0: print("automatski segue ka rooms...")
-        case 1:
+        switch (indexPath.section, indexPath.item) {
+        case (0, 0): print("auto segue ka rooms...")
+        case (1, 0):
             guard let roomId = roomId else {return}
             navigateToSessionVCAndSubscribeForSelectedSession(roomId: roomId)
         default: break
         }
     }
     
+}
+
+enum AnError: Error {
+    case sessionNotSelected
 }

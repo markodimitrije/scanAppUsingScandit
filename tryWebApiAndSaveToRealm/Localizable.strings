@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  tryWebApiAndSaveToRealm
+
+  Created by Marko Dimitrijevic on 22/10/2018.
+  Copyright © 2018 Marko Dimitrijevic. All rights reserved.
+*/
+
+Strings.Scaner.session.SessionConst = "Session: ";
+Strings.Scaner.session.noActiveSession = "No active session.";
+Strings.Scaner.session.noActiveSessionForRoom = "No active session in this room.";
