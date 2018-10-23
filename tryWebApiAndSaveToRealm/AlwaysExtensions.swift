@@ -84,4 +84,33 @@ extension Date { // (*)
         dateFormatter.dateFormat = format
         return dateFormatter.date(from: string)!
     }
+    
+    static func parseIntoTime(_ string: String, outputWithSeconds: Bool, format: String = "yyyy-MM-dd HH:mm:ss") -> String {
+        
+        let date = parse(string, format: format)
+        
+        let formatter = DateFormatter()
+        
+        formatter.dateStyle = .none
+        
+        formatter.timeStyle = outputWithSeconds ? .medium : .short
+        
+        return formatter.string(from: date).components(separatedBy: " ").first ?? ""
+        
+    }
+    
+    static func parseIntoDateOnly(_ string: String, format: String = "yyyy-MM-dd HH:mm:ss") -> String {
+        
+        let date = parse(string, format: format)
+        
+        let formatter = DateFormatter()
+        
+        formatter.dateStyle = .medium
+        
+        formatter.timeStyle = .none
+        
+        return formatter.string(from: date)//.components(separatedBy: " ").first ?? ""
+        
+    }
+    
 }

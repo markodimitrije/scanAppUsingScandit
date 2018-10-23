@@ -39,6 +39,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "RealmBlock.duration.getter:Block.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ends_at">
+            </PersistentString>
+            <PersistentString
+               value = "starts_at">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "SettingsVC.bindUI():SettingsVC.swift">
          <PersistentStrings>
             <PersistentString

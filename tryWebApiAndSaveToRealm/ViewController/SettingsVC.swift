@@ -82,9 +82,6 @@ class SettingsVC: UITableViewController {
             })
             .disposed(by: disposeBag)
         
-        
-        
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

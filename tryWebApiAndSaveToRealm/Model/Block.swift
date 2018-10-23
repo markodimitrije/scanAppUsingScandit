@@ -63,6 +63,25 @@ class RealmBlock: Object {
     
     @objc dynamic var owner: RealmRoom?
     
+    // rac. var koji ako je "today" vraca starts_at(HH:mm) - ends_at(HH:mm)
+    // ako nije onda yyyy-MM-dd (starts_at)HH:mm-(ends_at)HH:mm
+    var duration: String {
+        
+        let timeStartsAt = Date.parseIntoTime(starts_at, outputWithSeconds: false)
+        let timeEndsAt = Date.parseIntoTime(ends_at, outputWithSeconds: false)
+        
+        let calendar = Calendar.init(identifier: .gregorian)
+        
+        let timeDuration = timeStartsAt + "-" + timeEndsAt
+        
+        if calendar.isDateInToday(Date.parse(starts_at)) {
+            return timeDuration
+        } else {
+            return Date.parseIntoDateOnly(starts_at) + " " + timeDuration
+        }
+        
+    }
+    
     func updateWith(block: Block, withRealm realm: Realm) {
         self.id = block.id
         self.name = block.name
