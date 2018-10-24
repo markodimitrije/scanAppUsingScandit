@@ -11,5 +11,6 @@ target 'tryWebApiAndSaveToRealm' do
     pod 'RealmSwift'
     pod 'RxRealmDataSources'
     pod 'RxDataSources'
+    pod 'ReachabilitySwift'
 
 end

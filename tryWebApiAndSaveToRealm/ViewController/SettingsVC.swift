@@ -29,12 +29,12 @@ class SettingsVC: UITableViewController {
     let sessionSelected = PublishSubject<RealmBlock?>.init()
     
     fileprivate let roomViewModel = RoomViewModel()
-    //var settingsViewModel = SettingsViewModel(unsyncedConnections: 0)
     lazy var settingsViewModel = SettingsViewModel(unsyncedConnections: 0, saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside), cancelSettings: cancelSettingsBtn.rx.tap)
     
     override func viewDidLoad() { super.viewDidLoad()
-        bindUI()
+        //bindUI()
         bindControlEvents()
+//        bindReachability()
     }
     
     private func bindUI() { // glue code for selected Room
@@ -56,6 +56,8 @@ class SettingsVC: UITableViewController {
     
     private func bindControlEvents() {
         // ova 2 su INPUT za settingsViewModel - start
+        
+        
         roomSelected
             .subscribe(onNext: { [weak self] (selectedRoom) in
                 guard let strongSelf = self else {return}
@@ -72,13 +74,28 @@ class SettingsVC: UITableViewController {
         // ova 2 su INPUT za settingsViewModel - end
         
         settingsViewModel.shouldCloseSettingsVC
-            .subscribe(onNext: {
+            .subscribe(onNext: { [weak self] in
+                guard let strongSelf = self else {return}
                 if $0 {
                     print("uradi dismiss koji treba....")
-                    self.dismiss(animated: true)
+                    strongSelf.dismiss(animated: true)
                 } else {
                     print("prikazi alert da izabere room....")
                 }
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
+    private func bindReachability() {
+        
+        connectedToInternet()
+            .debug("")
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] status in
+                print("status emitted!")
+                guard let strongSelf = self else {return}
+                strongSelf.updateUI(hasInternetConnection: status)
             })
             .disposed(by: disposeBag)
         
@@ -123,6 +140,14 @@ class SettingsVC: UITableViewController {
         
     }
     
+    private func updateUI(hasInternetConnection connected: Bool) {
+        if connected {
+            print("side effects za connected")
+        } else {
+            print("side effects za false")
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.section, indexPath.item) {
         case (0, 0): print("auto segue ka rooms...")
@@ -131,6 +156,10 @@ class SettingsVC: UITableViewController {
             navigateToSessionVCAndSubscribeForSelectedSession(roomId: roomId)
         default: break
         }
+    }
+    
+    deinit {
+        print("deinit.setingsVC")
     }
     
 }

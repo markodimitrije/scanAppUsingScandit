@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6BF894CEE135BCD599618CFD137F3E34"
-               BuildableName = "Pods_tryWebApiAndSaveToRealm.framework"
-               BlueprintName = "Pods-tryWebApiAndSaveToRealm"
+               BlueprintIdentifier = "5967F8976EBD309F97603BC84E4C31A3"
+               BuildableName = "Reachability.framework"
+               BlueprintName = "ReachabilitySwift"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6BF894CEE135BCD599618CFD137F3E34"
-            BuildableName = "Pods_tryWebApiAndSaveToRealm.framework"
-            BlueprintName = "Pods-tryWebApiAndSaveToRealm"
+            BlueprintIdentifier = "5967F8976EBD309F97603BC84E4C31A3"
+            BuildableName = "Reachability.framework"
+            BlueprintName = "ReachabilitySwift"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

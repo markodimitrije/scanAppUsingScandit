@@ -11,8 +11,10 @@ import RxSwift
 import RxCocoa
 import Realm
 import RealmSwift
+import Reachability
 
-class SettingsViewModel {
+//class SettingsViewModel {
+struct SettingsViewModel {
     
     let disposeBag = DisposeBag()
     
@@ -45,15 +47,17 @@ class SettingsViewModel {
                                     .asObservable()
 
         oSaveSettingsClick.withLatestFrom(sessionSelected)
-            .subscribe(onNext: { [weak self] block in
-                guard let strongSelf = self else { return }
+            .subscribe(onNext: { block in//[weak self] block in
+                //guard let strongSelf = self else { return }
                 
                 if block == nil {
                     print("is clicked but block is nil, please select session")
-                    strongSelf.shouldCloseSettingsVC.onNext(false)
+                    //strongSelf.shouldCloseSettingsVC.onNext(false)
+                    self.shouldCloseSettingsVC.onNext(false)
                 } else {
                     print("is clicked should navigate...")
-                    strongSelf.shouldCloseSettingsVC.onNext(true)
+                    //strongSelf.shouldCloseSettingsVC.onNext(true)
+                    self.shouldCloseSettingsVC.onNext(true)
                 }
 
             })
@@ -62,9 +66,10 @@ class SettingsViewModel {
         cancelSettings
             .throttle(0.5, scheduler: MainScheduler.init())
             .asObservable()
-            .subscribe(onNext: { [weak self] tap in
-                guard let strongSelf = self else { return }
-                strongSelf.shouldCloseSettingsVC.onNext(true)
+            .subscribe(onNext: { tap in // [weak self] tap in
+                //guard let strongSelf = self else { return }
+//                strongSelf.shouldCloseSettingsVC.onNext(true)
+                self.shouldCloseSettingsVC.onNext(true)
             })
             .disposed(by: disposeBag)
     }

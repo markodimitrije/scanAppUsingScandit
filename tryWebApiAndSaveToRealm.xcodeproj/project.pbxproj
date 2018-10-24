@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6ACBF2A7749C4FA7E483E5B1 /* Pods_tryWebApiAndSaveToRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2A027F7E2230A84A444BE3 /* Pods_tryWebApiAndSaveToRealm.framework */; };
+		AD24E305217F74D8008E35F8 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E304217F74D8008E35F8 /* ReachabilityManager.swift */; };
 		AD295221217B5B24002DDE32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521C217B5B23002DDE32 /* AppDelegate.swift */; };
 		AD295222217B5B24002DDE32 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521D217B5B23002DDE32 /* Model.swift */; };
 		AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */; };
@@ -33,6 +34,7 @@
 		0E2A027F7E2230A84A444BE3 /* Pods_tryWebApiAndSaveToRealm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tryWebApiAndSaveToRealm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		42401D957459EB725DCF69A0 /* Pods-tryWebApiAndSaveToRealm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tryWebApiAndSaveToRealm.release.xcconfig"; path = "Pods/Target Support Files/Pods-tryWebApiAndSaveToRealm/Pods-tryWebApiAndSaveToRealm.release.xcconfig"; sourceTree = "<group>"; };
 		5417D6DCB607BDFB0EEA9675 /* Pods-tryWebApiAndSaveToRealm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tryWebApiAndSaveToRealm.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tryWebApiAndSaveToRealm/Pods-tryWebApiAndSaveToRealm.debug.xcconfig"; sourceTree = "<group>"; };
+		AD24E304217F74D8008E35F8 /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
 		AD29521C217B5B23002DDE32 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../tryObservableWebApiAndRealm/tryObservableWebApiAndRealm/AppDelegate.swift; sourceTree = "<group>"; };
 		AD29521D217B5B23002DDE32 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlwaysExtensions.swift; sourceTree = "<group>"; };
@@ -74,6 +76,14 @@
 				0E2A027F7E2230A84A444BE3 /* Pods_tryWebApiAndSaveToRealm.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AD24E303217F74C8008E35F8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AD24E304217F74D8008E35F8 /* ReachabilityManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		AD295228217B5E6F002DDE32 /* ViewModel */ = {
@@ -137,6 +147,7 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
+				AD24E303217F74C8008E35F8 /* Services */,
 				AD80F000217DE651003CEDD0 /* ModelData */,
 				AD29522B217B5E98002DDE32 /* Model */,
 				AD29522A217B5E8A002DDE32 /* APIController */,
@@ -266,6 +277,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-tryWebApiAndSaveToRealm/Pods-tryWebApiAndSaveToRealm-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -278,6 +290,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -299,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD24E305217F74D8008E35F8 /* ReachabilityManager.swift in Sources */,
 				AD295224217B5B24002DDE32 /* RoomsVC.swift in Sources */,
 				AD295222217B5B24002DDE32 /* Model.swift in Sources */,
 				AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */,
