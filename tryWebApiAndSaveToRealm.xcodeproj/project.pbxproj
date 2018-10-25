@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6ACBF2A7749C4FA7E483E5B1 /* Pods_tryWebApiAndSaveToRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2A027F7E2230A84A444BE3 /* Pods_tryWebApiAndSaveToRealm.framework */; };
 		AD24E305217F74D8008E35F8 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E304217F74D8008E35F8 /* ReachabilityManager.swift */; };
+		AD24E30821806C3A008E35F8 /* WiFiConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD24E30721806C3A008E35F8 /* WiFiConnectionView.xib */; };
+		AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E30921806C4A008E35F8 /* WiFiConnectionView.swift */; };
+		AD24E30C21807243008E35F8 /* ModelNamespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E30B21807243008E35F8 /* ModelNamespaces.swift */; };
 		AD295221217B5B24002DDE32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521C217B5B23002DDE32 /* AppDelegate.swift */; };
 		AD295222217B5B24002DDE32 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521D217B5B23002DDE32 /* Model.swift */; };
 		AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */; };
@@ -27,7 +30,12 @@
 		AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB4217BC6C000803BE2 /* SettingsVC.swift */; };
 		AD993AB7217BC79400803BE2 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */; };
 		ADA47212217F458D0078530E /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA47211217F458D0078530E /* ScannerViewModel.swift */; };
+		ADB2739E218078DD00345A5E /* UnsyncedScansView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADB2739C218078DC00345A5E /* UnsyncedScansView.xib */; };
+		ADB2739F218078DD00345A5E /* UnsyncedScansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2739D218078DC00345A5E /* UnsyncedScansView.swift */; };
+		ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB273A321807EFD00345A5E /* AutoSelectSessionsView.swift */; };
+		ADB273A621807EFD00345A5E /* AutoSelectSessionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADB273A421807EFD00345A5E /* AutoSelectSessionsView.xib */; };
 		ADB64DA1217E23C00094EC45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ADB64DA0217E23C00094EC45 /* Localizable.strings */; };
+		ADBCCB472180973E009D7753 /* AutoSelSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +43,9 @@
 		42401D957459EB725DCF69A0 /* Pods-tryWebApiAndSaveToRealm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tryWebApiAndSaveToRealm.release.xcconfig"; path = "Pods/Target Support Files/Pods-tryWebApiAndSaveToRealm/Pods-tryWebApiAndSaveToRealm.release.xcconfig"; sourceTree = "<group>"; };
 		5417D6DCB607BDFB0EEA9675 /* Pods-tryWebApiAndSaveToRealm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tryWebApiAndSaveToRealm.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tryWebApiAndSaveToRealm/Pods-tryWebApiAndSaveToRealm.debug.xcconfig"; sourceTree = "<group>"; };
 		AD24E304217F74D8008E35F8 /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
+		AD24E30721806C3A008E35F8 /* WiFiConnectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WiFiConnectionView.xib; sourceTree = "<group>"; };
+		AD24E30921806C4A008E35F8 /* WiFiConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiConnectionView.swift; sourceTree = "<group>"; };
+		AD24E30B21807243008E35F8 /* ModelNamespaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNamespaces.swift; sourceTree = "<group>"; };
 		AD29521C217B5B23002DDE32 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../tryObservableWebApiAndRealm/tryObservableWebApiAndRealm/AppDelegate.swift; sourceTree = "<group>"; };
 		AD29521D217B5B23002DDE32 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlwaysExtensions.swift; sourceTree = "<group>"; };
@@ -55,7 +66,12 @@
 		AD993AB4217BC6C000803BE2 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		ADA47211217F458D0078530E /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
+		ADB2739C218078DC00345A5E /* UnsyncedScansView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnsyncedScansView.xib; sourceTree = "<group>"; };
+		ADB2739D218078DC00345A5E /* UnsyncedScansView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsyncedScansView.swift; sourceTree = "<group>"; };
+		ADB273A321807EFD00345A5E /* AutoSelectSessionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSelectSessionsView.swift; sourceTree = "<group>"; };
+		ADB273A421807EFD00345A5E /* AutoSelectSessionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoSelectSessionsView.xib; sourceTree = "<group>"; };
 		ADB64DA0217E23C00094EC45 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSelSessionViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +102,19 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		AD24E30621806C22008E35F8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ADB273A421807EFD00345A5E /* AutoSelectSessionsView.xib */,
+				ADB273A321807EFD00345A5E /* AutoSelectSessionsView.swift */,
+				ADB2739C218078DC00345A5E /* UnsyncedScansView.xib */,
+				ADB2739D218078DC00345A5E /* UnsyncedScansView.swift */,
+				AD24E30721806C3A008E35F8 /* WiFiConnectionView.xib */,
+				AD24E30921806C4A008E35F8 /* WiFiConnectionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		AD295228217B5E6F002DDE32 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +122,7 @@
 				AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */,
 				AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */,
 				ADA47211217F458D0078530E /* ScannerViewModel.swift */,
+				ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -147,13 +177,14 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
+				AD24E30621806C22008E35F8 /* Views */,
+				AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */,
 				AD24E303217F74C8008E35F8 /* Services */,
 				AD80F000217DE651003CEDD0 /* ModelData */,
 				AD29522B217B5E98002DDE32 /* Model */,
 				AD29522A217B5E8A002DDE32 /* APIController */,
 				AD295229217B5E77002DDE32 /* ViewController */,
 				AD295228217B5E6F002DDE32 /* ViewModel */,
-				AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */,
 				AD29521C217B5B23002DDE32 /* AppDelegate.swift */,
 				AD53A01B217B577500A3F9FC /* Assets.xcassets */,
 				AD295226217B5C64002DDE32 /* Main.storyboard */,
@@ -168,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				AD80F001217DE65C003CEDD0 /* ModelData.swift */,
+				AD24E30B21807243008E35F8 /* ModelNamespaces.swift */,
 			);
 			path = ModelData;
 			sourceTree = "<group>";
@@ -241,10 +273,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADB2739E218078DD00345A5E /* UnsyncedScansView.xib in Resources */,
 				AD295227217B5C64002DDE32 /* Main.storyboard in Resources */,
 				ADB64DA1217E23C00094EC45 /* Localizable.strings in Resources */,
 				AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */,
 				AD53A01C217B577500A3F9FC /* Assets.xcassets in Resources */,
+				ADB273A621807EFD00345A5E /* AutoSelectSessionsView.xib in Resources */,
+				AD24E30821806C3A008E35F8 /* WiFiConnectionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD24E305217F74D8008E35F8 /* ReachabilityManager.swift in Sources */,
+				ADBCCB472180973E009D7753 /* AutoSelSessionViewModel.swift in Sources */,
 				AD295224217B5B24002DDE32 /* RoomsVC.swift in Sources */,
 				AD295222217B5B24002DDE32 /* Model.swift in Sources */,
 				AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */,
@@ -323,10 +359,14 @@
 				AD993AB3217BAA8800803BE2 /* BlockViewModel.swift in Sources */,
 				AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */,
 				AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */,
+				AD24E30C21807243008E35F8 /* ModelNamespaces.swift in Sources */,
 				ADA47212217F458D0078530E /* ScannerViewModel.swift in Sources */,
 				AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */,
+				ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */,
 				AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */,
+				AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */,
 				AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */,
+				ADB2739F218078DD00345A5E /* UnsyncedScansView.swift in Sources */,
 				AD80F002217DE65C003CEDD0 /* ModelData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

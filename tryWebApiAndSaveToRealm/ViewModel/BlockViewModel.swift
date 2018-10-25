@@ -16,14 +16,22 @@ class BlockViewModel {
     
     let disposeBag = DisposeBag()
     
-    private (set) var blocks: Results<RealmBlock>!
+    // ovi treba da su ti SUBJECTS! sta je poenta imati ih ovako ??
     
-    // output
+    private (set) var blocks: Results<RealmBlock>! // ostavio sam zbog vc-a.. (nije dobro ovo)
+//    private (set) var blocksSortedByDate = [RealmBlock]()
+
+    private var blocksSortedByDate = [RealmBlock]()
+    
+    // output 1 - za prikazivanje blocks na tableView...
     
     var sectionsHeadersAndItems = [SectionOfCustomData]()
     var oSectionsHeadersAndItems: Observable<[SectionOfCustomData]> {
         return Observable.just(sectionsHeadersAndItems)
     }
+    
+    // output 2 - expose your calculated stuff
+    var oAutomaticSession = BehaviorSubject<RealmBlock?>.init(value: nil)
     
     let roomId: Int
     
@@ -31,6 +39,7 @@ class BlockViewModel {
     init(roomId: Int) {
         self.roomId = roomId
         bindOutput()
+        bindAutomaticSession()
     }
     
     //... 2 - input
@@ -46,7 +55,14 @@ class BlockViewModel {
         print("implement me, filter by roomId = \(roomId)")
         
         // ovde mi treba jos da su od odgovarajuceg Room-a
-        blocks = realm.objects(RealmBlock.self).filter("type = 'Oral'").filter("location_id = %@", roomId)
+        blocks = realm
+                    .objects(RealmBlock.self)
+                    .filter("type = 'Oral'")
+                    .filter("location_id = %@", roomId)
+        
+        blocksSortedByDate = blocks.toArray().sorted(by: {
+            return Date.parse($0.starts_at) < Date.parse($1.starts_at)
+        })
         
         oBlocks = Observable.changeset(from: blocks)
         
@@ -58,6 +74,20 @@ class BlockViewModel {
             return SectionOfCustomData.init(header: sectionName, items: items)
         })
         
+    }
+    
+    // ako ima bilo koji session u zadatom Room, na koji se ceka krace od 2 sata, emituj SessionId; ako nema, emituj nil.
+    private func bindAutomaticSession() {
+        
+        let result = vremeCekanjaNaPrviSledSessionKraceOd2h() ? blocksSortedByDate.first : nil
+        
+        oAutomaticSession.onNext(result)
+        
+    }
+    
+    private func vremeCekanjaNaPrviSledSessionKraceOd2h() -> Bool {
+        // implement me
+        return true
     }
     
     private func sortBlocksByDay(blocksArray:[RealmBlock]) -> [[RealmBlock]] {
@@ -79,5 +109,7 @@ class BlockViewModel {
         }
         return resultArray
     }
+    
+    
     
 }

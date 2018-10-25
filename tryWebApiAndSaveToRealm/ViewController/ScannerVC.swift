@@ -33,7 +33,6 @@ class ScannerVC: UIViewController {
         scanerViewModel.sessionInfo // SESSION INFO
             .bind(to: sessionTimeAndRoomLbl.rx.text)
             .disposed(by: disposeBag)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

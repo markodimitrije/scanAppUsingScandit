@@ -12,7 +12,6 @@ import Realm
 import RealmSwift
 import RxRealmDataSources
 
-//class SettingsVC: UIViewController {
 class SettingsVC: UITableViewController {
 
     @IBOutlet weak var roomLbl: UILabel!
@@ -21,26 +20,35 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var saveSettingsAndExitBtn: UIButton!
     @IBOutlet weak var cancelSettingsBtn: UIBarButtonItem!
     
+    @IBOutlet weak var autoSelectSessionsView: AutoSelectSessionsView!
+    @IBOutlet weak var unsyncedScansView: UnsyncedScansView!
+    @IBOutlet weak var wiFiConnectionView: WiFiConnectionView!
+    
     let disposeBag = DisposeBag()
     
     // output
-    var roomId: Int!
-    let roomSelected = PublishSubject<RealmRoom>.init()
-    let sessionSelected = PublishSubject<RealmBlock?>.init()
+    var roomId: Int! {
+        didSet {
+            bindXibEvents()
+        }
+    }
+    let roomSelected = BehaviorSubject<RealmRoom?>.init(value: nil)
+    let sessionSelected = BehaviorSubject<RealmBlock?>.init(value: nil)
     
     fileprivate let roomViewModel = RoomViewModel()
     lazy var settingsViewModel = SettingsViewModel(unsyncedConnections: 0, saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside), cancelSettings: cancelSettingsBtn.rx.tap)
+    lazy fileprivate var autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
     
     override func viewDidLoad() { super.viewDidLoad()
-        //bindUI()
+        bindUI()
         bindControlEvents()
-//        bindReachability()
+        bindReachability()
     }
     
     private func bindUI() { // glue code for selected Room
         
         roomSelected // ROOM
-            .map { $0.name }
+            .map { $0?.name ?? RoomTextData.selectRoom }
             .bind(to: roomLbl.rx.text)
             .disposed(by: disposeBag)
 
@@ -90,15 +98,13 @@ class SettingsVC: UITableViewController {
     private func bindReachability() {
         
         connectedToInternet()
-            .debug("")
+            //.debug("")
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] status in
-                print("status emitted!")
                 guard let strongSelf = self else {return}
-                strongSelf.updateUI(hasInternetConnection: status)
+                strongSelf.wiFiConnectionView.update(connected: status)
             })
             .disposed(by: disposeBag)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -124,7 +130,48 @@ class SettingsVC: UITableViewController {
         
     }
     
+    private func bindXibEvents() { // ovde hook-up controls koje imas na xib
+        
+        // mozes da viewmodel-u prosledis switch kao hook
+        // + treba mu room i session
+        
+        autoSelSessionViewModel.selectedRoom = roomSelected
+        autoSelSessionViewModel.selectedSession = sessionSelected
+        
+        let switchState: Observable<Bool> = autoSelectSessionsView.controlSwitch.rx.controlEvent(.allTouchEvents)
+            .map { [weak self] _ in
+                guard let strongSelf = self else {return false}
+                return strongSelf.autoSelectSessionsView.controlSwitch!.isOn
+            }
+        switchState
+            .throttle(0.5, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] switchState in
+                guard let strongSelf = self else {return}
+                strongSelf.autoSelSessionViewModel.switchState.onNext(switchState) // forward..
+            })
+            .disposed(by: disposeBag)
+        
+        autoSelSessionViewModel.sessionName // output
+            .subscribe(onNext: {  [weak self] (sessionName) in
+                guard let strongSelf = self else {return}
+                print("bindXibEvents.sessionName = \(sessionName)")
+            })
+            .disposed(by: disposeBag)
+        
+        /* implement me....
+        unsyncedScansView.syncBtn.rx.controlEvent(.touchUpInside)
+            .subscribe(onNext: { [weak self] tap in
+                guard let strongSelf = self else {return}
+                print("sync btn is tapped, snimi sta self scaning app salje bekendu")
+            })
+            .disposed(by: disposeBag)
+ */
+    }
+    
     private func navigateToSessionVCAndSubscribeForSelectedSession(roomId: Int) {
+        
+        if autoSelectSessionsView.controlSwitch.isOn { return }
         
         guard let blocksVC = storyboard?.instantiateViewController(withIdentifier: "BlocksVC") as? BlocksVC else {return}
         
@@ -137,15 +184,6 @@ class SettingsVC: UITableViewController {
                 strongSelf.sessionSelected.onNext(block)
             })
             .disposed(by: disposeBag)
-        
-    }
-    
-    private func updateUI(hasInternetConnection connected: Bool) {
-        if connected {
-            print("side effects za connected")
-        } else {
-            print("side effects za false")
-        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

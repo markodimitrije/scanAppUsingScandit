@@ -111,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QOP-EG-MdP" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="366" y="761"/>
+            <point key="canvasLocation" x="366" y="772"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SQ3-Cy-wPm">
@@ -234,7 +234,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Select room" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z55-SU-t5C">
-                                                    <rect key="frame" x="20" y="11.5" width="92.5" height="20.5"/>
+                                                    <rect key="frame" x="20" y="11.5" width="942" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -242,6 +242,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Z55-SU-t5C" firstAttribute="leading" secondItem="zO7-4g-WZO" secondAttribute="leading" constant="20" symbolic="YES" id="3lr-Xx-gmb"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Z55-SU-t5C" secondAttribute="trailing" constant="16" id="88J-bT-yPS"/>
                                                 <constraint firstItem="Z55-SU-t5C" firstAttribute="centerY" secondItem="zO7-4g-WZO" secondAttribute="centerY" id="WTg-d4-dGC"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -253,21 +254,22 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="SESSION" id="BnZ-Ug-ejM">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="XSh-QP-pP2">
+                                    <tableViewCell clipsSubviews="YES" tag="10" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="XSh-QP-pP2">
                                         <rect key="frame" x="0.0" y="132" width="1024" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XSh-QP-pP2" id="ntv-i9-nVl">
                                             <rect key="frame" x="0.0" y="0.0" width="986" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Select session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4n0-vR-Xii">
-                                                    <rect key="frame" x="20" y="11.5" width="110.5" height="20.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Select session" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4n0-vR-Xii">
+                                                    <rect key="frame" x="20" y="11.5" width="942" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="4n0-vR-Xii" secondAttribute="trailing" constant="16" id="bQN-7G-wCE"/>
                                                 <constraint firstItem="4n0-vR-Xii" firstAttribute="leading" secondItem="ntv-i9-nVl" secondAttribute="leading" constant="20" symbolic="YES" id="qqT-rc-0ti"/>
                                                 <constraint firstItem="4n0-vR-Xii" firstAttribute="centerY" secondItem="ntv-i9-nVl" secondAttribute="centerY" id="zJA-Oc-jt4"/>
                                             </constraints>
@@ -280,21 +282,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic selection of sections" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jT2-cM-UfS">
-                                                    <rect key="frame" x="20" y="11.5" width="240" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="GxT-39-xxY">
-                                                    <rect key="frame" x="959" y="6.5" width="51" height="31"/>
-                                                </switch>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yCC-8j-GhC" customClass="AutoSelectSessionsView" customModule="tryWebApiAndSaveToRealm" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="GxT-39-xxY" firstAttribute="centerY" secondItem="KN7-JV-9ne" secondAttribute="centerY" id="Tmd-8i-0BW"/>
-                                                <constraint firstItem="jT2-cM-UfS" firstAttribute="centerY" secondItem="KN7-JV-9ne" secondAttribute="centerY" id="ccW-5H-hDG"/>
-                                                <constraint firstAttribute="trailing" secondItem="GxT-39-xxY" secondAttribute="trailing" constant="16" id="rUM-CU-Gue"/>
-                                                <constraint firstItem="jT2-cM-UfS" firstAttribute="leading" secondItem="KN7-JV-9ne" secondAttribute="leadingMargin" id="zxW-Gt-iP1"/>
+                                                <constraint firstItem="yCC-8j-GhC" firstAttribute="leading" secondItem="KN7-JV-9ne" secondAttribute="leading" id="80e-d5-7Ni"/>
+                                                <constraint firstItem="yCC-8j-GhC" firstAttribute="top" secondItem="KN7-JV-9ne" secondAttribute="top" id="jtD-vG-uCc"/>
+                                                <constraint firstAttribute="trailing" secondItem="yCC-8j-GhC" secondAttribute="trailing" id="wFz-xm-Fx2"/>
+                                                <constraint firstAttribute="bottom" secondItem="yCC-8j-GhC" secondAttribute="bottom" id="yn0-gp-Yyr"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -309,33 +306,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="SxO-3e-AFW">
-                                                    <rect key="frame" x="20" y="11.5" width="153.5" height="20.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsynced scans: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oys-Sy-fFH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="135" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rdt-yX-QOq">
-                                                            <rect key="frame" x="143" y="0.0" width="10.5" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCE-b8-hAW">
-                                                    <rect key="frame" x="974" y="7" width="34" height="30"/>
-                                                    <state key="normal" title="Sync"/>
-                                                </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHv-tg-OV2" customClass="UnsyncedScansView" customModule="tryWebApiAndSaveToRealm" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="SxO-3e-AFW" firstAttribute="centerY" secondItem="Apo-hR-3GY" secondAttribute="centerY" id="L91-k3-Soz"/>
-                                                <constraint firstItem="SxO-3e-AFW" firstAttribute="leading" secondItem="Apo-hR-3GY" secondAttribute="leadingMargin" id="MXO-GP-0zN"/>
-                                                <constraint firstAttribute="trailing" secondItem="OCE-b8-hAW" secondAttribute="trailing" constant="16" id="Qvf-oY-sdy"/>
-                                                <constraint firstItem="OCE-b8-hAW" firstAttribute="centerY" secondItem="Apo-hR-3GY" secondAttribute="centerY" id="rJD-Eu-ORR"/>
+                                                <constraint firstItem="AHv-tg-OV2" firstAttribute="top" secondItem="Apo-hR-3GY" secondAttribute="top" id="AoN-wR-Q5X"/>
+                                                <constraint firstAttribute="bottom" secondItem="AHv-tg-OV2" secondAttribute="bottom" id="CYi-RC-u0Y"/>
+                                                <constraint firstItem="AHv-tg-OV2" firstAttribute="leading" secondItem="Apo-hR-3GY" secondAttribute="leading" id="F2U-zR-Z21"/>
+                                                <constraint firstAttribute="trailing" secondItem="AHv-tg-OV2" secondAttribute="trailing" id="GLH-z5-B0D"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -346,35 +326,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wi-Fi status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kfe-qc-5dx">
-                                                    <rect key="frame" x="20" y="11.5" width="92.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jJB-17-cci">
-                                                    <rect key="frame" x="900" y="11.5" width="104" height="20.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afw-c6-rPD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="84.5" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jf-KF-MuC">
-                                                            <rect key="frame" x="92.5" y="0.0" width="11.5" height="20.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zkE-ke-GZ0" customClass="WiFiConnectionView" customModule="tryWebApiAndSaveToRealm" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Kfe-qc-5dx" firstAttribute="leading" secondItem="0Yl-zu-62F" secondAttribute="leadingMargin" id="DpI-6u-fiY"/>
-                                                <constraint firstItem="jJB-17-cci" firstAttribute="centerY" secondItem="0Yl-zu-62F" secondAttribute="centerY" id="PrJ-e3-Wzg"/>
-                                                <constraint firstItem="Kfe-qc-5dx" firstAttribute="centerY" secondItem="0Yl-zu-62F" secondAttribute="centerY" id="bze-ui-U4y"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="jJB-17-cci" secondAttribute="trailing" id="jTs-pZ-cTW"/>
+                                                <constraint firstItem="zkE-ke-GZ0" firstAttribute="leading" secondItem="0Yl-zu-62F" secondAttribute="leading" id="518-Qo-aIg"/>
+                                                <constraint firstItem="zkE-ke-GZ0" firstAttribute="top" secondItem="0Yl-zu-62F" secondAttribute="top" id="MmF-EI-YVv"/>
+                                                <constraint firstAttribute="bottom" secondItem="zkE-ke-GZ0" secondAttribute="bottom" id="lBY-fr-BqP"/>
+                                                <constraint firstAttribute="trailing" secondItem="zkE-ke-GZ0" secondAttribute="trailing" id="qk9-O8-A4J"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -408,15 +369,18 @@
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="QkL-8R-8ke"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="autoSelectSessionsView" destination="yCC-8j-GhC" id="nOJ-id-Grm"/>
                         <outlet property="cancelSettingsBtn" destination="QkL-8R-8ke" id="Ewv-aW-dPw"/>
                         <outlet property="roomLbl" destination="Z55-SU-t5C" id="RTY-zX-gYm"/>
                         <outlet property="saveSettingsAndExitBtn" destination="tS3-bo-vhN" id="cyd-Ds-ieQ"/>
                         <outlet property="sessionLbl" destination="4n0-vR-Xii" id="WIn-Tk-fhu"/>
+                        <outlet property="unsyncedScansView" destination="AHv-tg-OV2" id="yns-sF-nDf"/>
+                        <outlet property="wiFiConnectionView" destination="zkE-ke-GZ0" id="qmw-Bi-cfj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wXr-lW-JqP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-371" y="405"/>
+            <point key="canvasLocation" x="-371.484375" y="404.6875"/>
         </scene>
     </scenes>
 </document>

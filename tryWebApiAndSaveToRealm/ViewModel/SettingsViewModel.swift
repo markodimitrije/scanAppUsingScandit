@@ -31,7 +31,7 @@ struct SettingsViewModel {
     }
     
     //  // treba da slusas preko vc-a o room i session
-    var roomSelected = PublishSubject<RealmRoom>.init()
+    var roomSelected = PublishSubject<RealmRoom?>.init()
     var sessionSelected = PublishSubject<RealmBlock?>.init()
     
     // 3 - output

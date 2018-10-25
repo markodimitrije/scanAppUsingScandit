@@ -14,7 +14,7 @@ import RealmSwift
 
 struct ScannerViewModel {
     
-    var roomSelected = PublishSubject<RealmRoom>.init()
+    var roomSelected = PublishSubject<RealmRoom?>.init()
     var sessionSelected = PublishSubject<RealmBlock?>.init()
     
     let bag = DisposeBag()
@@ -31,13 +31,18 @@ struct ScannerViewModel {
     
         Observable.combineLatest(roomSelected, sessionSelected) { (room, block) -> (String, String) in
             
-            guard let block = block else {
-                return (SessionTextData.noActiveSession,"")
+                guard let room = room else {
+                    return (RoomTextData.noRoomSelected,"")
+                }
+            
+                guard let block = block else {
+                    return (SessionTextData.noActiveSession,"")
+                }
+            
+                return (block.name, block.duration + ", " + room.name)
+            
             }
-            
-            return (block.name, block.duration + ", " + room.name)
-            
-            }.subscribe(onNext: {  (blockName, blockInfo) in
+            .subscribe(onNext: {  (blockName, blockInfo) in
                 self.sessionName.onNext(blockName)
                 self.sessionInfo.onNext(blockInfo)
             })
