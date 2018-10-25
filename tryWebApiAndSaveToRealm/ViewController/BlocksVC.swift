@@ -61,5 +61,7 @@ class BlocksVC: UIViewController {
             .disposed(by: disposeBag)
         
     }
-
+    
+    deinit { print("deinit/ BlocksVC") }
+    
 }

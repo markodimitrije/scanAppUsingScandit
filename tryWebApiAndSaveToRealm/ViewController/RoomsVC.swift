@@ -43,6 +43,8 @@ class RoomsVC: UIViewController {
         
     }
     
+    deinit { print("deinit/ RoomsVC") }
+    
 }
 
 extension RoomsVC: UITableViewDelegate {

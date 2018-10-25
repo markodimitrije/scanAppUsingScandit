@@ -50,6 +50,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "closure #1 in SettingsVC.bindState():SettingsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "strongSelf.tableView.visibleCells.count">
+            </PersistentString>
+            <PersistentString
+               value = "strongSelf.tableView.visibleCells">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "SettingsVC.bindUI():SettingsVC.swift">
          <PersistentStrings>
             <PersistentString

@@ -27,7 +27,7 @@ class SettingsVC: UITableViewController {
     let disposeBag = DisposeBag()
     
     // output
-    var roomId: Int! {
+    var roomId: Int! = nil {
         didSet {
             bindXibEvents()
         }
@@ -43,6 +43,12 @@ class SettingsVC: UITableViewController {
         bindUI()
         bindControlEvents()
         bindReachability()
+//        bindState() // ovde je rano za tableView.visibleCells !!
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        bindState()
     }
     
     private func bindUI() { // glue code for selected Room
@@ -64,7 +70,6 @@ class SettingsVC: UITableViewController {
     
     private func bindControlEvents() {
         // ova 2 su INPUT za settingsViewModel - start
-        
         
         roomSelected
             .subscribe(onNext: { [weak self] (selectedRoom) in
@@ -107,6 +112,20 @@ class SettingsVC: UITableViewController {
             .disposed(by: disposeBag)
     }
     
+    private func bindState() {
+        roomSelected
+            .subscribe(onNext: { [weak self] room in
+                guard let strongSelf = self else {return}
+                _ = strongSelf.tableView.visibleCells.filter {
+                    strongSelf.tableView.indexPath(for: $0)?.section == 1
+                    }.map {
+                        $0.isUserInteractionEnabled = (room != nil)
+                        $0.alpha = (room != nil) ? 1.0: 0.5
+                    }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         hookUpIfRoomSegue(for: segue, sender: sender)
@@ -132,11 +151,9 @@ class SettingsVC: UITableViewController {
     
     private func bindXibEvents() { // ovde hook-up controls koje imas na xib
         
-        // mozes da viewmodel-u prosledis switch kao hook
-        // + treba mu room i session
+        // mozes da viewmodel-u prosledis switch kao hook  // + treba mu i room
         
         autoSelSessionViewModel.selectedRoom = roomSelected
-        autoSelSessionViewModel.selectedSession = sessionSelected
         
         let switchState: Observable<Bool> = autoSelectSessionsView.controlSwitch.rx.controlEvent(.allTouchEvents)
             .map { [weak self] _ in
@@ -146,16 +163,17 @@ class SettingsVC: UITableViewController {
         switchState
             .throttle(0.5, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
+            .skipUntil(roomSelected)
             .subscribe(onNext: { [weak self] switchState in
                 guard let strongSelf = self else {return}
                 strongSelf.autoSelSessionViewModel.switchState.onNext(switchState) // forward..
             })
             .disposed(by: disposeBag)
         
-        autoSelSessionViewModel.sessionName // output
-            .subscribe(onNext: {  [weak self] (sessionName) in
+        autoSelSessionViewModel.selectedSession // viewmodel-ov output
+            .subscribe(onNext: {  [weak self] (session) in
                 guard let strongSelf = self else {return}
-                print("bindXibEvents.sessionName = \(sessionName)")
+                strongSelf.sessionSelected.onNext(session)
             })
             .disposed(by: disposeBag)
         
@@ -196,9 +214,7 @@ class SettingsVC: UITableViewController {
         }
     }
     
-    deinit {
-        print("deinit.setingsVC")
-    }
+    deinit { print("deinit.setingsVC") }
     
 }
 
