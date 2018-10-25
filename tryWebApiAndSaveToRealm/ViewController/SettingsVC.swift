@@ -53,12 +53,15 @@ class SettingsVC: UITableViewController {
     
     private func bindUI() { // glue code for selected Room
         
-        roomSelected // ROOM
+        let roomSelectedShared = roomSelected // ROOM - roomLbl
             .map { $0?.name ?? RoomTextData.selectRoom }
+            .share()
+        
+        roomSelectedShared // ROOM - roomLbl
             .bind(to: roomLbl.rx.text)
             .disposed(by: disposeBag)
-
-        sessionSelected // SESSION
+        
+        sessionSelected // SESSION - sessionLbl
             .map {
                 guard let session = $0 else { return "Select session" }
                 return session.starts_at + " " + session.name
@@ -131,6 +134,7 @@ class SettingsVC: UITableViewController {
                     }
             })
             .disposed(by: disposeBag)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -194,6 +198,12 @@ class SettingsVC: UITableViewController {
             })
             .disposed(by: disposeBag)
  */
+        
+        roomSelected
+            .distinctUntilChanged()
+            .map {_ in return false} // hocemo da je default iskljuceno
+            .bind(to: autoSelectSessionsView.controlSwitch.rx.isOn)
+            .disposed(by: disposeBag)
     }
     
     private func navigateToSessionVCAndSubscribeForSelectedSession(roomId: Int) {

@@ -12,6 +12,7 @@
 		AD24E30821806C3A008E35F8 /* WiFiConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD24E30721806C3A008E35F8 /* WiFiConnectionView.xib */; };
 		AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E30921806C4A008E35F8 /* WiFiConnectionView.swift */; };
 		AD24E30C21807243008E35F8 /* ModelStructsAndNamespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E30B21807243008E35F8 /* ModelStructsAndNamespaces.swift */; };
+		AD28F6F12182122200A41BB8 /* RxExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD28F6F02182122200A41BB8 /* RxExtensions.swift */; };
 		AD295221217B5B24002DDE32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521C217B5B23002DDE32 /* AppDelegate.swift */; };
 		AD295222217B5B24002DDE32 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521D217B5B23002DDE32 /* Model.swift */; };
 		AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */; };
@@ -46,6 +47,7 @@
 		AD24E30721806C3A008E35F8 /* WiFiConnectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WiFiConnectionView.xib; sourceTree = "<group>"; };
 		AD24E30921806C4A008E35F8 /* WiFiConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiConnectionView.swift; sourceTree = "<group>"; };
 		AD24E30B21807243008E35F8 /* ModelStructsAndNamespaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStructsAndNamespaces.swift; sourceTree = "<group>"; };
+		AD28F6F02182122200A41BB8 /* RxExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxExtensions.swift; sourceTree = "<group>"; };
 		AD29521C217B5B23002DDE32 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../tryObservableWebApiAndRealm/tryObservableWebApiAndRealm/AppDelegate.swift; sourceTree = "<group>"; };
 		AD29521D217B5B23002DDE32 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlwaysExtensions.swift; sourceTree = "<group>"; };
@@ -115,6 +117,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		AD28F6EF2182120A00A41BB8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */,
+				AD28F6F02182122200A41BB8 /* RxExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		AD295228217B5E6F002DDE32 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,8 +188,8 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
+				AD28F6EF2182120A00A41BB8 /* Extensions */,
 				AD24E30621806C22008E35F8 /* Views */,
-				AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */,
 				AD24E303217F74C8008E35F8 /* Services */,
 				AD80F000217DE651003CEDD0 /* ModelData */,
 				AD29522B217B5E98002DDE32 /* Model */,
@@ -368,6 +379,7 @@
 				AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */,
 				ADB2739F218078DD00345A5E /* UnsyncedScansView.swift in Sources */,
 				AD80F002217DE65C003CEDD0 /* ModelData.swift in Sources */,
+				AD28F6F12182122200A41BB8 /* RxExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
