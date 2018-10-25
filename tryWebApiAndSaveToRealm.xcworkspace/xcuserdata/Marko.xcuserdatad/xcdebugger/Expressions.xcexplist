@@ -3,10 +3,24 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "RealmViewModel.bindOutput():RealmViewModel.swift">
+         contextName = "BlocksVC.bindUI():BlocksVC.swift">
          <PersistentStrings>
             <PersistentString
-               value = "rms.count">
+               value = "blockViewModel.oBlocks">
+            </PersistentString>
+            <PersistentString
+               value = "blockViewModel">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in SettingsVC.bindState():SettingsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "strongSelf.tableView.visibleCells.count">
+            </PersistentString>
+            <PersistentString
+               value = "strongSelf.tableView.visibleCells">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -28,17 +42,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "BlocksVC.bindUI():BlocksVC.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "blockViewModel.oBlocks">
-            </PersistentString>
-            <PersistentString
-               value = "blockViewModel">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "RealmBlock.duration.getter:Block.swift">
          <PersistentStrings>
             <PersistentString
@@ -50,13 +53,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in SettingsVC.bindState():SettingsVC.swift">
+         contextName = "BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "strongSelf.tableView.visibleCells.count">
+               value = "blocksSortedByDate">
             </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RealmViewModel.bindOutput():RealmViewModel.swift">
+         <PersistentStrings>
             <PersistentString
-               value = "strongSelf.tableView.visibleCells">
+               value = "rms.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -68,6 +76,14 @@
             </PersistentString>
             <PersistentString
                value = "settingsViewModel.saveSettingsAction">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlockViewModel.autoSessionIsAvailable(inLessThan:):BlockViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "difference &lt; TimeInterval.waitToMostRecentSession">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

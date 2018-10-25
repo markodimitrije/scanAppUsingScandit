@@ -113,9 +113,16 @@ class SettingsVC: UITableViewController {
     }
     
     private func bindState() {
+        
+//        func reloadAutoSelViewModel(forRoomId roomId: Int?) {
+//            guard let roomId = roomId else {return}
+//            autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
+//        }
+        
         roomSelected
             .subscribe(onNext: { [weak self] room in
                 guard let strongSelf = self else {return}
+                //reloadAutoSelViewModel(forRoomId: room?.id)
                 _ = strongSelf.tableView.visibleCells.filter {
                     strongSelf.tableView.indexPath(for: $0)?.section == 1
                     }.map {
@@ -151,8 +158,10 @@ class SettingsVC: UITableViewController {
     
     private func bindXibEvents() { // ovde hook-up controls koje imas na xib
         
-        // mozes da viewmodel-u prosledis switch kao hook  // + treba mu i room
+        print("bindXibEvents is called")
         
+        // mozes da viewmodel-u prosledis switch kao hook  // + treba mu i room
+        autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
         autoSelSessionViewModel.selectedRoom = roomSelected
         
         let switchState: Observable<Bool> = autoSelectSessionsView.controlSwitch.rx.controlEvent(.allTouchEvents)
@@ -216,8 +225,4 @@ class SettingsVC: UITableViewController {
     
     deinit { print("deinit.setingsVC") }
     
-}
-
-enum AnError: Error {
-    case sessionNotSelected
 }

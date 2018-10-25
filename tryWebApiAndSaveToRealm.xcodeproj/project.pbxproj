@@ -11,7 +11,7 @@
 		AD24E305217F74D8008E35F8 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E304217F74D8008E35F8 /* ReachabilityManager.swift */; };
 		AD24E30821806C3A008E35F8 /* WiFiConnectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD24E30721806C3A008E35F8 /* WiFiConnectionView.xib */; };
 		AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E30921806C4A008E35F8 /* WiFiConnectionView.swift */; };
-		AD24E30C21807243008E35F8 /* ModelNamespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E30B21807243008E35F8 /* ModelNamespaces.swift */; };
+		AD24E30C21807243008E35F8 /* ModelStructsAndNamespaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD24E30B21807243008E35F8 /* ModelStructsAndNamespaces.swift */; };
 		AD295221217B5B24002DDE32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521C217B5B23002DDE32 /* AppDelegate.swift */; };
 		AD295222217B5B24002DDE32 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521D217B5B23002DDE32 /* Model.swift */; };
 		AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */; };
@@ -45,7 +45,7 @@
 		AD24E304217F74D8008E35F8 /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
 		AD24E30721806C3A008E35F8 /* WiFiConnectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WiFiConnectionView.xib; sourceTree = "<group>"; };
 		AD24E30921806C4A008E35F8 /* WiFiConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiConnectionView.swift; sourceTree = "<group>"; };
-		AD24E30B21807243008E35F8 /* ModelNamespaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNamespaces.swift; sourceTree = "<group>"; };
+		AD24E30B21807243008E35F8 /* ModelStructsAndNamespaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStructsAndNamespaces.swift; sourceTree = "<group>"; };
 		AD29521C217B5B23002DDE32 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../tryObservableWebApiAndRealm/tryObservableWebApiAndRealm/AppDelegate.swift; sourceTree = "<group>"; };
 		AD29521D217B5B23002DDE32 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlwaysExtensions.swift; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				AD80F001217DE65C003CEDD0 /* ModelData.swift */,
-				AD24E30B21807243008E35F8 /* ModelNamespaces.swift */,
+				AD24E30B21807243008E35F8 /* ModelStructsAndNamespaces.swift */,
 			);
 			path = ModelData;
 			sourceTree = "<group>";
@@ -359,7 +359,7 @@
 				AD993AB3217BAA8800803BE2 /* BlockViewModel.swift in Sources */,
 				AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */,
 				AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */,
-				AD24E30C21807243008E35F8 /* ModelNamespaces.swift in Sources */,
+				AD24E30C21807243008E35F8 /* ModelStructsAndNamespaces.swift in Sources */,
 				ADA47212217F458D0078530E /* ScannerViewModel.swift in Sources */,
 				AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */,
 				ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */,

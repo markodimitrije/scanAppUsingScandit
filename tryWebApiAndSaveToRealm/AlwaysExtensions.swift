@@ -79,9 +79,12 @@ extension Date { // (*)
 extension Date { // (*)
     
     static func parse(_ string: String, format: String = "yyyy-MM-dd HH:mm:ss") -> Date {
+//        print("string = \(string)")
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        //dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = format
+//        print("parsedDate from string = \(dateFormatter.date(from: string)!)")
         return dateFormatter.date(from: string)!
     }
     

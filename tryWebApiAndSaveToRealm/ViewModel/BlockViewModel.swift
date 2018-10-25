@@ -37,6 +37,23 @@ class BlockViewModel {
     
     let roomId: Int
     
+    private var mostRecentSessionBlock: RealmBlock? {
+//        let todayBlocks = blocksSortedByDate.filter {
+//            Calendar.current.isDateInToday(Date.parse($0.starts_at))
+//        }
+        let todayBlocks = blocksSortedByDate.filter { // mock za test !
+            return Calendar.current.compare(NOW,
+                                            to: Date.parse($0.starts_at),
+                                            toGranularity: Calendar.Component.day) == ComparisonResult.orderedSame
+        }
+        
+        return todayBlocks.filter { block -> Bool in
+            let startsAt = Date.parse(block.starts_at)
+            //return startsAt > Date.now
+            return startsAt > NOW
+        }.first
+    }
+    
     // 1 - dependencies-init
     init(roomId: Int) {
         self.roomId = roomId
@@ -83,15 +100,31 @@ class BlockViewModel {
     // ako ima bilo koji session u zadatom Room, na koji se ceka krace od 2 sata, emituj SessionId; ako nema, emituj nil.
     private func bindAutomaticSession() {
         
-        let result = vremeCekanjaNaPrviSledSessionKraceOd2h() ? blocksSortedByDate.first : nil
+        let result = autoSessionIsAvailable(inLessThan: TimeInterval.waitToMostRecentSession) ?
+        mostRecentSessionBlock : nil
         
         oAutomaticSession.onNext(result)
         
     }
     
-    private func vremeCekanjaNaPrviSledSessionKraceOd2h() -> Bool {
-        // implement me
-        return true
+    private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
+//        let now = Date.init(timeIntervalSinceNow: 0) // 1
+        
+        let now = NOW // mock date !
+        
+        guard let firstAvailableSession = mostRecentSessionBlock else {
+            return false
+        }
+        let sessionDate = Date.parse(firstAvailableSession.starts_at) // 2
+        let date = now.addingTimeInterval(TimeInterval.waitToMostRecentSession) // 3
+        
+        let difference = date.timeIntervalSince(sessionDate)
+        if difference < 0 { // ima da ceka vise od zadatog intervala
+            return false
+        }
+        
+        return difference < TimeInterval.waitToMostRecentSession
+        
     }
     
     private func sortBlocksByDay(blocksArray:[RealmBlock]) -> [[RealmBlock]] {
@@ -117,3 +150,8 @@ class BlockViewModel {
     
     
 }
+
+let NOW = Date.parse("2018-05-24 12:35:00") // ovo je 10:35 - 2.blok
+//let NOW = Date.parse("2018-05-24 12:55:00") // ovo je 10:55 - nema
+//let NOW = Date.parse("2018-05-24 08:40:00") // ovo je 06:40 - 1.blok
+//let NOW = Date.parse("2018-05-24 08:00:00") // ovo je 06:00 - nema
