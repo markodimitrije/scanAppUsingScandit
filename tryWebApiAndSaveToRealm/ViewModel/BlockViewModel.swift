@@ -21,6 +21,8 @@ class BlockViewModel {
     private (set) var blocks: Results<RealmBlock>! // ostavio sam zbog vc-a.. (nije dobro ovo)
 //    private (set) var blocksSortedByDate = [RealmBlock]()
 
+    private (set) var sectionBlocks = [[RealmBlock]]() // niz nizova jer je tableView sa sections
+    
     private var blocksSortedByDate = [RealmBlock]()
     
     // output 1 - za prikazivanje blocks na tableView...
@@ -59,6 +61,8 @@ class BlockViewModel {
                     .objects(RealmBlock.self)
                     .filter("type = 'Oral'")
                     .filter("location_id = %@", roomId)
+        
+        sectionBlocks = sortBlocksByDay(blocksArray: blocks.toArray())
         
         blocksSortedByDate = blocks.toArray().sorted(by: {
             return Date.parse($0.starts_at) < Date.parse($1.starts_at)

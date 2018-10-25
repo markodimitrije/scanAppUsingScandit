@@ -54,7 +54,7 @@ class BlocksVC: UIViewController {
         tableView.rx.itemSelected // (**)
             .subscribe(onNext: { [weak self] ip in
                 guard let strongSelf = self else {return}
-                let selectedBlock = strongSelf.blockViewModel.blocks[ip.item]
+                let selectedBlock = strongSelf.blockViewModel.sectionBlocks[ip.section][ip.row]
                 strongSelf.selRealmBlock.onNext(selectedBlock)
                 strongSelf.navigationController?.popViewController(animated: true)
             })
