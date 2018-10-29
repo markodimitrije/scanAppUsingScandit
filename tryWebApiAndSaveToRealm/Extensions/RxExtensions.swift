@@ -21,13 +21,3 @@ extension Reactive where Base: UISwitch {
         }
     }
 }
-
-//extension Reactive where Base: UIView {
-//    /// Bindable sink for `hidden` property.
-//    public var isOn: Binder<Bool> {
-//        return Binder(self.base) { view, isOn in
-//            view.isOn = isOn
-//        }
-//    }
-//
-//}

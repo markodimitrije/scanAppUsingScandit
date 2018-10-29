@@ -77,14 +77,14 @@ class SettingsVC: UITableViewController {
         roomSelected
             .subscribe(onNext: { [weak self] (selectedRoom) in
                 guard let strongSelf = self else {return}
-                strongSelf.settingsViewModel.roomSelected.onNext(selectedRoom)
+                strongSelf.settingsViewModel.roomSelected.value = selectedRoom
             })
             .disposed(by: disposeBag)
         
         sessionSelected
             .subscribe(onNext: { [weak self] (sessionSelected) in
                 guard let strongSelf = self else {return}
-                strongSelf.settingsViewModel.sessionSelected.onNext(sessionSelected)
+                strongSelf.settingsViewModel.sessionSelected.value = sessionSelected
             })
             .disposed(by: disposeBag)
         // ova 2 su INPUT za settingsViewModel - end
@@ -98,9 +98,25 @@ class SettingsVC: UITableViewController {
                 } else {
                     print("prikazi alert da izabere room....")
                 }
+            }, onCompleted: { [weak self] in // slucaj da je cancel
+                guard let strongSelf = self else {return}
+                strongSelf.dismiss(animated: true)
+                strongSelf.roomSelected.onNext(nil)
+                strongSelf.sessionSelected.onNext(nil)
             })
             .disposed(by: disposeBag)
         
+//        roomSelected.asObservable()
+//            .withLatestFrom(sessionSelected.asObservable()) // BUG !
+        Observable.combineLatest(roomSelected, sessionSelected, resultSelector: { (room, session) -> Bool in // OK
+            return room != nil && session != nil
+        })
+            .subscribe(onNext: { [weak self] validSettings in//[weak self] (block) in
+                guard let strSelf = self else {return}
+                strSelf.saveSettingsAndExitBtn.alpha = validSettings ? 1.0 : 0.5
+                strSelf.saveSettingsAndExitBtn.isUserInteractionEnabled = validSettings
+            })
+            .disposed(by: disposeBag)
     }
     
     private func bindReachability() {
