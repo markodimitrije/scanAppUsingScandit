@@ -62,7 +62,6 @@ class ResourcesState {
                 guard let sSelf = self else {return}
                 sSelf.resourcesDownloaded = success
                 sSelf.timer?.invalidate()
-                //sSelf.timer = nil
             })
             .disposed(by: bag)
     }
@@ -170,3 +169,84 @@ class ResourcesState {
     
 }
 
+
+
+
+class CodeReportsState {
+    
+    var codeReports: Results<CodeReport>? {
+        
+        guard let realm = try? Realm.init() else {return nil} // ovde bi trebalo RealmError!
+        
+        return realm.objects(CodeReport.self)
+    }
+    
+    var shouldReportToWeb: Bool {
+        
+        guard let reports = codeReports else {return false} // ovde bi trebalo RealmError!
+        
+        return reports.isEmpty
+    }
+    
+    var timer: Timer?
+    
+    let bag = DisposeBag()
+
+    init() {
+        //
+    }
+    
+    private func reportToWeb(codeReports: Results<CodeReport>?) {
+        
+        // sviranje... treba mi servis da javi sve.... za sada posalji samo jedan...
+        
+        guard let report = codeReports?.first else {
+            print("nemam ni jedan code da report!...")
+            return
+        }
+
+        print("CodeReportsState/ javi web-u za ovaj report:")
+        print("code = \(report.code)")
+        print("code = \(report.date)")
+        print("code = \(report.sessionId)")
+    }
+    
+}
+
+class CodeReport: Object { // Realm Entity
+    
+    var code: String = ""
+    var sessionId: Int = -1
+    var date: Date = Date(timeIntervalSinceNow: 0)
+    
+    init(code: String, sessionId: Int, date: Date) {
+        self.code = code
+        self.sessionId = sessionId
+        self.date = date
+        super.init()
+    }
+    
+    func getPayload() -> [(String, String)] {
+        
+        return [
+            ("block_id", code),
+            ("code", "\(sessionId)"),
+            ("time_of_scan", date.toString(format: Date.defaultFormatString) ?? "")
+        ]
+    }
+    
+    // kompajler me tera da implementiram, mogu li ikako bez toga ? ...
+    
+    required init() {
+        super.init()
+    }
+
+    required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        super.init(realm: realm, schema: schema)
+    }
+
+    required init(value: Any, schema: RLMSchema) {
+        super.init(value: value, schema: schema)
+    }
+    
+}

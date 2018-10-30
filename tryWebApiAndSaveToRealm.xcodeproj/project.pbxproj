@@ -195,7 +195,7 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
-				AD697BD621887CC3002BC579 /* Logic */,
+				AD697BD621887CC3002BC579 /* ResourcesStateAndCodeReportsState */,
 				AD697BD32188622B002BC579 /* Globals */,
 				AD28F6EF2182120A00A41BB8 /* Extensions */,
 				AD24E30621806C22008E35F8 /* Views */,
@@ -223,12 +223,12 @@
 			path = Globals;
 			sourceTree = "<group>";
 		};
-		AD697BD621887CC3002BC579 /* Logic */ = {
+		AD697BD621887CC3002BC579 /* ResourcesStateAndCodeReportsState */ = {
 			isa = PBXGroup;
 			children = (
 				AD697BD721887CCE002BC579 /* ResourcesState.swift */,
 			);
-			path = Logic;
+			path = ResourcesStateAndCodeReportsState;
 			sourceTree = "<group>";
 		};
 		AD80F000217DE651003CEDD0 /* ModelData */ = {

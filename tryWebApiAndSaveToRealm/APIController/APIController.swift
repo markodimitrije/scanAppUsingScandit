@@ -61,6 +61,26 @@ class ApiController {
             }
     }
     
+    
+    //MARK: - Api Calls
+    func reportCodes(reports: [CodeReport]?) -> Observable<Bool> {
+        
+        guard let report = reports?.first else {return Observable.empty()} // hard-coded...!
+        
+        let params = report.getPayload()
+        
+        return buildRequest(pathComponent: "attendances",
+                            params: params)
+            .map() { data in
+                guard let object = try? JSONSerialization.jsonObject(with: data),
+                    let json = object as? [String: Any],
+                    let created = json["created"] as? Int, created == 201 else {
+                    return false
+                }
+            return true
+        }
+    }
+    
     //MARK: - Private Methods
     
     /** * Private method to build a request with RxCocoa */
@@ -85,14 +105,19 @@ class ApiController {
         request.url = urlComponents.url!
         request.httpMethod = method
         
-        request.allHTTPHeaderFields = ["Api-Key": apiKey]
+        let deviceUdid = UIDevice.current.identifierForVendor?.uuidString ?? ""
+        
+        request.allHTTPHeaderFields = ["Api-Key": apiKey,
+                                       "device-id": deviceUdid]
         
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let session = URLSession.shared
         
         return session.rx.response(request: request).map() { response, data in
-            if 200 ..< 300 ~= response.statusCode {
+            if 201 == response.statusCode {
+                return try! JSONSerialization.data(withJSONObject:  ["created": 201])
+            } else if 200 ..< 300 ~= response.statusCode {
                 print("buildRequest.imam data... all good")
                 return data
             } else if response.statusCode == 401 {
