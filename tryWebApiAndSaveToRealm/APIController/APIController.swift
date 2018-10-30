@@ -67,6 +67,8 @@ class ApiController {
     
     private func buildRequest(method: String = "GET", pathComponent: String, params: [(String, String)]) -> Observable<Data> {
         
+        print("APIController.buildingRequest.calling API !!!")
+        
         let url = baseURL.appendingPathComponent(pathComponent)
         var request = URLRequest(url: url)
 

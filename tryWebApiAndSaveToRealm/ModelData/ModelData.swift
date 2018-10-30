@@ -24,6 +24,12 @@ enum RoomTextData {
 }
 
 extension TimeInterval {
-    static var waitToMostRecentSession: TimeInterval = 15*60 // 15 minutes
+    static let waitToMostRecentSession: TimeInterval = 15*60 // 15 minutes
     //static var waitToMostRecentSession: TimeInterval = 60*60 // 60 minutes
+    static let timerForFetchingRoomAndBlockResources: Double = 15 // 10 seconds
+    static let timeoutForFetchingRoomAndBlockResources = 10 // 10 seconds
+}
+
+extension UserDefaults {
+    static let keyResourcesDownloaded = "resourcesDownloaded"
 }

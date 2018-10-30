@@ -22,6 +22,9 @@
 		AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */; };
 		AD53A01C217B577500A3F9FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01B217B577500A3F9FC /* Assets.xcassets */; };
 		AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */; };
+		AD697BD221885AF2002BC579 /* RealmDataPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD121885AF2002BC579 /* RealmDataPersister.swift */; };
+		AD697BD52188623A002BC579 /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD42188623A002BC579 /* GlobalVars.swift */; };
+		AD697BD821887CCE002BC579 /* ResourcesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD721887CCE002BC579 /* ResourcesState.swift */; };
 		AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFF9217DCDEA003CEDD0 /* Room.swift */; };
 		AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFB217DCE27003CEDD0 /* Block.swift */; };
 		AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */; };
@@ -59,6 +62,9 @@
 		AD53A01B217B577500A3F9FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD53A01E217B577500A3F9FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD53A020217B577500A3F9FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD697BD121885AF2002BC579 /* RealmDataPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataPersister.swift; sourceTree = "<group>"; };
+		AD697BD42188623A002BC579 /* GlobalVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
+		AD697BD721887CCE002BC579 /* ResourcesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesState.swift; sourceTree = "<group>"; };
 		AD80EFF9217DCDEA003CEDD0 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		AD80EFFB217DCE27003CEDD0 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
@@ -163,6 +169,7 @@
 				AD29521D217B5B23002DDE32 /* Model.swift */,
 				AD80EFF9217DCDEA003CEDD0 /* Room.swift */,
 				AD80EFFB217DCE27003CEDD0 /* Block.swift */,
+				AD697BD121885AF2002BC579 /* RealmDataPersister.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -188,6 +195,8 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
+				AD697BD621887CC3002BC579 /* Logic */,
+				AD697BD32188622B002BC579 /* Globals */,
 				AD28F6EF2182120A00A41BB8 /* Extensions */,
 				AD24E30621806C22008E35F8 /* Views */,
 				AD24E303217F74C8008E35F8 /* Services */,
@@ -204,6 +213,22 @@
 				ADB64DA0217E23C00094EC45 /* Localizable.strings */,
 			);
 			path = tryWebApiAndSaveToRealm;
+			sourceTree = "<group>";
+		};
+		AD697BD32188622B002BC579 /* Globals */ = {
+			isa = PBXGroup;
+			children = (
+				AD697BD42188623A002BC579 /* GlobalVars.swift */,
+			);
+			path = Globals;
+			sourceTree = "<group>";
+		};
+		AD697BD621887CC3002BC579 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				AD697BD721887CCE002BC579 /* ResourcesState.swift */,
+			);
+			path = Logic;
 			sourceTree = "<group>";
 		};
 		AD80F000217DE651003CEDD0 /* ModelData */ = {
@@ -359,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD24E305217F74D8008E35F8 /* ReachabilityManager.swift in Sources */,
+				AD697BD821887CCE002BC579 /* ResourcesState.swift in Sources */,
 				ADBCCB472180973E009D7753 /* AutoSelSessionViewModel.swift in Sources */,
 				AD295224217B5B24002DDE32 /* RoomsVC.swift in Sources */,
 				AD295222217B5B24002DDE32 /* Model.swift in Sources */,
@@ -374,11 +400,13 @@
 				ADA47212217F458D0078530E /* ScannerViewModel.swift in Sources */,
 				AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */,
 				ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */,
+				AD697BD52188623A002BC579 /* GlobalVars.swift in Sources */,
 				AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */,
 				AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */,
 				AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */,
 				ADB2739F218078DD00345A5E /* UnsyncedScansView.swift in Sources */,
 				AD80F002217DE65C003CEDD0 /* ModelData.swift in Sources */,
+				AD697BD221885AF2002BC579 /* RealmDataPersister.swift in Sources */,
 				AD28F6F12182122200A41BB8 /* RxExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
