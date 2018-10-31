@@ -35,6 +35,14 @@
 		AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB4217BC6C000803BE2 /* SettingsVC.swift */; };
 		AD993AB7217BC79400803BE2 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */; };
 		ADA47212217F458D0078530E /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA47211217F458D0078530E /* ScannerViewModel.swift */; };
+		ADAE9C242189F57D00615125 /* AVSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C232189F57D00615125 /* AVSessionViewModel.swift */; };
+		ADAE9C2E2189F5F500615125 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C262189F5F400615125 /* Global.swift */; };
+		ADAE9C2F2189F5F500615125 /* RxAVCaptureVideoDataOutputSampleBufferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C272189F5F400615125 /* RxAVCaptureVideoDataOutputSampleBufferDelegate.swift */; };
+		ADAE9C302189F5F500615125 /* AVCaptureSession+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C282189F5F400615125 /* AVCaptureSession+Rx.swift */; };
+		ADAE9C312189F5F500615125 /* RxAVCaptureDataOutputSynchronizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C292189F5F500615125 /* RxAVCaptureDataOutputSynchronizerDelegate.swift */; };
+		ADAE9C322189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C2A2189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift */; };
+		ADAE9C332189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C2C2189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift */; };
+		ADAE9C342189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C2D2189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift */; };
 		ADB2739E218078DD00345A5E /* UnsyncedScansView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADB2739C218078DC00345A5E /* UnsyncedScansView.xib */; };
 		ADB2739F218078DD00345A5E /* UnsyncedScansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2739D218078DC00345A5E /* UnsyncedScansView.swift */; };
 		ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB273A321807EFD00345A5E /* AutoSelectSessionsView.swift */; };
@@ -76,6 +84,15 @@
 		AD993AB4217BC6C000803BE2 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		ADA47211217F458D0078530E /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
+		ADAE9C232189F57D00615125 /* AVSessionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVSessionViewModel.swift; sourceTree = "<group>"; };
+		ADAE9C262189F5F400615125 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		ADAE9C272189F5F400615125 /* RxAVCaptureVideoDataOutputSampleBufferDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAVCaptureVideoDataOutputSampleBufferDelegate.swift; sourceTree = "<group>"; };
+		ADAE9C282189F5F400615125 /* AVCaptureSession+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVCaptureSession+Rx.swift"; sourceTree = "<group>"; };
+		ADAE9C292189F5F500615125 /* RxAVCaptureDataOutputSynchronizerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAVCaptureDataOutputSynchronizerDelegate.swift; sourceTree = "<group>"; };
+		ADAE9C2A2189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAVCaptureMetadataCaptureDelegate.swift; sourceTree = "<group>"; };
+		ADAE9C2B2189F5F500615125 /* RxAVFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxAVFoundation.h; sourceTree = "<group>"; };
+		ADAE9C2C2189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAVCapturePhotoCaptureDelegate.swift; sourceTree = "<group>"; };
+		ADAE9C2D2189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAVCaptureDepthDataOutputDelegate.swift; sourceTree = "<group>"; };
 		ADB2739C218078DC00345A5E /* UnsyncedScansView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnsyncedScansView.xib; sourceTree = "<group>"; };
 		ADB2739D218078DC00345A5E /* UnsyncedScansView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsyncedScansView.swift; sourceTree = "<group>"; };
 		ADB273A321807EFD00345A5E /* AutoSelectSessionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSelectSessionsView.swift; sourceTree = "<group>"; };
@@ -141,6 +158,7 @@
 				AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */,
 				AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */,
 				ADA47211217F458D0078530E /* ScannerViewModel.swift */,
+				ADAE9C232189F57D00615125 /* AVSessionViewModel.swift */,
 				ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */,
 			);
 			path = ViewModel;
@@ -198,6 +216,7 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
+				ADAE9C252189F5DB00615125 /* AVCaptureSession+Rx */,
 				AD697BD621887CC3002BC579 /* ResourcesStateAndCodeReportsState */,
 				AD697BD32188622B002BC579 /* Globals */,
 				AD28F6EF2182120A00A41BB8 /* Extensions */,
@@ -241,6 +260,21 @@
 				AD24E30B21807243008E35F8 /* ModelStructsAndNamespaces.swift */,
 			);
 			path = ModelData;
+			sourceTree = "<group>";
+		};
+		ADAE9C252189F5DB00615125 /* AVCaptureSession+Rx */ = {
+			isa = PBXGroup;
+			children = (
+				ADAE9C282189F5F400615125 /* AVCaptureSession+Rx.swift */,
+				ADAE9C262189F5F400615125 /* Global.swift */,
+				ADAE9C292189F5F500615125 /* RxAVCaptureDataOutputSynchronizerDelegate.swift */,
+				ADAE9C2D2189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift */,
+				ADAE9C2A2189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift */,
+				ADAE9C2C2189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift */,
+				ADAE9C272189F5F400615125 /* RxAVCaptureVideoDataOutputSampleBufferDelegate.swift */,
+				ADAE9C2B2189F5F500615125 /* RxAVFoundation.h */,
+			);
+			path = "AVCaptureSession+Rx";
 			sourceTree = "<group>";
 		};
 		C144544588EC78E4B476DBC2 /* Pods */ = {
@@ -387,24 +421,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD24E305217F74D8008E35F8 /* ReachabilityManager.swift in Sources */,
+				ADAE9C342189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift in Sources */,
 				AD697BD821887CCE002BC579 /* ResourcesState.swift in Sources */,
 				ADBCCB472180973E009D7753 /* AutoSelSessionViewModel.swift in Sources */,
 				AD295224217B5B24002DDE32 /* RoomsVC.swift in Sources */,
+				ADAE9C2F2189F5F500615125 /* RxAVCaptureVideoDataOutputSampleBufferDelegate.swift in Sources */,
 				AD5814AF2189B1AC009C593F /* CodeReport.swift in Sources */,
 				AD295222217B5B24002DDE32 /* Model.swift in Sources */,
 				AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */,
+				ADAE9C322189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift in Sources */,
 				AD993AAF217B9D2000803BE2 /* BlocksVC.swift in Sources */,
 				AD295225217B5B24002DDE32 /* APIController.swift in Sources */,
+				ADAE9C302189F5F500615125 /* AVCaptureSession+Rx.swift in Sources */,
 				AD993AB7217BC79400803BE2 /* SettingsViewModel.swift in Sources */,
 				AD295221217B5B24002DDE32 /* AppDelegate.swift in Sources */,
 				AD993AB3217BAA8800803BE2 /* BlockViewModel.swift in Sources */,
 				AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */,
+				ADAE9C242189F57D00615125 /* AVSessionViewModel.swift in Sources */,
 				AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */,
+				ADAE9C332189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift in Sources */,
 				AD24E30C21807243008E35F8 /* ModelStructsAndNamespaces.swift in Sources */,
 				ADA47212217F458D0078530E /* ScannerViewModel.swift in Sources */,
 				AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */,
 				ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */,
+				ADAE9C312189F5F500615125 /* RxAVCaptureDataOutputSynchronizerDelegate.swift in Sources */,
 				AD697BD52188623A002BC579 /* GlobalVars.swift in Sources */,
+				ADAE9C2E2189F5F500615125 /* Global.swift in Sources */,
 				AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */,
 				AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */,
 				AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */,

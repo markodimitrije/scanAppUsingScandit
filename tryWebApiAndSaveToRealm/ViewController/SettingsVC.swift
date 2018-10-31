@@ -34,8 +34,14 @@ class SettingsVC: UITableViewController {
     }
     let roomSelected = BehaviorSubject<RealmRoom?>.init(value: nil)
     let sessionSelected = BehaviorSubject<RealmBlock?>.init(value: nil)
-    //let codeReport = BehaviorSubject<Bool?>.init(value: nil)
+    
     let codeReport = BehaviorSubject<Bool?>.init(value: false)
+    
+    // input - trebalo je u INIT !!
+    var codeScaned = BehaviorSubject<String>.init(value: "")
+    private var codeScan: String {
+        return try! codeScaned.value()
+    }
     
     var sessionId: Int {
         guard let block = try? sessionSelected.value(),
@@ -186,7 +192,8 @@ class SettingsVC: UITableViewController {
     }
     
     private func getActualCodeReport() -> CodeReport {
-        return CodeReport.init(code: "Code 128",
+        print("KONACNO IMAM DA JE codeScan = \(codeScan)")
+        return CodeReport.init(code: codeScan,
                                sessionId: sessionId,
                                date: Date.now)
     }
