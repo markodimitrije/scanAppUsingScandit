@@ -15,14 +15,25 @@ import MapKit
 
 class ApiController {
     
+    struct Domain {
+        static let baseUrl = URL(string: "https://service.e-materials.com/api")!
+        static let baseTrackerURL = URL(string: "http://tracker.e-materials.com/")!
+    }
+    
     /// The shared instance
     static var shared = ApiController()
     
     /// The api key to communicate with Navus
-    let apiKey = "sv5NPptQyZHkBDx4fkMgNhO2Z4ONl4VP"
+    private let apiKey = "sv5NPptQyZHkBDx4fkMgNhO2Z4ONl4VP"
     
     /// API base URL
-    let baseURL = URL(string: "https://service.e-materials.com/api")!
+    //let baseURL = URL(string: "https://service.e-materials.com/api")!
+//    lazy var baseURL = {
+//        return URL(string: "https://service.e-materials.com/api")!
+//    }()
+//
+//    /// API base URL - report scan ima svoj base...
+//    let baseTrackerURL = URL(string: "http://tracker.e-materials.com")!
     
     init() {
         Logging.URLRequests = { request in
@@ -63,6 +74,31 @@ class ApiController {
     
     
     //MARK: - Api Calls
+    
+    func reportSingleCode(report: CodeReport?) -> Observable<(CodeReport,Bool)> {
+        
+        guard let report = report else {return Observable.empty()}
+        
+        let params = report.getPayload()
+        
+        
+        
+        return buildRequest(base: Domain.baseTrackerURL,
+                            method: "POST",
+                            pathComponent: "attendances",
+                            params: params)
+            .map() { data in
+                guard let object = try? JSONSerialization.jsonObject(with: data),
+                    let json = object as? [String: Any],
+                    let created = json["created"] as? Int, created == 201 else {
+                        return (report, false)
+                }
+                return (report, true)
+        }
+    }
+    
+    // implement me
+    /*
     func reportCodes(reports: [CodeReport]?) -> Observable<Bool> {
         
         guard let report = reports?.first else {return Observable.empty()} // hard-coded...!
@@ -80,24 +116,34 @@ class ApiController {
             return true
         }
     }
+    */
     
     //MARK: - Private Methods
     
     /** * Private method to build a request with RxCocoa */
     
-    private func buildRequest(method: String = "GET", pathComponent: String, params: [(String, String)]) -> Observable<Data> {
-        
+    // bez veze je Any... // treba ili [(String, String)] ili [String: Any]
+    
+    private func buildRequest(base: URL = Domain.baseUrl, method: String = "GET", pathComponent: String, params: Any) -> Observable<Data> {
+    
         print("APIController.buildingRequest.calling API !!!")
+        print("params")
         
-        let url = baseURL.appendingPathComponent(pathComponent)
+        let url = base.appendingPathComponent(pathComponent)
         var request = URLRequest(url: url)
 
         let urlComponents = NSURLComponents(url: url, resolvingAgainstBaseURL: true)!
         
         if method == "GET" {
+            guard let params = params as? [(String, String)] else {
+                return Observable.empty()
+            }
             let queryItems = params.map { URLQueryItem(name: $0.0, value: $0.1) }
             urlComponents.queryItems = queryItems
         } else {
+            guard let params = params as? [String: String] else {
+                return Observable.empty()
+            }
             let jsonData = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
             request.httpBody = jsonData
         }

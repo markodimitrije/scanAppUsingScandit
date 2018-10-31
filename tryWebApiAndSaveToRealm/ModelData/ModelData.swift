@@ -33,3 +33,7 @@ extension TimeInterval {
 extension UserDefaults {
     static let keyResourcesDownloaded = "resourcesDownloaded"
 }
+
+extension String {
+    static let now = Date.init(timeIntervalSinceNow: 0).toString(format: Date.defaultFormatString) ?? ""
+}

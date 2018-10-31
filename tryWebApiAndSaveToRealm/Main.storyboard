@@ -185,10 +185,20 @@
                                             <segue destination="WFo-Eo-cmi" kind="show" identifier="segueShowSettings" id="QnF-jJ-WaO"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" userInteractionEnabled="NO" alpha="0.01" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDQ-Qw-7k3" userLabel="codeSuccess">
+                                        <rect key="frame" x="286" y="313" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="03r-6Q-u95"/>
+                                            <constraint firstAttribute="height" constant="44" id="BKZ-VH-EgT"/>
+                                        </constraints>
+                                        <state key="normal" image="checkmark"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="RDQ-Qw-7k3" firstAttribute="centerY" secondItem="IqP-ec-QlF" secondAttribute="top" id="FO3-do-4c4"/>
                                     <constraint firstItem="IqP-ec-QlF" firstAttribute="centerX" secondItem="06H-9q-0RX" secondAttribute="centerX" id="LLU-Ae-PU0"/>
+                                    <constraint firstAttribute="trailing" secondItem="RDQ-Qw-7k3" secondAttribute="trailing" constant="10" id="PNC-CM-MlP"/>
                                     <constraint firstItem="IqP-ec-QlF" firstAttribute="leading" secondItem="06H-9q-0RX" secondAttribute="leading" constant="8" id="aUy-h8-bK1"/>
                                     <constraint firstItem="p91-E4-37B" firstAttribute="top" secondItem="06H-9q-0RX" secondAttribute="top" constant="8" id="dKn-bj-IaL"/>
                                     <constraint firstAttribute="trailing" secondItem="IqP-ec-QlF" secondAttribute="trailing" constant="8" id="f7p-AI-d8G"/>
@@ -211,6 +221,7 @@
                         <viewLayoutGuide key="safeArea" id="41f-AZ-GHc"/>
                     </view>
                     <connections>
+                        <outlet property="reportCodeBtn" destination="RDQ-Qw-7k3" id="POR-uQ-UCA"/>
                         <outlet property="sessionConstLbl" destination="46N-1r-4Nu" id="aVS-kS-OzV"/>
                         <outlet property="sessionNameLbl" destination="f86-Ax-axK" id="0ET-55-L6D"/>
                         <outlet property="sessionTimeAndRoomLbl" destination="y4T-j9-Nes" id="7Re-YZ-o04"/>
@@ -388,4 +399,7 @@
             <point key="canvasLocation" x="-371.484375" y="404.6875"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="checkmark" width="271" height="270"/>
+    </resources>
 </document>

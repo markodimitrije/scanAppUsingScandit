@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "ApiController.reportSingleCode(report:):APIController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "BlocksVC.bindUI():BlocksVC.swift">
          <PersistentStrings>
             <PersistentString
@@ -21,6 +29,14 @@
             </PersistentString>
             <PersistentString
                value = "strongSelf.tableView.visibleCells">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SettingsVC.getActualCodeReport():SettingsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "CodeReport.init(code: &quot;Code 128&quot;,&#10;                               sessionId: sessionId,&#10;                               date: Date.now)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

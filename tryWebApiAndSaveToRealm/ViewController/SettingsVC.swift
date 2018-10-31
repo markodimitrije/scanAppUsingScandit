@@ -34,6 +34,18 @@ class SettingsVC: UITableViewController {
     }
     let roomSelected = BehaviorSubject<RealmRoom?>.init(value: nil)
     let sessionSelected = BehaviorSubject<RealmBlock?>.init(value: nil)
+    //let codeReport = BehaviorSubject<Bool?>.init(value: nil)
+    let codeReport = BehaviorSubject<Bool?>.init(value: false)
+    
+    var sessionId: Int {
+        guard let block = try? sessionSelected.value(),
+            let id = block?.id else {
+            return -1 // bez veze je ovo.. BehaviorSubject... treba zamena za Variable !
+        }
+        return id
+    }
+    
+    let codeReporter = CodeReportsState.init() // vrsta viewModel-a ?
     
     fileprivate let roomViewModel = RoomViewModel()
     lazy var settingsViewModel = SettingsViewModel(unsyncedConnections: 0, saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside), cancelSettings: cancelSettingsBtn.rx.tap)
@@ -44,6 +56,7 @@ class SettingsVC: UITableViewController {
         bindControlEvents()
         bindReachability()
 //        bindState() // ovde je rano za tableView.visibleCells !!
+        bindCodeReporter()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,6 +84,25 @@ class SettingsVC: UITableViewController {
         
     }
     
+    private func bindCodeReporter() {
+        
+        codeReporter.webNotified
+            .asObservable()
+            .subscribe(onNext: { [weak self] arg in
+                guard let sSelf = self else { return }
+                guard let (report, success) = arg else { return }
+                
+                if true { // isto stanje sveta kao kad si otisao ? and success
+                    print("bindCodeReporter/daj mu anim da je uspesno report...")
+                    sSelf.codeReport.onNext(true)
+                } else {
+                    print("bindCodeReporter/fail silently...")
+                    sSelf.codeReport.onNext(false)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func bindControlEvents() {
         // ova 2 su INPUT za settingsViewModel - start
         
@@ -95,6 +127,11 @@ class SettingsVC: UITableViewController {
                 if $0 {
                     print("uradi dismiss koji treba....")
                     strongSelf.dismiss(animated: true)
+                    
+                    strongSelf.codeReporter.codeReport.value = strongSelf.getActualCodeReport()
+                    
+                    // implement me....
+                    
                 } else {
                     print("prikazi alert da izabere room....")
                 }
@@ -106,8 +143,6 @@ class SettingsVC: UITableViewController {
             })
             .disposed(by: disposeBag)
         
-//        roomSelected.asObservable()
-//            .withLatestFrom(sessionSelected.asObservable()) // BUG !
         Observable.combineLatest(roomSelected, sessionSelected, resultSelector: { (room, session) -> Bool in // OK
             return room != nil && session != nil
         })
@@ -151,6 +186,12 @@ class SettingsVC: UITableViewController {
             })
             .disposed(by: disposeBag)
         
+    }
+    
+    private func getActualCodeReport() -> CodeReport {
+        return CodeReport.init(code: "Code 128",
+                               sessionId: sessionId,
+                               date: Date.now)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

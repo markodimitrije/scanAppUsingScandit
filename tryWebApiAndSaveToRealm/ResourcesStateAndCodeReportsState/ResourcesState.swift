@@ -33,11 +33,11 @@ class ResourcesState {
         }
     }
     
-    var timer: Timer?
+    private var timer: Timer?
     
-    let bag = DisposeBag()
+    private let bag = DisposeBag()
     
-    var downloads = PublishSubject<Bool>.init()
+    private var downloads = PublishSubject<Bool>.init()
     
     init() {
         
@@ -66,7 +66,7 @@ class ResourcesState {
             .disposed(by: bag)
     }
     
-    @objc func appDidBecomeActive() {
+    @objc private func appDidBecomeActive() {
         
         //        print("ResourcesState/ appDidBecomeActive is called")
         
@@ -86,7 +86,7 @@ class ResourcesState {
         }
     }
     
-    @objc func appWillEnterBackground() {
+    @objc private func appWillEnterBackground() {
         
         //        print("ResourcesState/ appWillEnterForeground is called")
         
@@ -94,7 +94,7 @@ class ResourcesState {
         //timer = nil
     }
     
-    @objc func fetchRoomsAndBlocksResources() {
+    @objc private func fetchRoomsAndBlocksResources() {
         
         //        print("fetchRoomsAndBlocksResources is called")
         
@@ -174,26 +174,63 @@ class ResourcesState {
 
 class CodeReportsState {
     
-    var codeReports: Results<CodeReport>? {
+    private var codeReports: Results<CodeReport>? {
         
         guard let realm = try? Realm.init() else {return nil} // ovde bi trebalo RealmError!
         
         return realm.objects(CodeReport.self)
     }
     
-    var shouldReportToWeb: Bool {
+    private var shouldReportToWeb: Bool {
         
         guard let reports = codeReports else {return false} // ovde bi trebalo RealmError!
         
         return reports.isEmpty
     }
     
-    var timer: Timer?
+    private var timer: Timer?
     
-    let bag = DisposeBag()
+    private let bag = DisposeBag()
+    
+    // INPUT
+    
+    //let codeReport = BehaviorRelay<CodeReport?>.init(value: nil)
+    let codeReport = Variable<CodeReport?>.init(nil)
+    
+    // OUTPUT
+    
+    let webNotified = Variable<(CodeReport, Bool)?>.init(nil)
+    
+    //let webNotified = BehaviorRelay<(CodeReport, Bool)?>.init(value: nil)
 
     init() {
-        //
+        
+        bindInputWithOutput()
+        
+    }
+    
+    private func bindInputWithOutput() {
+        
+        codeReport
+            .asObservable()
+            .subscribe(onNext: { [weak self] report in
+                guard let sSelf = self else {return}
+                let obs = sSelf.reportImidiatelly(codeReport: sSelf.codeReport.value)
+                obs
+                    .subscribe(onNext: { (code, success) in
+                        sSelf.webNotified.value = (code, success)
+                    })
+                    .disposed(by: sSelf.bag)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func reportImidiatelly(codeReport: CodeReport?) -> Observable<(CodeReport, Bool)> {
+        
+        guard let report = codeReport else {return Observable.empty()}
+        
+        return ApiController.shared.reportSingleCode(report: report)
+        
     }
     
     private func reportToWeb(codeReports: Results<CodeReport>?) {
@@ -205,6 +242,21 @@ class CodeReportsState {
             return
         }
 
+        print("CodeReportsState/ javi web-u za ovaj report:")
+        print("code = \(report.code)")
+        print("code = \(report.date)")
+        print("code = \(report.sessionId)")
+    }
+    
+    private func reportToWebFailed(codeReport: CodeReport) {
+        
+        // sviranje... treba mi servis da javi sve.... za sada posalji samo jedan...
+        
+        guard let report = codeReports?.first else {
+            print("nemam ni jedan code da report!...")
+            return
+        }
+        
         print("CodeReportsState/ javi web-u za ovaj report:")
         print("code = \(report.code)")
         print("code = \(report.date)")
@@ -226,12 +278,12 @@ class CodeReport: Object { // Realm Entity
         super.init()
     }
     
-    func getPayload() -> [(String, String)] {
+    func getPayload() -> [String: String] {
         
         return [
-            ("block_id", code),
-            ("code", "\(sessionId)"),
-            ("time_of_scan", date.toString(format: Date.defaultFormatString) ?? "")
+            "block_id": "\(sessionId)",
+            "code": code,
+            "time_of_scan": date.toString(format: Date.defaultFormatString) ?? ""
         ]
     }
     
