@@ -59,6 +59,28 @@ struct RealmDataPersister {
         
     }
     
+    func saveToRealm(codeReport: CodeReport) -> Observable<Bool> {
+        
+        guard let realm = try? Realm() else {
+            return Observable<Bool>.just(false) // treba da imas err za Realm...
+        }
+        
+        let newCodeReport = RealmCodeReport.create(with: codeReport)
+
+        do {
+            try realm.write {
+                realm.add(newCodeReport)
+            }
+        } catch {
+            return Observable<Bool>.just(false)
+        }
+        
+        print("\(codeReport.code), \(codeReport.sessionId) saved to realm")
+        
+        return Observable<Bool>.just(true) // all good here
+        
+    }
+    
     func deleteDataIfAny() -> Observable<Bool> {
         guard let realm = try? Realm() else {
             return Observable<Bool>.just(false) // treba da imas err za Realm...

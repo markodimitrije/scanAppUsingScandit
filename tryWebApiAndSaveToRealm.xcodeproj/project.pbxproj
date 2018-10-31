@@ -22,6 +22,7 @@
 		AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */; };
 		AD53A01C217B577500A3F9FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01B217B577500A3F9FC /* Assets.xcassets */; };
 		AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */; };
+		AD5814AF2189B1AC009C593F /* CodeReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5814AE2189B1AC009C593F /* CodeReport.swift */; };
 		AD697BD221885AF2002BC579 /* RealmDataPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD121885AF2002BC579 /* RealmDataPersister.swift */; };
 		AD697BD52188623A002BC579 /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD42188623A002BC579 /* GlobalVars.swift */; };
 		AD697BD821887CCE002BC579 /* ResourcesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD721887CCE002BC579 /* ResourcesState.swift */; };
@@ -62,6 +63,7 @@
 		AD53A01B217B577500A3F9FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD53A01E217B577500A3F9FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD53A020217B577500A3F9FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD5814AE2189B1AC009C593F /* CodeReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeReport.swift; sourceTree = "<group>"; };
 		AD697BD121885AF2002BC579 /* RealmDataPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataPersister.swift; sourceTree = "<group>"; };
 		AD697BD42188623A002BC579 /* GlobalVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		AD697BD721887CCE002BC579 /* ResourcesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesState.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				AD29521D217B5B23002DDE32 /* Model.swift */,
 				AD80EFF9217DCDEA003CEDD0 /* Room.swift */,
 				AD80EFFB217DCE27003CEDD0 /* Block.swift */,
+				AD5814AE2189B1AC009C593F /* CodeReport.swift */,
 				AD697BD121885AF2002BC579 /* RealmDataPersister.swift */,
 			);
 			path = Model;
@@ -387,6 +390,7 @@
 				AD697BD821887CCE002BC579 /* ResourcesState.swift in Sources */,
 				ADBCCB472180973E009D7753 /* AutoSelSessionViewModel.swift in Sources */,
 				AD295224217B5B24002DDE32 /* RoomsVC.swift in Sources */,
+				AD5814AF2189B1AC009C593F /* CodeReport.swift in Sources */,
 				AD295222217B5B24002DDE32 /* Model.swift in Sources */,
 				AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */,
 				AD993AAF217B9D2000803BE2 /* BlocksVC.swift in Sources */,

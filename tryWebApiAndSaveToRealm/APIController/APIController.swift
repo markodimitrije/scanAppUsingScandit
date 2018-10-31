@@ -12,6 +12,7 @@ import RxCocoa
 import SwiftyJSON
 import CoreLocation
 import MapKit
+import Reachability
 
 class ApiController {
     
@@ -81,20 +82,27 @@ class ApiController {
         
         let params = report.getPayload()
         
+        if Reachability.init()?.connection == Reachability.Connection.wifi {
         
-        
-        return buildRequest(base: Domain.baseTrackerURL,
-                            method: "POST",
-                            pathComponent: "attendances",
-                            params: params)
-            .map() { data in
-                guard let object = try? JSONSerialization.jsonObject(with: data),
-                    let json = object as? [String: Any],
-                    let created = json["created"] as? Int, created == 201 else {
-                        return (report, false)
-                }
-                return (report, true)
+            return buildRequest(base: Domain.baseTrackerURL,
+                                method: "POST",
+                                pathComponent: "attendances",
+                                params: params)
+                .map() { data in
+                    guard let object = try? JSONSerialization.jsonObject(with: data),
+                        let json = object as? [String: Any],
+                        let created = json["created"] as? Int, created == 201 else {
+                            return (report, false)
+                    }
+                    return (report, true)
+            }
+        } else {
+            
+            _ = RealmDataPersister().saveToRealm(codeReport: report)
+            return Observable.just((report, true))
+            
         }
+        
     }
     
     // implement me
@@ -127,7 +135,6 @@ class ApiController {
     private func buildRequest(base: URL = Domain.baseUrl, method: String = "GET", pathComponent: String, params: Any) -> Observable<Data> {
     
         print("APIController.buildingRequest.calling API !!!")
-        print("params")
         
         let url = base.appendingPathComponent(pathComponent)
         var request = URLRequest(url: url)
@@ -161,6 +168,9 @@ class ApiController {
         let session = URLSession.shared
         
         return session.rx.response(request: request).map() { response, data in
+            
+            print("response.statusCode = \(response.statusCode)")
+            
             if 201 == response.statusCode {
                 return try! JSONSerialization.data(withJSONObject:  ["created": 201])
             } else if 200 ..< 300 ~= response.statusCode {

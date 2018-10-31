@@ -77,6 +77,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ApiController.buildRequest(base:method:pathComponent:params:):APIController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "response">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "RealmViewModel.bindOutput():RealmViewModel.swift">
          <PersistentStrings>
             <PersistentString

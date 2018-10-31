@@ -91,14 +91,8 @@ class SettingsVC: UITableViewController {
             .subscribe(onNext: { [weak self] arg in
                 guard let sSelf = self else { return }
                 guard let (report, success) = arg else { return }
-                
-                if true { // isto stanje sveta kao kad si otisao ? and success
-                    print("bindCodeReporter/daj mu anim da je uspesno report...")
-                    sSelf.codeReport.onNext(true)
-                } else {
-                    print("bindCodeReporter/fail silently...")
-                    sSelf.codeReport.onNext(false)
-                }
+                // da li je isto stanje sveta kada si se vratio ? zbog checkmark ? (report)
+                sSelf.codeReport.onNext(success)
             })
             .disposed(by: disposeBag)
     }
@@ -293,3 +287,8 @@ class SettingsVC: UITableViewController {
     deinit { print("deinit.setingsVC") }
     
 }
+
+
+//func codeReportMatchWorldAsBefore(report: CodeReport, sessionId: Int) -> Bool {
+//    return report.sessionId == sessionId && report.code ==
+//}

@@ -44,10 +44,6 @@ class ScannerVC: UIViewController {
             .bind(to: sessionTimeAndRoomLbl.rx.text)
             .disposed(by: disposeBag)
         
-//        codeReportIsHidden
-//            .bind(to: reportCodeBtn.rx.isHidden)
-//            .disposed(by: disposeBag)
-        
         codeReportIsHidden
             .map(viewIsHiddenToAlpha)
             .subscribe(onNext: { [weak self] (value) in
