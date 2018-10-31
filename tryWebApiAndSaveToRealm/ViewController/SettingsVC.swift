@@ -93,6 +93,9 @@ class SettingsVC: UITableViewController {
                 guard let (report, success) = arg else { return }
                 // da li je isto stanje sveta kada si se vratio ? zbog checkmark ? (report)
                 sSelf.codeReport.onNext(success)
+                if !success {
+                    _ = RealmDataPersister().saveToRealm(codeReport: report)
+                }
             })
             .disposed(by: disposeBag)
     }

@@ -82,27 +82,19 @@ class ApiController {
         
         let params = report.getPayload()
         
-        if Reachability.init()?.connection == Reachability.Connection.wifi {
-        
-            return buildRequest(base: Domain.baseTrackerURL,
-                                method: "POST",
-                                pathComponent: "attendances",
-                                params: params)
-                .map() { data in
-                    guard let object = try? JSONSerialization.jsonObject(with: data),
-                        let json = object as? [String: Any],
-                        let created = json["created"] as? Int, created == 201 else {
-                            return (report, false)
-                    }
-                    return (report, true)
+        return buildRequest(base: Domain.baseTrackerURL, // temp on
+                            method: "POST",
+                            pathComponent: "attendances",
+                            params: params)
+            .map { data in
+                guard let object = try? JSONSerialization.jsonObject(with: data),
+                    let json = object as? [String: Any],
+                    let created = json["created"] as? Int, created == 201 else {
+                        return (report, false)
+                }
+                return (report, true)
             }
-        } else {
-            
-            _ = RealmDataPersister().saveToRealm(codeReport: report)
-            return Observable.just((report, true))
-            
-        }
-        
+            .catchErrorJustReturn((report, false))
     }
     
     // implement me
