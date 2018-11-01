@@ -67,15 +67,21 @@ struct RealmDataPersister {
         
         let newCodeReport = RealmCodeReport.create(with: codeReport)
 
-        do {
-            try realm.write {
-                realm.add(newCodeReport)
+        if realm.objects(RealmCodeReport.self).filter("code = %@", codeReport.code).isEmpty {
+            
+            do { // ako nemas ovaj objekat kod sebe u bazi
+                
+                try realm.write {
+                    realm.add(newCodeReport)
+                    print("\(codeReport.code), \(codeReport.sessionId) saved to realm")
+                }
+            } catch {
+                return Observable<Bool>.just(false)
             }
-        } catch {
-            return Observable<Bool>.just(false)
-        }
         
-        print("\(codeReport.code), \(codeReport.sessionId) saved to realm")
+        } else {
+            print("saveToRealm.objekat vec postoji u bazi")
+        }
         
         return Observable<Bool>.just(true) // all good here
         

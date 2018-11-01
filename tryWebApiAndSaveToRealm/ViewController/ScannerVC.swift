@@ -25,7 +25,12 @@ class ScannerVC: UIViewController {
     let avSessionViewModel = AVSessionViewModel()
     var previewLayer: AVCaptureVideoPreviewLayer!
     
-    var scanedCode = BehaviorSubject<String>.init(value: "")
+    private (set) var scanedCode = BehaviorSubject<String>.init(value: "")
+    var code: String {
+        return try! scanedCode.value()
+    }
+    
+    let codeReporter = CodeReportsState.init() // vrsta viewModel-a ?
     
     var settingsVC: SettingsVC!
     
@@ -36,6 +41,8 @@ class ScannerVC: UIViewController {
         // scaner functionality
         bindAVSession()
         bindBarCode()
+        
+        bindCodeReporter()
     }
     
     private func bindUI() { // glue code for selected Room
@@ -48,6 +55,21 @@ class ScannerVC: UIViewController {
             .bind(to: sessionTimeAndRoomLbl.rx.text)
             .disposed(by: disposeBag)
         
+    }
+    
+    private func bindCodeReporter() {
+        
+        codeReporter.webNotified
+            .asObservable()
+            .subscribe(onNext: { arg in
+                
+                guard let (report, success) = arg else { return }
+                
+                if !success {
+                    _ = RealmDataPersister().saveToRealm(codeReport: report)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -88,15 +110,12 @@ class ScannerVC: UIViewController {
     
     // MARK:- Scanner related....
     
-    
     private func bindAVSession() {
         
         print("bindAVSession")
         
         avSessionViewModel.oSession
             .subscribe(onNext: { [unowned self] (session) in
-
-//                print("on next emitovan za session")
                 
                 self.previewLayer = AVCaptureVideoPreviewLayer(session: session)
                 self.previewLayer.frame = self.scannerView.layer.bounds
@@ -125,8 +144,19 @@ class ScannerVC: UIViewController {
     
     private func failed() { print("failed.....")
 
-        self.alert(title: AlertInfo.Scaner.title,
-                   text: AlertInfo.Scaner.msg,
+        self.alert(title: AlertInfo.Scan.ScanningNotSupported.title,
+                   text: AlertInfo.Scan.ScanningNotSupported.msg,
+                   btnText: AlertInfo.ok)
+            .subscribe {
+                self.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func failedDueToNoSettings() { print("failed failedDueToNoSettings.....")
+        
+        self.alert(title: AlertInfo.Scan.NoSettings.title,
+                   text: AlertInfo.Scan.NoSettings.msg,
                    btnText: AlertInfo.ok)
             .subscribe {
                 self.dismiss(animated: true)
@@ -136,7 +166,22 @@ class ScannerVC: UIViewController {
     
     func found(code: String) { // ovo mozes da report VM-u kao append novi code
         
+        if scanerViewModel.sessionId != -1 {
+            codeSuccessfull(code: code)
+        } else {
+            failedDueToNoSettings()
+        }
+        
+    }
+    
+    private func codeSuccessfull(code: String) {
+        
         avSessionViewModel.captureSession.stopRunning()
+        
+        if self.scannerView.subviews.contains(where: {$0.tag == 20}) {
+            print("vec prikazuje arrow, izadji...")
+            return
+        } // already arr
         
         scanedCode.onNext(code)
         
@@ -149,6 +194,8 @@ class ScannerVC: UIViewController {
             }
         }
         
+        codeReporter.codeReport.value = getActualCodeReport()
+        
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -156,21 +203,32 @@ class ScannerVC: UIViewController {
     }
     
     // napravi API za ovo na odg viewModel-u...
-    override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated)
+//    override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated)
+//
+//        if (avSessionViewModel.captureSession.isRunning == false) {
+//            avSessionViewModel.captureSession.startRunning()
+//        }
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated)
+//
+//        if (avSessionViewModel.captureSession.isRunning == true) {
+//            avSessionViewModel.captureSession.stopRunning()
+//        }
+//    }
+    
+    // MARK:- Private
+    
+    private func getActualCodeReport() -> CodeReport {
+       
+        print("KONACNO IMAM DA JE codeScan = \(code)")
         
-        if (avSessionViewModel.captureSession.isRunning == false) {
-            avSessionViewModel.captureSession.startRunning()
-        }
+        return CodeReport.init(code: code,
+                               sessionId: scanerViewModel.sessionId,
+                               date: Date.now)
     }
     
-    override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated)
-        
-        if (avSessionViewModel.captureSession.isRunning == true) {
-            avSessionViewModel.captureSession.stopRunning()
-        }
-    }
-    
-    func getArrowImgView() -> UIImageView {
+    private func getArrowImgView() -> UIImageView {
         let v = UIImageView.init(frame: scannerView.bounds)
         v.image = UIImage.init(named: "arrow")
         v.tag = 20

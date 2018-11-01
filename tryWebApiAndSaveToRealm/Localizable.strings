@@ -19,5 +19,8 @@ Strings.Scaner.room.noRoomSelected = "No room selected";
 
 Strings.Alert.ok = "OK";
 
-Strings.Scaner.ScanningNotSupported.title = "Scanning not supported";
-Strings.Scaner.ScanningNotSupported.msg = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+Strings.Scan.ScanningNotSupported.title = "Scanning not supported";
+Strings.Scan.ScanningNotSupported.msg = "Your device does not support scanning a code from an item. Please use a device with a camera.";
+
+Strings.Scan.NoSettings.title = "Room and session not select";
+Strings.Scan.NoSettings.msg = "Go to Settings to select Room and Session, than come back to scan code.";

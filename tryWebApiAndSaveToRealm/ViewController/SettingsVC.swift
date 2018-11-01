@@ -35,8 +35,6 @@ class SettingsVC: UITableViewController {
     let roomSelected = BehaviorSubject<RealmRoom?>.init(value: nil)
     let sessionSelected = BehaviorSubject<RealmBlock?>.init(value: nil)
     
-    let codeReport = BehaviorSubject<Bool?>.init(value: false)
-    
     // input - trebalo je u INIT !!
     var codeScaned = BehaviorSubject<String>.init(value: "")
     private var codeScan: String {
@@ -51,8 +49,6 @@ class SettingsVC: UITableViewController {
         return id
     }
     
-    let codeReporter = CodeReportsState.init() // vrsta viewModel-a ?
-    
     fileprivate let roomViewModel = RoomViewModel()
     lazy var settingsViewModel = SettingsViewModel(unsyncedConnections: 0, saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside), cancelSettings: cancelSettingsBtn.rx.tap)
     lazy fileprivate var autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
@@ -62,7 +58,6 @@ class SettingsVC: UITableViewController {
         bindControlEvents()
         bindReachability()
 //        bindState() // ovde je rano za tableView.visibleCells !!
-        bindCodeReporter()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -89,23 +84,7 @@ class SettingsVC: UITableViewController {
             .disposed(by: disposeBag)
         
     }
-    
-    private func bindCodeReporter() {
-        
-        codeReporter.webNotified
-            .asObservable()
-            .subscribe(onNext: { [weak self] arg in
-                guard let sSelf = self else { return }
-                guard let (report, success) = arg else { return }
-                // da li je isto stanje sveta kada si se vratio ? zbog checkmark ? (report)
-                sSelf.codeReport.onNext(success)
-                if !success {
-                    _ = RealmDataPersister().saveToRealm(codeReport: report)
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
+
     private func bindControlEvents() {
         // ova 2 su INPUT za settingsViewModel - start
         
@@ -128,10 +107,8 @@ class SettingsVC: UITableViewController {
             .subscribe(onNext: { [weak self] in
                 guard let strongSelf = self else {return}
                 if $0 {
-                    print("uradi dismiss koji treba....")
-                    strongSelf.dismiss(animated: true)
                     
-                    strongSelf.codeReporter.codeReport.value = strongSelf.getActualCodeReport()
+                    strongSelf.dismiss(animated: true)
                     
                 } else {
                     print("prikazi alert da izabere room....")
@@ -189,7 +166,7 @@ class SettingsVC: UITableViewController {
         
     }
     
-    private func getActualCodeReport() -> CodeReport {
+    private func getActualCodeReport() -> CodeReport { // refactor - delete
         print("KONACNO IMAM DA JE codeScan = \(codeScan)")
         return CodeReport.init(code: codeScan,
                                sessionId: sessionId,
@@ -249,15 +226,6 @@ class SettingsVC: UITableViewController {
             })
             .disposed(by: disposeBag)
         
-        /* implement me....
-        unsyncedScansView.syncBtn.rx.controlEvent(.touchUpInside)
-            .subscribe(onNext: { [weak self] tap in
-                guard let strongSelf = self else {return}
-                print("sync btn is tapped, snimi sta self scaning app salje bekendu")
-            })
-            .disposed(by: disposeBag)
- */
-        
         roomSelected
             .distinctUntilChanged()
             .map {_ in return false} // hocemo da je default iskljuceno
@@ -295,8 +263,3 @@ class SettingsVC: UITableViewController {
     deinit { print("deinit.setingsVC") }
     
 }
-
-
-//func codeReportMatchWorldAsBefore(report: CodeReport, sessionId: Int) -> Bool {
-//    return report.sessionId == sessionId && report.code ==
-//}

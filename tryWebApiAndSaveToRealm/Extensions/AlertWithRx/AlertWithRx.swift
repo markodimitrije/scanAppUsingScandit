@@ -30,10 +30,17 @@ extension UIViewController {
 }
 
 struct AlertInfo {
-    static let ok = NSLocalizedString("OK", comment: "")
-    struct Scaner {
-        static let title = NSLocalizedString("Scanning not supported", comment: "")
-        static let msg = NSLocalizedString("Your device does not support scanning a code from an item. Please use a device with a camera.", comment: "")
+    static let ok = NSLocalizedString("Strings.Alert.ok", comment: "")
+    struct Scan {
+        struct ScanningNotSupported { // device
+            static let title = NSLocalizedString("Strings.Scan.ScanningNotSupported.title", comment: "")
+            static let msg = NSLocalizedString("Strings.Scan.ScanningNotSupported.msg", comment: "")
+        }
+        struct NoSettings { //
+            static let title = NSLocalizedString("Strings.Scan.NoSettings.title", comment: "")
+            static let msg = NSLocalizedString("Strings.Scan.NoSettings.msg", comment: "")
+        }
     }
+    
 }
 

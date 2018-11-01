@@ -211,13 +211,19 @@ class CodeReportsState {
     
     private func bindInputWithOutput() {
         
+        print("CodeReportsState.bindInputWithOutput")
+        
         codeReport
             .asObservable()
             .subscribe(onNext: { [weak self] report in
+                
+                print("pozivam reportImidiatelly ??")
+                
                 guard let sSelf = self else {return}
                 let obs = sSelf.reportImidiatelly(codeReport: sSelf.codeReport.value)
                 obs
                     .subscribe(onNext: { (code, success) in
+                        print("web notified onNext za \(code), sa success \(success)")
                         sSelf.webNotified.value = (code, success)
                     })
                     .disposed(by: sSelf.bag)
