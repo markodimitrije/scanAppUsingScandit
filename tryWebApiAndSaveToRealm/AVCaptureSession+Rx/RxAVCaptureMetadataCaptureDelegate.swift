@@ -22,7 +22,7 @@ final class RxAVCaptureMetadataCaptureDelegate: NSObject, AVCaptureMetadataOutpu
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         
-        print("emitujem metadata....")
+        //print("emitujem metadata....")
         observer?.on(.next(MetadataCaptureOutput(output, metadataObjects: metadataObjects, connection: connection)))
         
     }

@@ -14,3 +14,10 @@ Strings.Scaner.session.noAutoSelSessionsAvailable = "No automatic selection sess
 
 Strings.Scaner.room.SelectRoom = "Select room";
 Strings.Scaner.room.noRoomSelected = "No room selected";
+
+// Scaner device
+
+Strings.Alert.ok = "OK";
+
+Strings.Scaner.ScanningNotSupported.title = "Scanning not supported";
+Strings.Scaner.ScanningNotSupported.msg = "Your device does not support scanning a code from an item. Please use a device with a camera.";

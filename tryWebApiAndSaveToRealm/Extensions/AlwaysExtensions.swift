@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 extension FileManager {
     static var docDirUrl: URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

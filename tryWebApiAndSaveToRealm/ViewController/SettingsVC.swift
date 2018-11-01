@@ -133,8 +133,6 @@ class SettingsVC: UITableViewController {
                     
                     strongSelf.codeReporter.codeReport.value = strongSelf.getActualCodeReport()
                     
-                    // implement me....
-                    
                 } else {
                     print("prikazi alert da izabere room....")
                 }

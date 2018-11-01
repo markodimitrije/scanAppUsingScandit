@@ -20,7 +20,6 @@
 		AD295225217B5B24002DDE32 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD295220217B5B24002DDE32 /* APIController.swift */; };
 		AD295227217B5C64002DDE32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD295226217B5C64002DDE32 /* Main.storyboard */; };
 		AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */; };
-		AD53A01C217B577500A3F9FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01B217B577500A3F9FC /* Assets.xcassets */; };
 		AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */; };
 		AD5814AF2189B1AC009C593F /* CodeReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5814AE2189B1AC009C593F /* CodeReport.swift */; };
 		AD697BD221885AF2002BC579 /* RealmDataPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD121885AF2002BC579 /* RealmDataPersister.swift */; };
@@ -43,6 +42,8 @@
 		ADAE9C322189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C2A2189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift */; };
 		ADAE9C332189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C2C2189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift */; };
 		ADAE9C342189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C2D2189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift */; };
+		ADAE9C37218AFDB400615125 /* AlertWithRx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAE9C36218AFDB400615125 /* AlertWithRx.swift */; };
+		ADAE9C39218B08EA00615125 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADAE9C38218B08EA00615125 /* Assets.xcassets */; };
 		ADB2739E218078DD00345A5E /* UnsyncedScansView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADB2739C218078DC00345A5E /* UnsyncedScansView.xib */; };
 		ADB2739F218078DD00345A5E /* UnsyncedScansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2739D218078DC00345A5E /* UnsyncedScansView.swift */; };
 		ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB273A321807EFD00345A5E /* AutoSelectSessionsView.swift */; };
@@ -68,7 +69,6 @@
 		AD295226217B5C64002DDE32 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModel.swift; sourceTree = "<group>"; };
 		AD53A011217B577400A3F9FC /* tryWebApiAndSaveToRealm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tryWebApiAndSaveToRealm.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD53A01B217B577500A3F9FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD53A01E217B577500A3F9FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD53A020217B577500A3F9FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD5814AE2189B1AC009C593F /* CodeReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeReport.swift; sourceTree = "<group>"; };
@@ -93,6 +93,8 @@
 		ADAE9C2B2189F5F500615125 /* RxAVFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RxAVFoundation.h; sourceTree = "<group>"; };
 		ADAE9C2C2189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAVCapturePhotoCaptureDelegate.swift; sourceTree = "<group>"; };
 		ADAE9C2D2189F5F500615125 /* RxAVCaptureDepthDataOutputDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxAVCaptureDepthDataOutputDelegate.swift; sourceTree = "<group>"; };
+		ADAE9C36218AFDB400615125 /* AlertWithRx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertWithRx.swift; sourceTree = "<group>"; };
+		ADAE9C38218B08EA00615125 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADB2739C218078DC00345A5E /* UnsyncedScansView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UnsyncedScansView.xib; sourceTree = "<group>"; };
 		ADB2739D218078DC00345A5E /* UnsyncedScansView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsyncedScansView.swift; sourceTree = "<group>"; };
 		ADB273A321807EFD00345A5E /* AutoSelectSessionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoSelectSessionsView.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 		AD28F6EF2182120A00A41BB8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				ADAE9C35218AFD8700615125 /* AlertWithRx */,
 				AD29521E217B5B23002DDE32 /* AlwaysExtensions.swift */,
 				AD28F6F02182122200A41BB8 /* RxExtensions.swift */,
 			);
@@ -228,7 +231,7 @@
 				AD295229217B5E77002DDE32 /* ViewController */,
 				AD295228217B5E6F002DDE32 /* ViewModel */,
 				AD29521C217B5B23002DDE32 /* AppDelegate.swift */,
-				AD53A01B217B577500A3F9FC /* Assets.xcassets */,
+				ADAE9C38218B08EA00615125 /* Assets.xcassets */,
 				AD295226217B5C64002DDE32 /* Main.storyboard */,
 				AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */,
 				AD53A020217B577500A3F9FC /* Info.plist */,
@@ -275,6 +278,14 @@
 				ADAE9C2B2189F5F500615125 /* RxAVFoundation.h */,
 			);
 			path = "AVCaptureSession+Rx";
+			sourceTree = "<group>";
+		};
+		ADAE9C35218AFD8700615125 /* AlertWithRx */ = {
+			isa = PBXGroup;
+			children = (
+				ADAE9C36218AFDB400615125 /* AlertWithRx.swift */,
+			);
+			path = AlertWithRx;
 			sourceTree = "<group>";
 		};
 		C144544588EC78E4B476DBC2 /* Pods */ = {
@@ -350,7 +361,7 @@
 				AD295227217B5C64002DDE32 /* Main.storyboard in Resources */,
 				ADB64DA1217E23C00094EC45 /* Localizable.strings in Resources */,
 				AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */,
-				AD53A01C217B577500A3F9FC /* Assets.xcassets in Resources */,
+				ADAE9C39218B08EA00615125 /* Assets.xcassets in Resources */,
 				ADB273A621807EFD00345A5E /* AutoSelectSessionsView.xib in Resources */,
 				AD24E30821806C3A008E35F8 /* WiFiConnectionView.xib in Resources */,
 			);
@@ -430,6 +441,7 @@
 				AD295222217B5B24002DDE32 /* Model.swift in Sources */,
 				AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */,
 				ADAE9C322189F5F500615125 /* RxAVCaptureMetadataCaptureDelegate.swift in Sources */,
+				ADAE9C37218AFDB400615125 /* AlertWithRx.swift in Sources */,
 				AD993AAF217B9D2000803BE2 /* BlocksVC.swift in Sources */,
 				AD295225217B5B24002DDE32 /* APIController.swift in Sources */,
 				ADAE9C302189F5F500615125 /* AVCaptureSession+Rx.swift in Sources */,
