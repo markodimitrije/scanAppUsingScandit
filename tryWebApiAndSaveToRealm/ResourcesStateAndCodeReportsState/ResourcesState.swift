@@ -25,10 +25,8 @@ class ResourcesState {
     
     var shouldDownloadResources: Bool {
         if resourcesDownloaded == nil || resourcesDownloaded == false {
-            print("shouldDownloadResources. TRUE!")
             return true
         } else {
-            print("shouldDownloadResources. FALSE!")
             return false
         }
     }
@@ -172,105 +170,6 @@ class ResourcesState {
 
 
 
-class CodeReportsState {
-    
-    private var codeReports: Results<CodeReport>? {
-        
-        guard let realm = try? Realm.init() else {return nil} // ovde bi trebalo RealmError!
-        
-        return realm.objects(CodeReport.self)
-    }
-    
-    private var shouldReportToWeb: Bool {
-        
-        guard let reports = codeReports else {return false} // ovde bi trebalo RealmError!
-        
-        return reports.isEmpty
-    }
-    
-    private var timer: Timer?
-    
-    private let bag = DisposeBag()
-    
-    // INPUT
-    
-    //let codeReport = BehaviorRelay<CodeReport?>.init(value: nil)
-    let codeReport = Variable<CodeReport?>.init(nil)
-    
-    // OUTPUT
-    
-    let webNotified = Variable<(CodeReport, Bool)?>.init(nil)
-    
-    //let webNotified = BehaviorRelay<(CodeReport, Bool)?>.init(value: nil)
-
-    init() {
-        
-        bindInputWithOutput()
-        
-    }
-    
-    private func bindInputWithOutput() {
-        
-        print("CodeReportsState.bindInputWithOutput")
-        
-        codeReport
-            .asObservable()
-            .subscribe(onNext: { [weak self] report in
-                
-                print("pozivam reportImidiatelly ??")
-                
-                guard let sSelf = self else {return}
-                let obs = sSelf.reportImidiatelly(codeReport: sSelf.codeReport.value)
-                obs
-                    .subscribe(onNext: { (code, success) in
-                        print("web notified onNext za \(code), sa success \(success)")
-                        sSelf.webNotified.value = (code, success)
-                    })
-                    .disposed(by: sSelf.bag)
-            })
-            .disposed(by: bag)
-    }
-    
-    private func reportImidiatelly(codeReport: CodeReport?) -> Observable<(CodeReport, Bool)> {
-        
-        guard let report = codeReport else {return Observable.empty()}
-        
-        return ApiController.shared.reportSingleCode(report: report)
-        
-    }
-    
-    private func reportToWeb(codeReports: Results<CodeReport>?) {
-        
-        // sviranje... treba mi servis da javi sve.... za sada posalji samo jedan...
-        
-        guard let report = codeReports?.first else {
-            print("nemam ni jedan code da report!...")
-            return
-        }
-
-        print("CodeReportsState/ javi web-u za ovaj report:")
-        print("code = \(report.code)")
-        print("code = \(report.date)")
-        print("code = \(report.sessionId)")
-    }
-    
-    private func reportToWebFailed(codeReport: CodeReport) {
-        
-        // sviranje... treba mi servis da javi sve.... za sada posalji samo jedan...
-        
-        guard let report = codeReports?.first else {
-            print("nemam ni jedan code da report!...")
-            return
-        }
-        
-        print("CodeReportsState/ javi web-u za ovaj report:")
-        print("code = \(report.code)")
-        print("code = \(report.date)")
-        print("code = \(report.sessionId)")
-    }
-    
-}
-
 class CodeReport: Object { // Realm Entity
     
     var code: String = ""
@@ -284,12 +183,28 @@ class CodeReport: Object { // Realm Entity
         super.init()
     }
     
+    init(realmCodeReport: RealmCodeReport) {
+        self.code = realmCodeReport.code
+        self.sessionId = realmCodeReport.sessionId
+        self.date = realmCodeReport.date ?? Date(timeIntervalSinceNow: 0)
+        super.init()
+    }
+    
     func getPayload() -> [String: String] {
         
         return [
             "block_id": "\(sessionId)",
             "code": code,
             "time_of_scan": date.toString(format: Date.defaultFormatString) ?? ""
+        ]
+    }
+    
+    func getPayload(_ report: CodeReport) -> [String: String] {
+        
+        return [
+            "block_id": "\(report.sessionId)",
+            "code": report.code,
+            "time_of_scan": report.date.toString(format: Date.defaultFormatString) ?? ""
         ]
     }
     

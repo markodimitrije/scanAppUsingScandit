@@ -27,15 +27,6 @@ class ApiController {
     /// The api key to communicate with Navus
     private let apiKey = "sv5NPptQyZHkBDx4fkMgNhO2Z4ONl4VP"
     
-    /// API base URL
-    //let baseURL = URL(string: "https://service.e-materials.com/api")!
-//    lazy var baseURL = {
-//        return URL(string: "https://service.e-materials.com/api")!
-//    }()
-//
-//    /// API base URL - report scan ima svoj base...
-//    let baseTrackerURL = URL(string: "http://tracker.e-materials.com")!
-    
     init() {
         Logging.URLRequests = { request in
             return true
@@ -82,7 +73,7 @@ class ApiController {
         
         let params = report.getPayload()
         
-        return buildRequest(base: Domain.baseTrackerURL, // temp on
+        return buildRequest(base: Domain.baseTrackerURL,
                             method: "POST",
                             pathComponent: "attendances",
                             params: params)
@@ -98,25 +89,31 @@ class ApiController {
     }
     
     // implement me
-    /*
+    
     func reportCodes(reports: [CodeReport]?) -> Observable<Bool> {
         
-        guard let report = reports?.first else {return Observable.empty()} // hard-coded...!
+        guard let report = reports?.last else {
+            return Observable.error(ReportToWebError.noCodesToReport)
+        }
         
-        let params = report.getPayload()
+        let params = report.getPayload(report)
         
-        return buildRequest(pathComponent: "attendances",
+        return buildRequest(base: Domain.baseTrackerURL,
+                            method: "POST",
+                            pathComponent: "attendances",
                             params: params)
             .map() { data in
                 guard let object = try? JSONSerialization.jsonObject(with: data),
                     let json = object as? [String: Any],
                     let created = json["created"] as? Int, created == 201 else {
+//                        print("reportCodes vraca FALSE!!")
                     return false
                 }
+//                print("reportCodes vraca TRUE!!")
             return true
         }
     }
-    */
+ 
     
     //MARK: - Private Methods
     
@@ -126,7 +123,7 @@ class ApiController {
     
     private func buildRequest(base: URL = Domain.baseUrl, method: String = "GET", pathComponent: String, params: Any) -> Observable<Data> {
     
-        print("APIController.buildingRequest.calling API !!!")
+        //print("APIController.buildingRequest.calling API !!!")
         
         let url = base.appendingPathComponent(pathComponent)
         var request = URLRequest(url: url)
@@ -161,7 +158,7 @@ class ApiController {
         
         return session.rx.response(request: request).map() { response, data in
             
-            print("response.statusCode = \(response.statusCode)")
+//            print("response.statusCode = \(response.statusCode)")
             
             if 201 == response.statusCode {
                 return try! JSONSerialization.data(withJSONObject:  ["created": 201])

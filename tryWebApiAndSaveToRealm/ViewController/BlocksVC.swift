@@ -62,6 +62,6 @@ class BlocksVC: UIViewController {
         
     }
     
-    deinit { print("deinit/ BlocksVC") }
+    //deinit { print("deinit/ BlocksVC") }
     
 }

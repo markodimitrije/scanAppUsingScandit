@@ -42,7 +42,6 @@ class ScannerVC: UIViewController {
         bindAVSession()
         bindBarCode()
         
-        bindCodeReporter()
     }
     
     private func bindUI() { // glue code for selected Room
@@ -55,21 +54,6 @@ class ScannerVC: UIViewController {
             .bind(to: sessionTimeAndRoomLbl.rx.text)
             .disposed(by: disposeBag)
         
-    }
-    
-    private func bindCodeReporter() {
-        
-        codeReporter.webNotified
-            .asObservable()
-            .subscribe(onNext: { arg in
-                
-                guard let (report, success) = arg else { return }
-                
-                if !success {
-                    _ = RealmDataPersister().saveToRealm(codeReport: report)
-                }
-            })
-            .disposed(by: disposeBag)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -112,8 +96,6 @@ class ScannerVC: UIViewController {
     
     private func bindAVSession() {
         
-        print("bindAVSession")
-        
         avSessionViewModel.oSession
             .subscribe(onNext: { [unowned self] (session) in
                 
@@ -135,7 +117,7 @@ class ScannerVC: UIViewController {
         avSessionViewModel.oCode
             .subscribe(onNext: { [weak self] (barCodeValue) in
                 guard let sSelf = self else {return}
-                print("dobio sam code \(barCodeValue), pozovi found!!")
+                
                 sSelf.found(code: barCodeValue)
             })
             .disposed(by: disposeBag)
@@ -179,13 +161,13 @@ class ScannerVC: UIViewController {
         avSessionViewModel.captureSession.stopRunning()
         
         if self.scannerView.subviews.contains(where: {$0.tag == 20}) {
-            print("vec prikazuje arrow, izadji...")
+//            print("vec prikazuje arrow, izadji...")
             return
         } // already arr
         
         scanedCode.onNext(code)
         
-        self.scannerView.addSubview(getArrowImgView())
+        self.scannerView.addSubview(getArrowImgView(frame: scannerView.bounds))
         
         delay(2.0) { // ovoliko traje anim kada prikazujes arrow
             DispatchQueue.main.async {
@@ -228,13 +210,4 @@ class ScannerVC: UIViewController {
                                date: Date.now)
     }
     
-    private func getArrowImgView() -> UIImageView {
-        let v = UIImageView.init(frame: scannerView.bounds)
-        v.image = UIImage.init(named: "arrow")
-        v.tag = 20
-        return v
-    }
-    
 }
-
-

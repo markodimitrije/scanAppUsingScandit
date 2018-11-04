@@ -43,7 +43,7 @@ class RoomsVC: UIViewController {
         
     }
     
-    deinit { print("deinit/ RoomsVC") }
+    //deinit { print("deinit/ RoomsVC") }
     
 }
 

@@ -71,8 +71,6 @@ class BlockViewModel {
         
         guard let realm = try? Realm() else { return }
         
-        print("implement me, filter by roomId = \(roomId)")
-        
         // ovde mi treba jos da su od odgovarajuceg Room-a
         blocks = realm
                     .objects(RealmBlock.self)

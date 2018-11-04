@@ -57,11 +57,14 @@ struct SettingsViewModel {
         oSaveSettingsClick.withLatestFrom(oSessionSelected)
             .subscribe(onNext: { block in
                 
+                // self.shouldCloseSettingsVC.onNext(!(block == nil))
+                
                 if block == nil {
-                    print("is clicked but block is nil, please select session")
+                    
                     self.shouldCloseSettingsVC.onNext(false)
+                    
                 } else {
-                    print("is clicked should navigate...")
+
                     self.shouldCloseSettingsVC.onNext(true)
                 }
 

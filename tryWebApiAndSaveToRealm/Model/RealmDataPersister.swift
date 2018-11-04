@@ -15,6 +15,36 @@ struct RealmDataPersister {
     
     static var shared = RealmDataPersister()
     
+    func getCodeReports() -> [CodeReport] {
+        
+        guard let realm = try? Realm.init() else {return [ ]} // iako je Error!
+        
+        let realmResults = realm.objects(RealmCodeReport.self).toArray()
+        
+        return realmResults.map {CodeReport.init(realmCodeReport: $0)}
+        
+    }
+    
+    func deleteAllCodeReports() -> Observable<Bool> {
+        
+        guard let realm = try? Realm.init() else {
+            return Observable.just(false)
+        } // iako je Error!
+        
+        let realmResults = realm.objects(RealmCodeReport.self)
+        
+        do {
+            try realm.write {
+                realm.delete(realmResults)
+            }
+//            print("RealmDataPersister.deleteAllCodeReports.all code reports are deleted")
+            return Observable.just(true)
+        } catch {
+            return Observable.just(false)
+        }
+        
+    }
+    
     func saveToRealm(rooms: [Room]) -> Observable<Bool> {
         
         // prvo ih map u svoje objects a onda persist i javi da jesi...
@@ -73,15 +103,16 @@ struct RealmDataPersister {
                 
                 try realm.write {
                     realm.add(newCodeReport)
-                    print("\(codeReport.code), \(codeReport.sessionId) saved to realm")
+//                    print("\(codeReport.code), \(codeReport.sessionId) saved to realm")
                 }
             } catch {
                 return Observable<Bool>.just(false)
             }
         
-        } else {
-            print("saveToRealm.objekat vec postoji u bazi")
         }
+        //else {
+//            print("saveToRealm.objekat vec postoji u bazi")
+        //}
         
         return Observable<Bool>.just(true) // all good here
         

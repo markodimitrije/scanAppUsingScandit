@@ -9,3 +9,7 @@
 import Foundation
 
 var resourcesState: ResourcesState!
+
+var codesDumper: CodesDumper! // prazni codes (saved in Realm), koji su failed da se prijave pojedinacno na web
+
+

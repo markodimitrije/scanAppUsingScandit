@@ -187,7 +187,7 @@ class SettingsVC: UITableViewController {
         roomsVC.selectedRealmRoom
             .subscribe(onNext: { [weak self] (room) in
                 guard let strongSelf = self else {return}
-                print("room.name is \(room.name)")
+                
                 strongSelf.roomId = room.id // sranje, kako izvuci val iz PublishSubj? necu Variable..
                 strongSelf.roomSelected.onNext(room)
                 strongSelf.sessionSelected.onNext(nil)
@@ -197,8 +197,6 @@ class SettingsVC: UITableViewController {
     }
     
     private func bindXibEvents() { // ovde hook-up controls koje imas na xib
-        
-        print("bindXibEvents is called")
         
         // mozes da viewmodel-u prosledis switch kao hook  // + treba mu i room
         autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
@@ -252,7 +250,7 @@ class SettingsVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.section, indexPath.item) {
-        case (0, 0): print("auto segue ka rooms...")
+        //case (0, 0): print("auto segue ka rooms...")
         case (1, 0):
             guard let roomId = roomId else {return}
             navigateToSessionVCAndSubscribeForSelectedSession(roomId: roomId)
