@@ -15,6 +15,8 @@ struct RealmDataPersister {
     
     static var shared = RealmDataPersister()
     
+    // MARK:- CodeReports
+    
     func getCodeReports() -> [CodeReport] {
         
         guard let realm = try? Realm.init() else {return [ ]} // iako je Error!
@@ -44,6 +46,30 @@ struct RealmDataPersister {
         }
         
     }
+    
+    func deleteCodeReports(_ codeReports: [CodeReport]) -> Observable<Bool> {
+        
+        guard let realm = try? Realm.init() else {
+            return Observable.just(false)
+        } // iako je Error!
+        
+        let realmResults = realm.objects(RealmCodeReport.self).filter { report -> Bool in
+            return codeReports.map {$0.code}.contains(report.code)
+        }
+        
+        do {
+            try realm.write {
+                realm.delete(realmResults)
+            }
+            print("RealmDataPersister.deleteCodeReports: delete Reported CodeReports")
+            return Observable.just(true)
+        } catch {
+            return Observable.just(false)
+        }
+        
+    }
+    
+    // MARK:- Save data
     
     func saveToRealm(rooms: [Room]) -> Observable<Bool> {
         
@@ -117,6 +143,8 @@ struct RealmDataPersister {
         return Observable<Bool>.just(true) // all good here
         
     }
+    
+    // MARK: All data (delete)
     
     func deleteDataIfAny() -> Observable<Bool> {
         guard let realm = try? Realm() else {

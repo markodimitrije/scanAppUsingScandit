@@ -199,13 +199,20 @@ class CodeReport: Object { // Realm Entity
         ]
     }
     
-    func getPayload(_ report: CodeReport) -> [String: String] {
+    static func getPayload(_ report: CodeReport) -> [String: String] {
         
         return [
             "block_id": "\(report.sessionId)",
             "code": report.code,
             "time_of_scan": report.date.toString(format: Date.defaultFormatString) ?? ""
         ]
+    }
+    
+    static func getPayload(_ reports: [CodeReport]) -> [String: Any] {
+        
+        let listOfReports = reports.map {getPayload($0)}
+        
+        return ["data": listOfReports]
     }
     
     // kompajler me tera da implementiram, mogu li ikako bez toga ? ...

@@ -92,11 +92,9 @@ class ApiController {
     
     func reportMultipleCodes(reports: [CodeReport]?) -> Observable<Bool> {
         
-        guard let report = reports?.last else {
-            return Observable.error(ReportToWebError.noCodesToReport)
-        }
+        guard let reports = reports else {return Observable.empty()}
         
-        let params = report.getPayload(report)
+        let params = CodeReport.getPayload(reports)
         
         return buildRequest(base: Domain.baseTrackerURL,
                             method: "POST",

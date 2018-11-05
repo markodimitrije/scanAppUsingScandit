@@ -57,11 +57,11 @@ class SettingsVC: UITableViewController {
         bindUI()
         bindControlEvents()
         bindReachability()
+        bindUnsyncedScans()
 //        bindState() // ovde je rano za tableView.visibleCells !!
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated)
         bindState()
     }
     
@@ -144,12 +144,11 @@ class SettingsVC: UITableViewController {
             .disposed(by: disposeBag)
     }
     
-    private func bindState() {
+    private func bindUnsyncedScans() {
         
-//        func reloadAutoSelViewModel(forRoomId roomId: Int?) {
-//            guard let roomId = roomId else {return}
-//            autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
-//        }
+    }
+    
+    private func bindState() {
         
         roomSelected
             .subscribe(onNext: { [weak self] room in

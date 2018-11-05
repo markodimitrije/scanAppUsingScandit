@@ -80,11 +80,13 @@ class CodesDumper {
                 
                 guard let sSelf = self else {return}
                 
-                sSelf.reportSavedCodesToWeb()
+                let codeReports = RealmDataPersister.shared.getCodeReports()
+                
+                sSelf.reportSavedCodesToWeb(codeReports: codeReports)
                     .subscribe(onNext: { success in
                         if success {
                             
-                            RealmDataPersister.shared.deleteAllCodeReports()
+                            RealmDataPersister.shared.deleteCodeReports(codeReports)
                                 .subscribe(onNext: { deleted in
                                     sSelf.codeReportsDeleted.value = deleted
                                 })
@@ -113,9 +115,7 @@ class CodesDumper {
             .disposed(by: bag)
     }
     
-    private func reportSavedCodesToWeb() -> Observable<Bool> { print("reportSavedCodesToWeb")
-        
-        let codeReports = RealmDataPersister.shared.getCodeReports()
+    private func reportSavedCodesToWeb(codeReports: [CodeReport]) -> Observable<Bool> { print("reportSavedCodesToWeb")
         
         guard !codeReports.isEmpty else { print("CodesDumper.reportSavedCodes/ internal error...")
             return Observable.just(false)
