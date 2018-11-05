@@ -49,9 +49,17 @@ class SettingsVC: UITableViewController {
         return id
     }
     
+    // MARK:- ViewModels
     fileprivate let roomViewModel = RoomViewModel()
-    lazy var settingsViewModel = SettingsViewModel(unsyncedConnections: 0, saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside), cancelSettings: cancelSettingsBtn.rx.tap)
+    
+    lazy var settingsViewModel = SettingsViewModel(
+        saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside),
+        cancelSettings: cancelSettingsBtn.rx.tap)
+    
     lazy fileprivate var autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
+    
+    lazy fileprivate var unsyncScansViewModel = UnsyncScansViewModel.init(syncScans: unsyncedScansView.syncBtn.rx.controlEvent(.touchUpInside))
+    
     
     override func viewDidLoad() { super.viewDidLoad()
         bindUI()
@@ -146,6 +154,15 @@ class SettingsVC: UITableViewController {
     
     private func bindUnsyncedScans() {
         
+        unsyncScansViewModel.syncScansCount
+            .map {"\($0)"}
+            .bind(to: unsyncedScansView.countLbl.rx.text)
+            .disposed(by: disposeBag)
+        
+        unsyncScansViewModel.syncControlAvailable
+            .map(!)
+            .bind(to: unsyncedScansView.syncBtn.rx.isHidden)
+            .disposed(by: disposeBag)
     }
     
     private func bindState() {

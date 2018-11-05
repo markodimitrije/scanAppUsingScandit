@@ -106,7 +106,7 @@ class CodesDumper {
         codeReportsDeleted.asObservable()
             .subscribe(onNext: { [weak self] success in
                 guard let sSelf = self else {return}
-                if success { //print("all good, ugasi timer!")
+                if success { print("all good, ugasi timer!")
                     
                     sSelf.isRunning.value = false // ugasi timer, uspesno si javio i obrisao Realm
                     sSelf.oCodesDumped.value = true

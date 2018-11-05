@@ -28,6 +28,7 @@
 		AD697BD221885AF2002BC579 /* RealmDataPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD121885AF2002BC579 /* RealmDataPersister.swift */; };
 		AD697BD52188623A002BC579 /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD42188623A002BC579 /* GlobalVars.swift */; };
 		AD697BD821887CCE002BC579 /* ResourcesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD721887CCE002BC579 /* ResourcesState.swift */; };
+		AD69BB6A2190948200EF80F9 /* UnsyncScansViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD69BB692190948200EF80F9 /* UnsyncScansViewModel.swift */; };
 		AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFF9217DCDEA003CEDD0 /* Room.swift */; };
 		AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFB217DCE27003CEDD0 /* Block.swift */; };
 		AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */; };
@@ -81,6 +82,7 @@
 		AD697BD121885AF2002BC579 /* RealmDataPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataPersister.swift; sourceTree = "<group>"; };
 		AD697BD42188623A002BC579 /* GlobalVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		AD697BD721887CCE002BC579 /* ResourcesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesState.swift; sourceTree = "<group>"; };
+		AD69BB692190948200EF80F9 /* UnsyncScansViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsyncScansViewModel.swift; sourceTree = "<group>"; };
 		AD80EFF9217DCDEA003CEDD0 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		AD80EFFB217DCE27003CEDD0 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				ADA47211217F458D0078530E /* ScannerViewModel.swift */,
 				ADAE9C232189F57D00615125 /* AVSessionViewModel.swift */,
 				ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */,
+				AD69BB692190948200EF80F9 /* UnsyncScansViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				ADAE9C302189F5F500615125 /* AVCaptureSession+Rx.swift in Sources */,
 				AD993AB7217BC79400803BE2 /* SettingsViewModel.swift in Sources */,
 				AD295221217B5B24002DDE32 /* AppDelegate.swift in Sources */,
+				AD69BB6A2190948200EF80F9 /* UnsyncScansViewModel.swift in Sources */,
 				AD993AB3217BAA8800803BE2 /* BlockViewModel.swift in Sources */,
 				AD295223217B5B24002DDE32 /* AlwaysExtensions.swift in Sources */,
 				ADAE9C242189F57D00615125 /* AVSessionViewModel.swift in Sources */,

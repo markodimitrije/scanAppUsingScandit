@@ -17,6 +17,16 @@ struct RealmDataPersister {
     
     // MARK:- CodeReports
     
+    func getCodeReportsCount() -> Observable<Int> {
+        
+        guard let realm = try? Realm.init() else {return Observable.empty()} // iako je Error!
+        
+        let count = realm.objects(RealmCodeReport.self).count
+        
+        return Observable.just(count)
+        
+    }
+    
     func getCodeReports() -> [CodeReport] {
         
         guard let realm = try? Realm.init() else {return [ ]} // iako je Error!

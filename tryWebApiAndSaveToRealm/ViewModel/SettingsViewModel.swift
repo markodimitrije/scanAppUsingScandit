@@ -18,13 +18,11 @@ struct SettingsViewModel {
     
     let disposeBag = DisposeBag()
     
-    private var unsyncedConnections: Int = 0
     var saveSettings: ControlEvent<()>
     var cancelSettings: ControlEvent<()>
     
     // 1 - dependencies-init
-    init(unsyncedConnections: Int, saveSettings: ControlEvent<()>, cancelSettings: ControlEvent<()>) {
-        self.unsyncedConnections = unsyncedConnections
+    init(saveSettings: ControlEvent<()>, cancelSettings: ControlEvent<()>) {
         self.saveSettings = saveSettings
         self.cancelSettings = cancelSettings
         bindControls()
