@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import AVFoundation
+import RealmSwift
 
 class ScannerVC: UIViewController {
     
@@ -35,6 +36,9 @@ class ScannerVC: UIViewController {
     var settingsVC: SettingsVC!
     
     override func viewDidLoad() { super.viewDidLoad()
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        
         sessionConstLbl.text = SessionTextData.sessionConst
         bindUI()
         
@@ -184,26 +188,11 @@ class ScannerVC: UIViewController {
         return .landscape //[.landscapeLeft, .landscapeRight]
     }
     
-    // napravi API za ovo na odg viewModel-u...
-//    override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated)
-//
-//        if (avSessionViewModel.captureSession.isRunning == false) {
-//            avSessionViewModel.captureSession.startRunning()
-//        }
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated)
-//
-//        if (avSessionViewModel.captureSession.isRunning == true) {
-//            avSessionViewModel.captureSession.stopRunning()
-//        }
-//    }
-    
     // MARK:- Private
     
     private func getActualCodeReport() -> CodeReport {
        
-        print("KONACNO IMAM DA JE codeScan = \(code)")
+        print("getActualCodeReport = \(code)")
         
         return CodeReport.init(code: code,
                                sessionId: scanerViewModel.sessionId,

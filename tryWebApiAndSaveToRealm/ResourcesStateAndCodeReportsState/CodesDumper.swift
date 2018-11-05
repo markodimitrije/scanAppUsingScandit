@@ -40,7 +40,7 @@ class CodesDumper {
         hookUpNotifyWeb()
         
         hookUpAllCodesReportedToWeb()
-
+        
     }
     
     // Output
