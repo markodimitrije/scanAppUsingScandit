@@ -90,7 +90,7 @@ class ApiController {
     
     // implement me
     
-    func reportCodes(reports: [CodeReport]?) -> Observable<Bool> {
+    func reportMultipleCodes(reports: [CodeReport]?) -> Observable<Bool> {
         
         guard let report = reports?.last else {
             return Observable.error(ReportToWebError.noCodesToReport)
@@ -137,7 +137,7 @@ class ApiController {
             let queryItems = params.map { URLQueryItem(name: $0.0, value: $0.1) }
             urlComponents.queryItems = queryItems
         } else {
-            guard let params = params as? [String: String] else {
+            guard let params = params as? [String: Any] else {
                 return Observable.empty()
             }
             let jsonData = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)

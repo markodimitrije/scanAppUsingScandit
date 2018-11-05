@@ -139,7 +139,7 @@ class ScannerVC: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func failedDueToNoSettings() { print("failed failedDueToNoSettings.....")
+    private func failedDueToNoSettings() {
         
         self.alert(title: AlertInfo.Scan.NoSettings.title,
                    text: AlertInfo.Scan.NoSettings.msg,

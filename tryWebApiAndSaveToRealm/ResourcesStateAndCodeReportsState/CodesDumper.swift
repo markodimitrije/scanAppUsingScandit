@@ -124,7 +124,7 @@ class CodesDumper {
         // posalji codes web-u... - // posalji web-u ... koji vraca Observable<>Bool
 
         return ApiController.shared
-            .reportCodes(reports: codeReports) // Observable<Bool>
+            .reportMultipleCodes(reports: codeReports) // Observable<Bool>
             .map({ (success) -> Bool in
 //                print("reportSavedCodesToWeb.reported \(success)")
                 if success {
