@@ -149,7 +149,15 @@ class BlockViewModel {
     
 }
 
+var NOW: Date {
+    return Date.init(timeIntervalSinceNow: 0)
+}
+
+/*
+
 let NOW = Date.parse("2018-05-24 12:35:00") // ovo je 10:35 - 2.blok
 //let NOW = Date.parse("2018-05-24 12:55:00") // ovo je 10:55 - nema
 //let NOW = Date.parse("2018-05-24 08:40:00") // ovo je 06:40 - 1.blok
 //let NOW = Date.parse("2018-05-24 08:00:00") // ovo je 06:00 - nema
+
+ */
