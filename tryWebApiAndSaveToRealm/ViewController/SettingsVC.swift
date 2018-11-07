@@ -240,11 +240,6 @@ class SettingsVC: UITableViewController {
             })
             .disposed(by: disposeBag)
         
-        roomSelected
-            .distinctUntilChanged()
-            .map {_ in return false} // hocemo da je default iskljuceno
-            .bind(to: autoSelectSessionsView.controlSwitch.rx.isOn)
-            .disposed(by: disposeBag)
     }
     
     private func navigateToSessionVCAndSubscribeForSelectedSession(roomId: Int) {

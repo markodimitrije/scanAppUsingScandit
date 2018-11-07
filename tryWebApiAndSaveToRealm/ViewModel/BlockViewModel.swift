@@ -105,6 +105,7 @@ class BlockViewModel {
         
     }
     
+    // verzija sa fiksiranim intervalom od: TimeInterval.waitToMostRecentSession
     private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
 //        let now = Date.init(timeIntervalSinceNow: 0) // 1
         
@@ -122,6 +123,20 @@ class BlockViewModel {
         }
         
         return difference < TimeInterval.waitToMostRecentSession
+        
+    }
+    
+    private func autoSessionIsAvailableImplementMe(inLessThan interval: TimeInterval) -> Bool { // implement me
+        //        let now = Date.init(timeIntervalSinceNow: 0) // 1
+        
+        let now = NOW // mock date !
+        
+        guard let theMostRecent = mostRecentSessionBlock,
+            let recentStartDate = theMostRecent.starts_at.toDate(format: Date.defaultFormatString) else {
+                return false
+        } // nema nikakvih sesija
+        
+        return NOW < recentStartDate
         
     }
     
