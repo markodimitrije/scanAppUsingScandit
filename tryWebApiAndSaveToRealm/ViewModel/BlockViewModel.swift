@@ -60,8 +60,6 @@ class BlockViewModel {
             }
             .first
         
-        print("first = \(first!)")
-        
         return first
     }
     

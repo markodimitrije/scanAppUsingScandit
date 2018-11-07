@@ -31,6 +31,8 @@ class ResourcesState {
         }
     }
     
+    var oAppDidBecomeActive = BehaviorSubject<Void>.init(value: ())
+    
     private var timer: Timer?
     
     private let bag = DisposeBag()
@@ -62,11 +64,27 @@ class ResourcesState {
                 sSelf.timer?.invalidate()
             })
             .disposed(by: bag)
+        
+        oAppDidBecomeActive
+            //.throttle(0.5, scheduler: MainScheduler.instance)
+            .take(1) // emitj jedanput i postani finished (odlicno)
+            .subscribe(onNext: { [weak self] event in
+                guard let sSelf = self else {return}
+                sSelf.downloadResources()
+            })
+            .disposed(by: bag)
     }
     
     @objc private func appDidBecomeActive() {
         
-        //        print("ResourcesState/ appDidBecomeActive is called")
+        oAppDidBecomeActive.onNext(())
+        
+        print("ResourcesState/ appDidBecomeActive/ appDidBecomeActive is called")
+
+    }
+    
+    
+    private func downloadResources() {
         
         if shouldDownloadResources {
             
@@ -82,6 +100,7 @@ class ResourcesState {
                     repeats: true)
             }
         }
+        
     }
     
     @objc private func appWillEnterBackground() {
@@ -103,8 +122,8 @@ class ResourcesState {
                 
                 if realmIsEmpty {
                     
-                    //strongSelf.fetchRoomsAndSaveToRealm()
-                    //strongSelf.fetchSessionsAndSaveToRealm()
+//                    strongSelf.fetchRoomsAndSaveToRealm()
+//                    strongSelf.fetchSessionsAndSaveToRealm()
                     strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
                     strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
                     
@@ -153,7 +172,7 @@ class ResourcesState {
                 
                 let mock = blocks.map { (block) -> Block in
                     block.starts_at = mockDates[block.id] ?? block.starts_at
-                    print("id \(block.id) starts_at \(block.starts_at)")
+                    //print("id \(block.id) starts_at \(block.starts_at)")
                     return block
                 }
                 
