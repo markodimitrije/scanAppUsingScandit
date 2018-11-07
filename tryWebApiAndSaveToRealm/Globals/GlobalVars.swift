@@ -8,6 +8,12 @@
 
 import Foundation
 
+let hourMinuteSet = Set<Calendar.Component>.init(arrayLiteral: .hour, .minute)
+
+var defaultAutoSessionDate: Date {
+    return Date.init(timeIntervalSinceNow: -TimeInterval(15*60))
+}
+
 var resourcesState: ResourcesState!
 
 var codesDumper: CodesDumper! // prazni codes (saved in Realm), koji su failed da se prijave pojedinacno na web

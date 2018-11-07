@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "tryWebApiAndSaveToRealm/APIController/APIController.swift"
-            timestampString = "563122183.4810441"
+            timestampString = "563278828.215265"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "tryWebApiAndSaveToRealm/APIController/APIController.swift"
-            timestampString = "563122183.481456"
+            timestampString = "563278828.215372"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "171"
@@ -42,27 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "tryWebApiAndSaveToRealm/APIController/APIController.swift"
-            timestampString = "563122183.481722"
+            timestampString = "563278828.2154551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "168"
             endingLineNumber = "168"
-            landmarkName = "buildRequest(base:method:pathComponent:params:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "tryWebApiAndSaveToRealm/APIController/APIController.swift"
-            timestampString = "563122183.481969"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
             landmarkName = "buildRequest(base:method:pathComponent:params:)"
             landmarkType = "7">
          </BreakpointContent>

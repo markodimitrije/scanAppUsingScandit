@@ -23,7 +23,7 @@ enum RoomTextData {
     static let noRoomSelected = NSLocalizedString("Strings.Scaner.room.noRoomSelected", comment: "")
 }
 
-extension TimeInterval {
+struct MyTimeInterval {
     static let waitToMostRecentSession: TimeInterval = 15*60 // 15 minutes
     //static var waitToMostRecentSession: TimeInterval = 60*60 // 60 minutes
     static let timerForFetchingRoomAndBlockResources: Double = 15 // 10 seconds

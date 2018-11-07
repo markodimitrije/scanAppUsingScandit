@@ -11,17 +11,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "BlocksVC.bindUI():BlocksVC.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "blockViewModel.oBlocks">
-            </PersistentString>
-            <PersistentString
-               value = "blockViewModel">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "closure #1 in SettingsVC.bindState():SettingsVC.swift">
          <PersistentStrings>
             <PersistentString
@@ -33,10 +22,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "SettingsVC.getActualCodeReport():SettingsVC.swift">
+         contextName = "ApiController.buildRequest(base:method:pathComponent:params:):APIController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "CodeReport.init(code: &quot;Code 128&quot;,&#10;                               sessionId: sessionId,&#10;                               date: Date.now)">
+               value = "response">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RealmBlock.duration.getter:Block.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ends_at">
+            </PersistentString>
+            <PersistentString
+               value = "starts_at">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -58,29 +58,46 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "RealmBlock.duration.getter:Block.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "ends_at">
-            </PersistentString>
-            <PersistentString
-               value = "starts_at">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
          <PersistentStrings>
+            <PersistentString
+               value = "todayBlocks.count">
+            </PersistentString>
             <PersistentString
                value = "blocksSortedByDate">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ApiController.buildRequest(base:method:pathComponent:params:):APIController.swift">
+         contextName = "SettingsVC.bindXibEvents():SettingsVC.swift">
          <PersistentStrings>
             <PersistentString
-               value = "response">
+               value = "switchState">
+            </PersistentString>
+            <PersistentString
+               value = "autoSelectSessionsView">
+            </PersistentString>
+            <PersistentString
+               value = "autoSelectSessionsView.controlSwitch">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Calendar.current.compare(NOW,&#10;                                            to: Date.parse($0.starts_at),&#10;                                            toGranularity: Calendar.Component.day) == ComparisonResult.orderedSame">
+            </PersistentString>
+            <PersistentString
+               value = "blocksSortedByDate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SettingsVC.getActualCodeReport():SettingsVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "CodeReport.init(code: &quot;Code 128&quot;,&#10;                               sessionId: sessionId,&#10;                               date: Date.now)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -89,6 +106,25 @@
          <PersistentStrings>
             <PersistentString
                value = "rms.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlocksVC.bindUI():BlocksVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "blockViewModel.oBlocks">
+            </PersistentString>
+            <PersistentString
+               value = "blockViewModel">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BlockViewModel.bindAutomaticSession(interval:):BlockViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "mostRecentSessionBlock">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

@@ -75,7 +75,7 @@ class ResourcesState {
             if timer == nil {
                 
                 timer = Timer.scheduledTimer(
-                    timeInterval: TimeInterval.timerForFetchingRoomAndBlockResources,
+                    timeInterval: MyTimeInterval.timerForFetchingRoomAndBlockResources,
                     target: self,
                     selector: #selector(ResourcesState.fetchRoomsAndBlocksResources),
                     userInfo: nil,
@@ -103,12 +103,70 @@ class ResourcesState {
                 
                 if realmIsEmpty {
                     
-                    strongSelf.fetchRoomsAndSaveToRealm()
-                    strongSelf.fetchSessionsAndSaveToRealm()
+                    //strongSelf.fetchRoomsAndSaveToRealm()
+                    //strongSelf.fetchSessionsAndSaveToRealm()
+                    strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
+                    strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
+                    
                 }
             })
             .disposed(by: bag)
         
+    }
+    
+    // MOCK !
+    
+    private func fetchRoomsAndSaveToRealm_MOCK() {
+        
+        let oRooms = ApiController.shared.getRooms(updated_from: nil,
+                                                   with_pagination: 0,
+                                                   with_trashed: 0)
+        oRooms
+            .subscribe(onNext: { [ weak self] (rooms) in
+                
+                guard let strongSelf = self else {return}
+                
+                let mock = rooms.first(where: {$0.id == 4008})!
+                
+                RealmDataPersister.shared.saveToRealm(rooms: [mock])
+                    .subscribe(onNext: { (success) in
+                        
+                        strongSelf.downloads.onNext(success)
+                        
+                    })
+                    .disposed(by: strongSelf.bag)
+                
+            })
+            .disposed(by: bag)
+        
+    }
+    
+    private func fetchSessionsAndSaveToRealm_MOCK() {
+        
+        let oBlocks = ApiController.shared.getBlocks(updated_from: nil,
+                                                     with_pagination: 0,
+                                                     with_trashed: 0)
+        oBlocks
+            .subscribe(onNext: { [weak self] (blocks) in
+                
+                guard let strongSelf = self else {return}
+                
+                let mock = blocks.map { (block) -> Block in
+                    block.starts_at = mockDates[block.id] ?? block.starts_at
+                    print("id \(block.id) starts_at \(block.starts_at)")
+                    return block
+                }
+                
+                RealmDataPersister.shared.saveToRealm(blocks: mock)
+                    .subscribe(onNext: { (success) in
+                        
+                        strongSelf.downloads.onNext(success) // okini na svom observable, njega monitor
+                        
+                    })
+                    .disposed(by: strongSelf.bag)
+                
+            })
+            .disposed(by: bag)
     }
     
     
@@ -230,3 +288,9 @@ class CodeReport: Object { // Realm Entity
     }
     
 }
+
+let mockDates: [Int: String] = [7257: "2018-11-07 13:55:00", // "Immune-mediated..."
+                7266: "2018-11-07 14:20:00", // "Emerging insights in..."
+                8612: "2018-11-07 10:40:00", // "The evolving face"
+                7480: "2018-11-07 20:10:00", // "ERA-EDTA & CSN"
+                7330: "2018-11-08 10:10:00"] // "Challenges in"

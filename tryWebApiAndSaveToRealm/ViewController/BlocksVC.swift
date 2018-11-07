@@ -29,6 +29,8 @@ class BlocksVC: UIViewController {
         return selRealmBlock.asObservable()
     }
     
+    var selectedInterval = Variable.init(MyTimeInterval.waitToMostRecentSession)
+    
     override func viewDidLoad() { super.viewDidLoad()
         bindUI()
     }
@@ -60,8 +62,18 @@ class BlocksVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        
+        blockViewModel.oAutoSelSessInterval
+            .asObservable()
+            .subscribe(onNext: { [weak self] seconds in
+                guard let sSelf = self else {return}
+                sSelf.selectedInterval.value = seconds
+            })
+            .disposed(by: disposeBag)
     }
     
     //deinit { print("deinit/ BlocksVC") }
     
 }
+
+

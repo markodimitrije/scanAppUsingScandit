@@ -20,6 +20,8 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var saveSettingsAndExitBtn: UIButton!
     @IBOutlet weak var cancelSettingsBtn: UIBarButtonItem!
     
+    @IBOutlet weak var setIntervalForAutoSessionView: SetIntervalForAutoSessionView!
+    
     @IBOutlet weak var autoSelectSessionsView: AutoSelectSessionsView!
     @IBOutlet weak var unsyncedScansView: UnsyncedScansView!
     @IBOutlet weak var wiFiConnectionView: WiFiConnectionView!
@@ -30,10 +32,12 @@ class SettingsVC: UITableViewController {
     var roomId: Int! = nil {
         didSet {
             bindXibEvents()
+            bindInterval()
         }
     }
     let roomSelected = BehaviorSubject<RealmRoom?>.init(value: nil)
     let sessionSelected = BehaviorSubject<RealmBlock?>.init(value: nil)
+    var selectedInterval = Variable<TimeInterval>.init(MyTimeInterval.waitToMostRecentSession) // posesava na odg XIB
     
     // input - trebalo je u INIT !!
     var codeScaned = BehaviorSubject<String>.init(value: "")
@@ -124,8 +128,8 @@ class SettingsVC: UITableViewController {
             }, onCompleted: { [weak self] in // slucaj da je cancel
                 guard let strongSelf = self else {return}
                 strongSelf.dismiss(animated: true)
-                strongSelf.roomSelected.onNext(nil)
-                strongSelf.sessionSelected.onNext(nil)
+                //strongSelf.roomSelected.onNext(nil)
+                //strongSelf.sessionSelected.onNext(nil)
             })
             .disposed(by: disposeBag)
         
@@ -163,6 +167,27 @@ class SettingsVC: UITableViewController {
             .map(!)
             .bind(to: unsyncedScansView.syncBtn.rx.isHidden)
             .disposed(by: disposeBag)
+    }
+    
+    private func bindInterval() {
+        
+        let diffComponents = Calendar.current.dateComponents(
+            hourMinuteSet,
+            from: defaultAutoSessionDate,
+            to: NOW)
+        
+        setIntervalForAutoSessionView.picker.date = Calendar.current.date(from: diffComponents)!
+        
+        setIntervalForAutoSessionView.picker.addTarget(
+            self,
+            action: #selector(SettingsVC.datePickerValueChanged(_:)),
+            for:.valueChanged)
+        
+        selectedInterval
+            .asObservable()
+            .bind(to: autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval)
+            .disposed(by: disposeBag)
+        
     }
     
     private func bindState() {
@@ -262,6 +287,7 @@ class SettingsVC: UITableViewController {
                 strongSelf.sessionSelected.onNext(block)
             })
             .disposed(by: disposeBag)
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -276,4 +302,11 @@ class SettingsVC: UITableViewController {
     
     deinit { print("deinit.setingsVC") }
     
+}
+
+extension SettingsVC {
+    @objc func datePickerValueChanged(_ picker: UIDatePicker) {
+        print("datePickerValueChanged.value = \(picker.countDownDuration)")
+        self.selectedInterval.value = picker.countDownDuration
+    }
 }

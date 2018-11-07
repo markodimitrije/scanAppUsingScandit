@@ -25,6 +25,10 @@ class BlockViewModel {
     
     private var blocksSortedByDate = [RealmBlock]()
     
+    // INPUT (javice ti neko, ono sto procita drugi model...)
+    
+    var oAutoSelSessInterval = Variable.init(MyTimeInterval.waitToMostRecentSession)
+    
     // output 1 - za prikazivanje blocks na tableView...
     
     var sectionsHeadersAndItems = [SectionOfCustomData]()
@@ -37,6 +41,8 @@ class BlockViewModel {
     
     let roomId: Int
     
+    var selInterval: Int?
+    
     private var mostRecentSessionBlock: RealmBlock? {
 //        let todayBlocks = blocksSortedByDate.filter {
 //            Calendar.current.isDateInToday(Date.parse($0.starts_at))
@@ -47,11 +53,16 @@ class BlockViewModel {
                                             toGranularity: Calendar.Component.day) == ComparisonResult.orderedSame
         }
         
-        return todayBlocks.filter { block -> Bool in
+        let first = todayBlocks.filter { block -> Bool in
             let startsAt = Date.parse(block.starts_at)
             //return startsAt > Date.now
             return startsAt > NOW
-        }.first
+            }
+            .first
+        
+        print("first = \(first!)")
+        
+        return first
     }
     
     // 1 - dependencies-init
@@ -59,6 +70,7 @@ class BlockViewModel {
         self.roomId = roomId
         bindOutput()
         bindAutomaticSession()
+        bindSelectedInterval()
     }
     
     //... 2 - input
@@ -96,17 +108,34 @@ class BlockViewModel {
     }
     
     // ako ima bilo koji session u zadatom Room, na koji se ceka krace od 2 sata, emituj SessionId; ako nema, emituj nil.
-    private func bindAutomaticSession() {
+    private func bindAutomaticSession(interval: TimeInterval = MyTimeInterval.waitToMostRecentSession) {
         
-        let result = autoSessionIsAvailable(inLessThan: TimeInterval.waitToMostRecentSession) ?
-        mostRecentSessionBlock : nil
+        //let result = autoSessionIsAvailable(inLessThan: interval) ?
+        //mostRecentSessionBlock : nil
         
-        oAutomaticSession.onNext(result)
+        let sessionAvailable = autoSessionIsAvailable(inLessThan: interval)
+        
+        if sessionAvailable {
+            oAutomaticSession.onNext(mostRecentSessionBlock)
+        } else {
+            oAutomaticSession.onNext(nil)
+        }
+        
+        //oAutomaticSession.onNext(result)
         
     }
     
+    private func bindSelectedInterval() {
+        oAutoSelSessInterval.asObservable()
+            .subscribe(onNext: { [weak self] seconds in
+                guard let sSelf = self else {return}
+                print("imam zadati interval \(seconds), recalculate....")
+                sSelf.bindAutomaticSession(interval: seconds)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
-//        let now = Date.init(timeIntervalSinceNow: 0) // 1
         
         let now = NOW // mock date !
         
@@ -114,14 +143,9 @@ class BlockViewModel {
             return false
         }
         let sessionDate = Date.parse(firstAvailableSession.starts_at) // 2
-        let date = now.addingTimeInterval(TimeInterval.waitToMostRecentSession) // 3
-        
-        let difference = date.timeIntervalSince(sessionDate)
-        if difference < 0 { // ima da ceka vise od zadatog intervala
-            return false
-        }
-        
-        return difference < TimeInterval.waitToMostRecentSession
+        let willingToWaitTill = now.addingTimeInterval(interval)//MyTimeInterval.waitToMostRecentSession) // 3
+
+        return willingToWaitTill > sessionDate
         
     }
     
@@ -145,7 +169,7 @@ class BlockViewModel {
         return resultArray
     }
     
-    
+    deinit { print("deinit/BlockViewModel is deinit") }
     
 }
 
