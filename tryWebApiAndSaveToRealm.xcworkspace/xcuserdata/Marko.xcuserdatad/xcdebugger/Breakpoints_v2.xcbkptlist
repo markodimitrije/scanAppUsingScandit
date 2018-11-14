@@ -10,7 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "tryWebApiAndSaveToRealm/APIController/APIController.swift"
+<<<<<<< HEAD
             timestampString = "563292509.592214"
+=======
+            timestampString = "563288696.655682"
+>>>>>>> autoSelFirstAvailable
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
@@ -26,7 +30,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "tryWebApiAndSaveToRealm/APIController/APIController.swift"
+<<<<<<< HEAD
             timestampString = "563292509.592326"
+=======
+            timestampString = "563288696.656176"
+>>>>>>> autoSelFirstAvailable
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "171"
@@ -42,7 +50,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "tryWebApiAndSaveToRealm/APIController/APIController.swift"
+<<<<<<< HEAD
             timestampString = "563292509.592424"
+=======
+            timestampString = "563288696.656498"
+>>>>>>> autoSelFirstAvailable
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "168"
@@ -51,5 +63,120 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+<<<<<<< HEAD
+=======
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "tryWebApiAndSaveToRealm/Views/AutoSelectSessionsView.swift"
+            timestampString = "563288696.656813"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "switchState"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "tryWebApiAndSaveToRealm/Views/AutoSelectSessionsView.swift"
+            timestampString = "563288743.227435"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "switchState"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "tryWebApiAndSaveToRealm/ViewModel/BlockViewModel.swift"
+            timestampString = "563306902.477478"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "autoSessionIsAvailable(inLessThan:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "tryWebApiAndSaveToRealm/ViewModel/BlockViewModel.swift"
+            timestampString = "563306902.4779201"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "autoSessionIsAvailable(inLessThan:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "tryWebApiAndSaveToRealm/ViewModel/AutoSelSessionViewModel.swift"
+            timestampString = "563296786.821785"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "bindInputWithOutput()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "tryWebApiAndSaveToRealm/ViewModel/AutoSelSessionViewModel.swift"
+            timestampString = "563296786.82184"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "bindInputWithOutput()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "tryWebApiAndSaveToRealm/ViewModel/AutoSelSessionViewModel.swift"
+            timestampString = "563296786.821888"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "bindInputWithOutput()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+>>>>>>> autoSelFirstAvailable
    </Breakpoints>
 </Bucket>

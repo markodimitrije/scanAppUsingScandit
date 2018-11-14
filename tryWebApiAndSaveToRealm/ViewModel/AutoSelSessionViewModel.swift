@@ -24,7 +24,7 @@ struct AutoSelSessionViewModel {
     
     // INPUT:
     var selectedRoom = BehaviorSubject<RealmRoom?>.init(value: nil) // implement me
-    var switchState = BehaviorSubject<Bool>.init(value: false)
+    var switchState = BehaviorSubject<Bool>.init(value: true)
     
     // OUTPUT
     var selectedSession = BehaviorSubject<RealmBlock?>.init(value: nil)

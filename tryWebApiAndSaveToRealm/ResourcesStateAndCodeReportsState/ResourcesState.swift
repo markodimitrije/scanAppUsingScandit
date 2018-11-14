@@ -31,7 +31,11 @@ class ResourcesState {
         }
     }
     
+<<<<<<< HEAD
     var oAppDidBecomeActive = BehaviorSubject<Void>.init(value: ())
+=======
+    private var oAppDidBecomeActive = BehaviorSubject<Void>.init(value: ())
+>>>>>>> autoSelFirstAvailable
     
     private var timer: Timer?
     
@@ -40,19 +44,6 @@ class ResourcesState {
     private var downloads = PublishSubject<Bool>.init()
     
     init() {
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.appDidBecomeActive),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil)
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.appWillEnterBackground),
-            name: UIApplication.willResignActiveNotification,
-            object: nil)
-        
         downloads
             .take(2) // room API and blocks API
             .reduce(true) { (sum, last) -> Bool in
@@ -64,10 +55,18 @@ class ResourcesState {
                 sSelf.timer?.invalidate()
             })
             .disposed(by: bag)
+<<<<<<< HEAD
         
         oAppDidBecomeActive
             //.throttle(0.5, scheduler: MainScheduler.instance)
             .take(1) // emitj jedanput i postani finished (odlicno)
+=======
+
+        
+        
+        let delegate = (UIApplication.shared.delegate as! AppDelegate)
+        delegate.rx.sentMessage(#selector(AppDelegate.applicationDidBecomeActive(_:)))
+>>>>>>> autoSelFirstAvailable
             .subscribe(onNext: { [weak self] event in
                 guard let sSelf = self else {return}
                 sSelf.downloadResources()
@@ -75,6 +74,7 @@ class ResourcesState {
             .disposed(by: bag)
     }
     
+<<<<<<< HEAD
     @objc private func appDidBecomeActive() {
         
         oAppDidBecomeActive.onNext(())
@@ -85,6 +85,9 @@ class ResourcesState {
     
     
     private func downloadResources() {
+=======
+    private func downloadResources() { // rooms and blocks
+>>>>>>> autoSelFirstAvailable
         
         if shouldDownloadResources {
             
@@ -111,6 +114,27 @@ class ResourcesState {
         //timer = nil
     }
     
+//    @objc private func fetchRoomsAndBlocksResources() {
+//
+//        //        print("fetchRoomsAndBlocksResources is called")
+//
+//        RealmDataPersister.shared.deleteDataIfAny()
+//            .subscribe(onNext: { [weak self] (realmIsEmpty) in
+//
+//                guard let strongSelf = self else {return}
+//
+//                if realmIsEmpty {
+//
+//                    strongSelf.fetchRoomsAndSaveToRealm()
+//                    strongSelf.fetchSessionsAndSaveToRealm()
+//                }
+//            })
+//            .disposed(by: bag)
+//
+//    }
+    
+    
+    
     @objc private func fetchRoomsAndBlocksResources() {
         
         //        print("fetchRoomsAndBlocksResources is called")
@@ -122,10 +146,17 @@ class ResourcesState {
                 
                 if realmIsEmpty {
                     
+<<<<<<< HEAD
 //                    strongSelf.fetchRoomsAndSaveToRealm()
 //                    strongSelf.fetchSessionsAndSaveToRealm()
                     strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
                     strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
+=======
+                    strongSelf.fetchRoomsAndSaveToRealm()
+                    strongSelf.fetchSessionsAndSaveToRealm()
+//                    strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
+//                    strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
+>>>>>>> autoSelFirstAvailable
                     
                 }
             })
@@ -189,6 +220,7 @@ class ResourcesState {
     }
     
     
+    
     private func fetchRoomsAndSaveToRealm() {
         
         //        print("fetchRoomsAndSaveToRealm is called")
@@ -237,6 +269,73 @@ class ResourcesState {
             })
             .disposed(by: bag)
     }
+    
+    
+    
+    // TEMP for TESTING
+    
+    private func fetchRoomsAndSaveToRealm_MOCK() {
+        
+        print("fetchRoomsAndSaveToRealm_MOCK is called")
+        
+        let oRooms = ApiController.shared.getRooms(updated_from: nil,
+                                                   with_pagination: 0,
+                                                   with_trashed: 0)
+        oRooms
+            .subscribe(onNext: { [ weak self] (rooms) in
+                
+                guard let strongSelf = self else {return}
+                
+                let mock = rooms.first(where: {$0.id == 4008})!
+                
+                RealmDataPersister.shared.saveToRealm(rooms: [mock])
+                    .subscribe(onNext: { (success) in
+                        
+                        strongSelf.downloads.onNext(success)
+                        
+                    })
+                    .disposed(by: strongSelf.bag)
+                
+            })
+            .disposed(by: bag)
+        
+    }
+    
+    private func fetchSessionsAndSaveToRealm_MOCK() {
+        
+        let oBlocks = ApiController.shared.getBlocks(updated_from: nil,
+                                                     with_pagination: 0,
+                                                     with_trashed: 0)
+        oBlocks
+            .subscribe(onNext: { [weak self] (blocks) in
+                
+                guard let strongSelf = self else {return}
+                
+                let mock = blocks.map { (block) -> Block in
+                    block.starts_at = mockDates[block.id] ?? block.starts_at
+                    
+                    return block
+                }
+                
+                RealmDataPersister.shared.saveToRealm(blocks: mock)
+                    .subscribe(onNext: { (success) in
+                        
+                        strongSelf.downloads.onNext(success) // okini na svom observable, njega monitor
+                        
+                    })
+                    .disposed(by: strongSelf.bag)
+                
+            })
+            .disposed(by: bag)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     deinit {
         print("ResourcesState.deinit is called")
@@ -308,8 +407,17 @@ class CodeReport: Object { // Realm Entity
     
 }
 
+<<<<<<< HEAD
 let mockDates: [Int: String] = [7257: "2018-11-07 13:55:00", // "Immune-mediated..."
                 7266: "2018-11-07 14:20:00", // "Emerging insights in..."
                 8612: "2018-11-07 10:40:00", // "The evolving face"
                 7480: "2018-11-07 20:10:00", // "ERA-EDTA & CSN"
                 7330: "2018-11-08 10:10:00"] // "Challenges in"
+=======
+
+let mockDates = [7266: "2018-11-07 17:00:00",
+                7257: "2018-11-07 17:00:00",
+                7330: "2018-11-07 17:00:00",
+                7748: "2018-11-07 17:00:00",
+                8612: "2018-11-07 17:00:00"]
+>>>>>>> autoSelFirstAvailable
