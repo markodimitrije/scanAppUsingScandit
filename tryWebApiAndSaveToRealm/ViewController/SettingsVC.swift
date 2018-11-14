@@ -255,26 +255,15 @@ class SettingsVC: UITableViewController {
             .map { [weak self] _ in
                 guard let strongSelf = self else {return false}
                 return strongSelf.autoSelectSessionsView.controlSwitch!.isOn
-            }
-
-        let switchDrive = switchState
-            .throttle(0.5, scheduler: MainScheduler.instance)
-            .skipUntil(roomSelected)
-        
-        let pickerDrive = setIntervalForAutoSessionView.picker
-            .rx.controlEvent(UIControlEvents.allEvents)
-            .map {_ in return self.autoSelectSessionsView.controlSwitch.isOn}
-            .asObservable()
-        
-        let source = Observable.combineLatest(switchDrive, pickerDrive) { (switcher, picker) -> Bool in
-            return switcher && picker
         }
-        
-        source
-            .subscribe(onNext: { [weak self] userAction in
+        switchState
+            .throttle(0.5, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .skipUntil(roomSelected)
+            .subscribe(onNext: { [weak self] switchState in
                 guard let strongSelf = self else {return}
-                
-                strongSelf.autoSelSessionViewModel.switchState.onNext(userAction) // forward..
+                print("forwardujem switch event")
+                strongSelf.autoSelSessionViewModel.switchState.onNext(switchState) // forward..
             })
             .disposed(by: disposeBag)
         
@@ -284,6 +273,7 @@ class SettingsVC: UITableViewController {
                 strongSelf.sessionSelected.onNext(session)
             })
             .disposed(by: disposeBag)
+        
     }
     
     private func navigateToSessionVCAndSubscribeForSelectedSession(roomId: Int) {
