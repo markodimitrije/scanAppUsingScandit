@@ -109,6 +109,9 @@
             <PersistentString
                value = "difference &lt; TimeInterval.waitToMostRecentSession">
             </PersistentString>
+            <PersistentString
+               value = "NOW &lt; recentStartDate">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
    </ContextStates>

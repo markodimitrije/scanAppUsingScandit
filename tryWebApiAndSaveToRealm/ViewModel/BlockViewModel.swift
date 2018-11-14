@@ -11,15 +11,14 @@ import RealmSwift
 import Realm
 import RxSwift
 import RxRealm
+import RxCocoa
 
 class BlockViewModel {
     
     let disposeBag = DisposeBag()
     
     // ovi treba da su ti SUBJECTS! sta je poenta imati ih ovako ??
-    
-    private (set) var blocks: Results<RealmBlock>! // ostavio sam zbog vc-a.. (nije dobro ovo)
-//    private (set) var blocksSortedByDate = [RealmBlock]()
+
 
     private (set) var sectionBlocks = [[RealmBlock]]() // niz nizova jer je tableView sa sections
     
@@ -27,10 +26,7 @@ class BlockViewModel {
     
     // output 1 - za prikazivanje blocks na tableView...
     
-    var sectionsHeadersAndItems = [SectionOfCustomData]()
-    var oSectionsHeadersAndItems: Observable<[SectionOfCustomData]> {
-        return Observable.just(sectionsHeadersAndItems)
-    }
+    let items: Driver<[SectionOfCustomData]>
     
     // output 2 - expose your calculated stuff
     var oAutomaticSession = BehaviorSubject<RealmBlock?>.init(value: nil)
@@ -57,43 +53,25 @@ class BlockViewModel {
     // 1 - dependencies-init
     init(roomId: Int) {
         self.roomId = roomId
-        bindOutput()
+        guard let realm = try? Realm() else { fatalError() }
+        // ovde mi treba jos da su od odgovarajuceg Room-a
+        let blocks = realm
+            .objects(RealmBlock.self)
+            .filter("type = 'Oral'")
+            .filter("location_id = %@", roomId)
+        self.items = Observable.collection(from: blocks)
+            .map { $0.sorted { Date.parse($0.starts_at) < Date.parse($1.starts_at) } }
+            .map { (blocks) -> [SectionOfCustomData] in
+                let sectionName = blocks.first?.starts_at.components(separatedBy: " ").first ?? ""
+                let items = blocks.map {$0.starts_at + " " + $0.name}
+                return [SectionOfCustomData.init(header: sectionName, items: items)]
+            }
+            .asDriver(onErrorJustReturn: [])
         bindAutomaticSession()
     }
     
     //... 2 - input
     
-    // 3 - output
-    
-    private(set) var oBlocks: Observable<(AnyRealmCollection<RealmBlock>, RealmChangeset?)>!
-    
-    private func bindOutput() { // hook-up se za Realm, sada su Rooms synced sa bazom
-        
-        guard let realm = try? Realm() else { return }
-        
-        // ovde mi treba jos da su od odgovarajuceg Room-a
-        blocks = realm
-                    .objects(RealmBlock.self)
-                    .filter("type = 'Oral'")
-                    .filter("location_id = %@", roomId)
-        
-        sectionBlocks = sortBlocksByDay(blocksArray: blocks.toArray())
-        
-        blocksSortedByDate = blocks.toArray().sorted(by: {
-            return Date.parse($0.starts_at) < Date.parse($1.starts_at)
-        })
-        
-        oBlocks = Observable.changeset(from: blocks)
-        
-        let blocksByDay = sortBlocksByDay(blocksArray: blocks.toArray()) // private helper
-        
-        sectionsHeadersAndItems = blocksByDay.map({ (blocks) -> SectionOfCustomData in
-            let sectionName = blocks.first?.starts_at.components(separatedBy: " ").first ?? ""
-            let items = blocks.map {$0.starts_at + " " + $0.name}
-            return SectionOfCustomData.init(header: sectionName, items: items)
-        })
-        
-    }
     
     // ako ima bilo koji session u zadatom Room, na koji se ceka krace od 2 sata, emituj SessionId; ako nema, emituj nil.
     private func bindAutomaticSession() {
@@ -106,27 +84,27 @@ class BlockViewModel {
     }
     
     // verzija sa fiksiranim intervalom od: TimeInterval.waitToMostRecentSession
-    private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
-//        let now = Date.init(timeIntervalSinceNow: 0) // 1
-        
-        let now = NOW // mock date !
-        
-        guard let firstAvailableSession = mostRecentSessionBlock else {
-            return false
-        }
-        let sessionDate = Date.parse(firstAvailableSession.starts_at) // 2
-        let date = now.addingTimeInterval(TimeInterval.waitToMostRecentSession) // 3
-        
-        let difference = date.timeIntervalSince(sessionDate)
-        if difference < 0 { // ima da ceka vise od zadatog intervala
-            return false
-        }
-        
-        return difference < TimeInterval.waitToMostRecentSession
-        
-    }
+//    private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
+////        let now = Date.init(timeIntervalSinceNow: 0) // 1
+//
+//        let now = NOW // mock date !
+//
+//        guard let firstAvailableSession = mostRecentSessionBlock else {
+//            return false
+//        }
+//        let sessionDate = Date.parse(firstAvailableSession.starts_at) // 2
+//        let date = now.addingTimeInterval(TimeInterval.waitToMostRecentSession) // 3
+//
+//        let difference = date.timeIntervalSince(sessionDate)
+//        if difference < 0 { // ima da ceka vise od zadatog intervala
+//            return false
+//        }
+//
+//        return difference < TimeInterval.waitToMostRecentSession
+//
+//    }
     
-    private func autoSessionIsAvailableImplementMe(inLessThan interval: TimeInterval) -> Bool { // implement me
+    private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
         //        let now = Date.init(timeIntervalSinceNow: 0) // 1
         
         let now = NOW // mock date !

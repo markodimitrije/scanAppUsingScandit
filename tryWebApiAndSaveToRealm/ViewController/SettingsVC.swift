@@ -138,6 +138,9 @@ class SettingsVC: UITableViewController {
                 strSelf.saveSettingsAndExitBtn.isUserInteractionEnabled = validSettings
             })
             .disposed(by: disposeBag)
+        
+        
+        
     }
     
     private func bindReachability() {

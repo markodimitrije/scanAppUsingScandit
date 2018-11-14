@@ -31,6 +31,8 @@ class ResourcesState {
         }
     }
     
+    private var oAppDidBecomeActive = BehaviorSubject<Void>.init(value: ())
+    
     private var timer: Timer?
     
     private let bag = DisposeBag()
@@ -38,21 +40,6 @@ class ResourcesState {
     private var downloads = PublishSubject<Bool>.init()
     
     init() {
-        
-        print("creating ResourcesState")
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.appDidBecomeActive),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil)
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.appWillEnterBackground),
-            name: UIApplication.willResignActiveNotification,
-            object: nil)
-        
         downloads
             .take(2) // room API and blocks API
             .reduce(true) { (sum, last) -> Bool in
@@ -64,11 +51,19 @@ class ResourcesState {
                 sSelf.timer?.invalidate()
             })
             .disposed(by: bag)
+
+        
+        
+        let delegate = (UIApplication.shared.delegate as! AppDelegate)
+        delegate.rx.sentMessage(#selector(AppDelegate.applicationDidBecomeActive(_:)))
+            .subscribe(onNext: { [weak self] event in
+                guard let sSelf = self else {return}
+                sSelf.downloadResources()
+            })
+            .disposed(by: bag)
     }
     
-    @objc private func appDidBecomeActive() {
-        
-        print("ResourcesState/ appDidBecomeActive is called")
+    private func downloadResources() { // rooms and blocks
         
         if shouldDownloadResources {
             
@@ -84,6 +79,7 @@ class ResourcesState {
                     repeats: true)
             }
         }
+        
     }
     
     @objc private func appWillEnterBackground() {
@@ -126,10 +122,10 @@ class ResourcesState {
                 
                 if realmIsEmpty {
                     
-//                    strongSelf.fetchRoomsAndSaveToRealm()
-//                    strongSelf.fetchSessionsAndSaveToRealm()
-                    strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
-                    strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
+                    strongSelf.fetchRoomsAndSaveToRealm()
+                    strongSelf.fetchSessionsAndSaveToRealm()
+//                    strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
+//                    strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
                     
                 }
             })
@@ -231,7 +227,7 @@ class ResourcesState {
                 
                 let mock = blocks.map { (block) -> Block in
                     block.starts_at = mockDates[block.id] ?? block.starts_at
-                    print("id \(block.id) starts_at \(block.starts_at)")
+                    
                     return block
                 }
                 

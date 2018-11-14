@@ -46,8 +46,8 @@ class BlocksVC: UIViewController {
             return dataSource.sectionModels[index].header
         }
         
-        Observable.just(blockViewModel.sectionsHeadersAndItems) // imas data u svom viewmodel
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+        blockViewModel.items
+            .drive( tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         // tableView didSelect
