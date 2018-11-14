@@ -30,13 +30,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "RealmBlock.duration.getter:Block.swift">
+         contextName = "closure #1 in BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "ends_at">
+               value = "Calendar.current.compare(NOW,&#10;                                            to: Date.parse($0.starts_at),&#10;                                            toGranularity: Calendar.Component.day) == ComparisonResult.orderedSame">
             </PersistentString>
             <PersistentString
-               value = "starts_at">
+               value = "blocksSortedByDate">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -61,10 +61,24 @@
          contextName = "BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "todayBlocks.count">
+               value = "blocksSortedByDate">
             </PersistentString>
             <PersistentString
-               value = "blocksSortedByDate">
+               value = "sectionBlocks">
+            </PersistentString>
+            <PersistentString
+               value = "todayBlocks.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RealmBlock.duration.getter:Block.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ends_at">
+            </PersistentString>
+            <PersistentString
+               value = "starts_at">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -79,17 +93,6 @@
             </PersistentString>
             <PersistentString
                value = "autoSelectSessionsView.controlSwitch">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Calendar.current.compare(NOW,&#10;                                            to: Date.parse($0.starts_at),&#10;                                            toGranularity: Calendar.Component.day) == ComparisonResult.orderedSame">
-            </PersistentString>
-            <PersistentString
-               value = "blocksSortedByDate">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

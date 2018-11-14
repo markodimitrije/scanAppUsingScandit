@@ -56,6 +56,8 @@ class BlockViewModel {
             }
             .first
         
+        print("mostRecentSessionBlock = \(first)")
+        
         return first
     }
     
@@ -101,7 +103,7 @@ class BlockViewModel {
         
     }
     
-<<<<<<< HEAD
+
     private func bindSelectedInterval() {
         oAutoSelSessInterval.asObservable()
             .subscribe(onNext: { [weak self] seconds in
@@ -117,13 +119,16 @@ class BlockViewModel {
         let now = NOW // mock date !
         
         guard let firstAvailableSession = mostRecentSessionBlock else {
+            print("nemam most recent session?")
             return false
         }
         let sessionDate = Date.parse(firstAvailableSession.starts_at) // 2
         let willingToWaitTill = now.addingTimeInterval(interval)//MyTimeInterval.waitToMostRecentSession) // 3
 
+        print("willingToWaitTill.vracam = \(willingToWaitTill > sessionDate)")
+        
         return willingToWaitTill > sessionDate
-=======
+
     // verzija sa fiksiranim intervalom od: TimeInterval.waitToMostRecentSession
 //    private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
 ////        let now = Date.init(timeIntervalSinceNow: 0) // 1
@@ -143,22 +148,22 @@ class BlockViewModel {
 //
 //        return difference < TimeInterval.waitToMostRecentSession
 //
-//    }
-    
-    private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
-        //        let now = Date.init(timeIntervalSinceNow: 0) // 1
-        
-        let now = NOW // mock date !
-        
-        guard let theMostRecent = mostRecentSessionBlock,
-            let recentStartDate = theMostRecent.starts_at.toDate(format: Date.defaultFormatString) else {
-                return false
-        } // nema nikakvih sesija
-        
-        return NOW < recentStartDate
->>>>>>> autoSelFirstAvailable
-        
     }
+    
+//    private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
+//        //        let now = Date.init(timeIntervalSinceNow: 0) // 1
+//
+//        let now = NOW // mock date !
+//
+//        guard let theMostRecent = mostRecentSessionBlock,
+//            let recentStartDate = theMostRecent.starts_at.toDate(format: Date.defaultFormatString) else {
+//                return false
+//        } // nema nikakvih sesija
+//
+//        return NOW < recentStartDate
+//
+//
+//    }
     
     private func sortBlocksByDay(blocksArray:[RealmBlock]) -> [[RealmBlock]] {
         
