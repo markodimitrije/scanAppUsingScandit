@@ -11,7 +11,7 @@ import Foundation
 let hourMinuteSet = Set<Calendar.Component>.init(arrayLiteral: .hour, .minute)
 
 var defaultAutoSessionDate: Date {
-    return Date.init(timeIntervalSinceNow: -TimeInterval(15*60))
+    return Date.init(timeIntervalSinceNow: -MyTimeInterval.waitToMostRecentSession)
 }
 
 var resourcesState: ResourcesState!

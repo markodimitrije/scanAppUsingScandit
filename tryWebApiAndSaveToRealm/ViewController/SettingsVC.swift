@@ -89,8 +89,16 @@ class SettingsVC: UITableViewController {
         
         sessionSelected // SESSION - sessionLbl
             .map {
-                guard let session = $0 else { return "Select session" }
+                guard let session = $0 else {
+                    if self.autoSelectSessionsView.switchState { // ON
+                        return SessionTextData.noAutoSessAvailable
+                    } else {
+                        return SessionTextData.selectSessManuallyOrTryAuto
+                    }
+                }
+
                 return session.starts_at + " " + session.name
+                
             }
             .bind(to: sessionLbl.rx.text)
             .disposed(by: disposeBag)
@@ -128,8 +136,8 @@ class SettingsVC: UITableViewController {
             }, onCompleted: { [weak self] in // slucaj da je cancel
                 guard let strongSelf = self else {return}
                 strongSelf.dismiss(animated: true)
-                //strongSelf.roomSelected.onNext(nil)
-                //strongSelf.sessionSelected.onNext(nil)
+                strongSelf.roomSelected.onNext(nil)
+                strongSelf.sessionSelected.onNext(nil)
             })
             .disposed(by: disposeBag)
         
@@ -231,7 +239,7 @@ class SettingsVC: UITableViewController {
                 
                 strongSelf.roomId = room.id // sranje, kako izvuci val iz PublishSubj? necu Variable..
                 strongSelf.roomSelected.onNext(room)
-                strongSelf.sessionSelected.onNext(nil)
+                //strongSelf.sessionSelected.onNext(nil) // bug fix
             })
             .disposed(by: disposeBag)
         
@@ -248,13 +256,25 @@ class SettingsVC: UITableViewController {
                 guard let strongSelf = self else {return false}
                 return strongSelf.autoSelectSessionsView.controlSwitch!.isOn
             }
-        switchState
+
+        let switchDrive = switchState
             .throttle(0.5, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
             .skipUntil(roomSelected)
-            .subscribe(onNext: { [weak self] switchState in
+        
+        let pickerDrive = setIntervalForAutoSessionView.picker
+            .rx.controlEvent(UIControlEvents.allEvents)
+            .map {_ in return self.autoSelectSessionsView.controlSwitch.isOn}
+            .asObservable()
+        
+        let source = Observable.combineLatest(switchDrive, pickerDrive) { (switcher, picker) -> Bool in
+            return switcher && picker
+        }
+        
+        source
+            .subscribe(onNext: { [weak self] userAction in
                 guard let strongSelf = self else {return}
-                strongSelf.autoSelSessionViewModel.switchState.onNext(switchState) // forward..
+                
+                strongSelf.autoSelSessionViewModel.switchState.onNext(userAction) // forward..
             })
             .disposed(by: disposeBag)
         
@@ -263,12 +283,6 @@ class SettingsVC: UITableViewController {
                 guard let strongSelf = self else {return}
                 strongSelf.sessionSelected.onNext(session)
             })
-            .disposed(by: disposeBag)
-        
-        roomSelected
-            .distinctUntilChanged()
-            .map {_ in return false} // hocemo da je default iskljuceno
-            .bind(to: autoSelectSessionsView.controlSwitch.rx.isOn)
             .disposed(by: disposeBag)
     }
     
@@ -304,9 +318,11 @@ class SettingsVC: UITableViewController {
     
 }
 
-extension SettingsVC {
+extension SettingsVC { // ovo treba da napises preko Rx ....
     @objc func datePickerValueChanged(_ picker: UIDatePicker) {
-        print("datePickerValueChanged.value = \(picker.countDownDuration)")
+//        print("datePickerValueChanged.value = \(picker.countDownDuration)")
         self.selectedInterval.value = picker.countDownDuration
     }
 }
+
+

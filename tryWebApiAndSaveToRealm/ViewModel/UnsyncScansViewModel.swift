@@ -75,7 +75,7 @@ class UnsyncScansViewModel {
         Observable.collection(from: result)
             .subscribe(onNext: { [weak self] items in
                 guard let sSelf = self else {return}
-                print("Query returned \(items.count) items")
+                //print("UnsyncScansViewModel.Query returned \(items.count) items")
                 sSelf.syncScansCount.onNext(items.count) // output syncScansCount
             })
             .disposed(by: bag)

@@ -14,7 +14,8 @@ enum SessionTextData {
     static let noActiveSessionForRoom = NSLocalizedString("Strings.Scaner.session.noActiveSessionForRoom", comment: "")
     static let selectSession = NSLocalizedString("Strings.Scaner.session.selectSession", comment: "")
     static let noAutoSelSessionsAvailable = NSLocalizedString("Strings.Scaner.session.noAutoSelSessionsAvailable", comment: "")
-
+    static let selectSessManuallyOrTryAuto = NSLocalizedString("Strings.Scaner.session.selSessionManuallyOrTryAuto", comment: "")
+    static let noAutoSessAvailable = NSLocalizedString("Strings.Scaner.session.noAutoSessionAvailable", comment: "")
     
 }
 
@@ -25,7 +26,8 @@ enum RoomTextData {
 
 struct MyTimeInterval {
     static let waitToMostRecentSession: TimeInterval = 15*60 // 15 minutes
-    //static var waitToMostRecentSession: TimeInterval = 60*60 // 60 minutes
+    
+    //static var waitToMostRecentSession: TimeInterval = 60*60 // 1 hours
     static let timerForFetchingRoomAndBlockResources: Double = 15 // 10 seconds
     static let timeoutForFetchingRoomAndBlockResources = 10 // 10 seconds
 }

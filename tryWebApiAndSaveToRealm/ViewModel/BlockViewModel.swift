@@ -44,9 +44,7 @@ class BlockViewModel {
     var selInterval: Int?
     
     private var mostRecentSessionBlock: RealmBlock? {
-//        let todayBlocks = blocksSortedByDate.filter {
-//            Calendar.current.isDateInToday(Date.parse($0.starts_at))
-//        }
+
         let todayBlocks = blocksSortedByDate.filter { // mock za test !
             return Calendar.current.compare(NOW,
                                             to: Date.parse($0.starts_at),
@@ -55,7 +53,7 @@ class BlockViewModel {
         
         let first = todayBlocks.filter { block -> Bool in
             let startsAt = Date.parse(block.starts_at)
-            //return startsAt > Date.now
+            
             return startsAt > NOW
             }
             .first
@@ -108,9 +106,6 @@ class BlockViewModel {
     // ako ima bilo koji session u zadatom Room, na koji se ceka krace od 2 sata, emituj SessionId; ako nema, emituj nil.
     private func bindAutomaticSession(interval: TimeInterval = MyTimeInterval.waitToMostRecentSession) {
         
-        //let result = autoSessionIsAvailable(inLessThan: interval) ?
-        //mostRecentSessionBlock : nil
-        
         let sessionAvailable = autoSessionIsAvailable(inLessThan: interval)
         
         if sessionAvailable {
@@ -119,15 +114,13 @@ class BlockViewModel {
             oAutomaticSession.onNext(nil)
         }
         
-        //oAutomaticSession.onNext(result)
-        
     }
     
     private func bindSelectedInterval() {
         oAutoSelSessInterval.asObservable()
             .subscribe(onNext: { [weak self] seconds in
                 guard let sSelf = self else {return}
-                print("imam zadati interval \(seconds), recalculate....")
+//                print("imam zadati interval \(seconds), recalculate....")
                 sSelf.bindAutomaticSession(interval: seconds)
             })
             .disposed(by: disposeBag)
@@ -143,6 +136,8 @@ class BlockViewModel {
         let sessionDate = Date.parse(firstAvailableSession.starts_at) // 2
         let willingToWaitTill = now.addingTimeInterval(interval)//MyTimeInterval.waitToMostRecentSession) // 3
 
+//        print("willingToWaitTill > sessionDate = \(willingToWaitTill > sessionDate)")
+        
         return willingToWaitTill > sessionDate
         
     }
@@ -167,7 +162,7 @@ class BlockViewModel {
         return resultArray
     }
     
-    deinit { print("deinit/BlockViewModel is deinit") }
+    //deinit { print("deinit/BlockViewModel is deinit") }
     
 }
 
