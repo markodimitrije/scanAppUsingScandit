@@ -61,10 +61,13 @@
          contextName = "BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "blocksSortedByDate">
+               value = "todayBlocks.count">
             </PersistentString>
             <PersistentString
-               value = "todayBlocks.count">
+               value = "first.description">
+            </PersistentString>
+            <PersistentString
+               value = "blocksSortedByDate">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

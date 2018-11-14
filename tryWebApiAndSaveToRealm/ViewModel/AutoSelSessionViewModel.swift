@@ -12,7 +12,7 @@ import RxCocoa
 import Realm
 import RealmSwift
 
-struct AutoSelSessionViewModel {
+class AutoSelSessionViewModel {
     
     let bag = DisposeBag()
     let blockViewModel: BlockViewModel!
@@ -45,7 +45,11 @@ struct AutoSelSessionViewModel {
                     self.selectedSession.onNext(nil)
                 }
             })
-        .disposed(by: bag)
+        //.disposed(by: bag)
     }
-
+    
+    deinit {
+        print("AutoSelSessionViewModel.deinit")
+    }
+    
 }

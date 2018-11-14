@@ -120,7 +120,7 @@ class BlockViewModel {
         oAutoSelSessInterval.asObservable()
             .subscribe(onNext: { [weak self] seconds in
                 guard let sSelf = self else {return}
-//                print("imam zadati interval \(seconds), recalculate....")
+                print("imam zadati interval \(seconds), recalculate....")
                 sSelf.bindAutomaticSession(interval: seconds)
             })
             .disposed(by: disposeBag)

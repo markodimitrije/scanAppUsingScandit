@@ -251,6 +251,12 @@ class SettingsVC: UITableViewController {
         autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
         autoSelSessionViewModel.selectedRoom = roomSelected
         
+        self.selectedInterval.asObservable()
+            .subscribe(onNext: { (val) in
+                self.autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval.value = val
+                self.autoSelSessionViewModel.switchState.onNext(self.autoSelectSessionsView.controlSwitch!.isOn)
+            }).disposed(by: disposeBag)
+        
         let switchState: Observable<Bool> = autoSelectSessionsView.controlSwitch.rx.controlEvent(.allTouchEvents)
             .map { [weak self] _ in
                 guard let strongSelf = self else {return false}
