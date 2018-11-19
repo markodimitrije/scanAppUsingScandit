@@ -36,3 +36,24 @@ extension Reactive where Base: UITableView {
     }
     
 }
+
+extension Reactive where Base: UIViewController {
+    var shouldBeDismiss: Binder<Bool> {
+        return Binder(self.base) { target, shouldDismiss in
+            if shouldDismiss {
+                target.dismiss(animated: true)
+            } else {
+                // mozes neki alert i slicno....
+            }
+        }
+    }
+}
+
+extension Reactive where Base: UIButton {
+    var btnIsActive: Binder<Bool> {
+        return Binder(self.base) { target, value in
+            target.alpha = value ? 1.0 : 0.5
+            target.isUserInteractionEnabled = value
+        }
+    }
+}

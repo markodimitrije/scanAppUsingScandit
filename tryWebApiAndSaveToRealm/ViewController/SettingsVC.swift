@@ -79,12 +79,10 @@ class SettingsVC: UITableViewController {
     
     private func bindUI() { // glue code for selected Room
         
-        let roomSelectedShared = roomSelected // ROOM - roomLbl
+        roomSelected
+            .asDriver(onErrorJustReturn: nil)
             .map { $0?.name ?? RoomTextData.selectRoom }
-            .share()
-        
-        roomSelectedShared // ROOM - roomLbl
-            .bind(to: roomLbl.rx.text)
+            .drive(roomLbl.rx.text)
             .disposed(by: disposeBag)
         
         sessionSelected // SESSION - sessionLbl
@@ -96,9 +94,7 @@ class SettingsVC: UITableViewController {
                         return SessionTextData.selectSessManuallyOrTryAuto
                     }
                 }
-
                 return session.starts_at + " " + session.name
-
             }
             .bind(to: sessionLbl.rx.text)
             .disposed(by: disposeBag)
@@ -117,18 +113,17 @@ class SettingsVC: UITableViewController {
             .disposed(by: disposeBag)
         
         // switch povezivanje - end
+        // shouldCloseSettingsVC dismiss behaviour - start
         
-        settingsViewModel.shouldCloseSettingsVC
-            .subscribe(onNext: { [weak self] in
-                guard let strongSelf = self else {return}
-                if $0 {
-                    
-                    strongSelf.dismiss(animated: true)
-                    
-                } else {
-                    print("prikazi alert da izabere room....")
-                }
-            }, onCompleted: { [weak self] in // slucaj da je cancel
+        let shouldCloseSettingsVCDriver = settingsViewModel.shouldCloseSettingsVC
+            .asDriver(onErrorJustReturn: false)
+        
+        shouldCloseSettingsVCDriver
+            .drive(self.rx.shouldBeDismiss)
+            .disposed(by: disposeBag)
+        
+        shouldCloseSettingsVCDriver
+            .drive(onCompleted: { [weak self] in
                 guard let strongSelf = self else {return}
                 strongSelf.dismiss(animated: true)
                 strongSelf.roomSelected.onNext(nil)
@@ -136,14 +131,11 @@ class SettingsVC: UITableViewController {
             })
             .disposed(by: disposeBag)
         
+        // saveSettingsAndExitBtn availability for user interaction - start
         Observable.combineLatest(roomSelected, sessionSelected, resultSelector: { (room, session) -> Bool in // OK
             return room != nil && session != nil
-        })
-            .subscribe(onNext: { [weak self] validSettings in//[weak self] (block) in
-                guard let strSelf = self else {return}
-                strSelf.saveSettingsAndExitBtn.alpha = validSettings ? 1.0 : 0.5
-                strSelf.saveSettingsAndExitBtn.isUserInteractionEnabled = validSettings
-            })
+        }).asDriver(onErrorJustReturn: false)
+            .drive(saveSettingsAndExitBtn.rx.btnIsActive)
             .disposed(by: disposeBag)
     }
     
@@ -252,7 +244,6 @@ class SettingsVC: UITableViewController {
                 strongSelf.sessionSelected.onNext(session)
             })
             .disposed(by: disposeBag)
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
