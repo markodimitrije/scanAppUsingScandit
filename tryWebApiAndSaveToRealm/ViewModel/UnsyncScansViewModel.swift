@@ -37,7 +37,7 @@ class UnsyncScansViewModel {
     
     private (set) var syncScansCount = BehaviorSubject<Int>.init(value: 0)
     
-    var syncFinished = Variable<Bool>.init(false)
+    var syncFinished = BehaviorRelay<Bool>.init(value: false)
     
     private func bindInputWithOutput() {
         // povezi se sa ostalim inputs i emituj na svoj output

@@ -29,8 +29,8 @@ struct SettingsViewModel {
     }
     
     // INPUT // treba da slusas preko vc-a o room i session
-    var roomSelected = Variable<RealmRoom?>.init(nil)
-    var sessionSelected = Variable<RealmBlock?>.init(nil)
+    var roomSelected = BehaviorRelay<RealmRoom?>.init(value: nil)
+    var sessionSelected = BehaviorRelay<RealmBlock?>.init(value: nil)
     
     private var oRoomSelected: Observable<RealmRoom?> {
         return roomSelected.asObservable()
@@ -44,6 +44,8 @@ struct SettingsViewModel {
     
     var shouldCloseSettingsVC = PublishSubject<Bool>()
     
+    var oSessionText = BehaviorRelay<String>.init(value: "")
+    
     // MARK:- Privates
     
     private func bindControls() { // ovo radi za session + saveSettings
@@ -55,16 +57,7 @@ struct SettingsViewModel {
         oSaveSettingsClick.withLatestFrom(oSessionSelected)
             .subscribe(onNext: { block in
                 
-                // self.shouldCloseSettingsVC.onNext(!(block == nil))
-                
-                if block == nil {
-                    
-                    self.shouldCloseSettingsVC.onNext(false)
-                    
-                } else {
-
-                    self.shouldCloseSettingsVC.onNext(true)
-                }
+                self.shouldCloseSettingsVC.onNext(block != nil)
 
             })
             .disposed(by: disposeBag)

@@ -11,6 +11,7 @@ import RealmSwift
 import Realm
 import RxSwift
 import RxRealm
+import RxCocoa
 
 class BlockViewModel {
     
@@ -27,7 +28,7 @@ class BlockViewModel {
     
     // INPUT (javice ti neko, ono sto procita drugi model...)
     
-    var oAutoSelSessInterval = Variable.init(MyTimeInterval.waitToMostRecentSession)
+    var oAutoSelSessInterval = BehaviorRelay.init(value: MyTimeInterval.waitToMostRecentSession)
     
     // output 1 - za prikazivanje blocks na tableView...
     
@@ -37,7 +38,13 @@ class BlockViewModel {
     }
     
     // output 2 - expose your calculated stuff
-    var oAutomaticSession = BehaviorSubject<RealmBlock?>.init(value: nil)
+    //var oAutomaticSession = BehaviorSubject<RealmBlock?>.init(value: nil)
+    var oAutomaticSession = BehaviorRelay<RealmBlock?>.init(value: nil)
+    
+    //var oAutomaticSessionDriver: SharedSequence<DriverSharingStrategy, RealmBlock?> {
+    var oAutomaticSessionDriver: Driver<RealmBlock?> {
+        return oAutomaticSession.asDriver(onErrorJustReturn: nil)
+    }
     
     let roomId: Int
     
@@ -109,9 +116,11 @@ class BlockViewModel {
         let sessionAvailable = autoSessionIsAvailable(inLessThan: interval)
         
         if sessionAvailable {
-            oAutomaticSession.onNext(mostRecentSessionBlock)
+            //oAutomaticSession.onNext(mostRecentSessionBlock) // radi za behaviourSubject
+            oAutomaticSession.accept(mostRecentSessionBlock)
         } else {
-            oAutomaticSession.onNext(nil)
+            //oAutomaticSession.onNext(nil) // radi za behaviourSubject
+            oAutomaticSession.accept(nil)
         }
         
     }
@@ -120,7 +129,7 @@ class BlockViewModel {
         oAutoSelSessInterval.asObservable()
             .subscribe(onNext: { [weak self] seconds in
                 guard let sSelf = self else {return}
-                print("imam zadati interval \(seconds), recalculate....")
+//                print("imam zadati interval \(seconds), recalculate....")
                 sSelf.bindAutomaticSession(interval: seconds)
             })
             .disposed(by: disposeBag)

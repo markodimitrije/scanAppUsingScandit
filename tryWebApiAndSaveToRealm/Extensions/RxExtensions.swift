@@ -21,3 +21,18 @@ extension Reactive where Base: UISwitch {
         }
     }
 }
+
+extension Reactive where Base: UITableView {
+    
+    var roomValidationSideEffects: Binder<RealmRoom?> {
+        return Binder(self.base) { target, roomSelected in // _ je view (self)
+            _ = target.visibleCells.filter {
+                target.indexPath(for: $0)?.section == 1
+                }.map {
+                    $0.isUserInteractionEnabled = (roomSelected != nil)
+                    $0.alpha = (roomSelected != nil) ? 1.0: 0.5
+            }
+        }
+    }
+    
+}

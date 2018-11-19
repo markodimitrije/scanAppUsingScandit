@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class WiFiConnectionView: UIView {
     
@@ -16,7 +18,9 @@ class WiFiConnectionView: UIView {
     
     @IBOutlet weak var wiFiStatusLbl: UILabel!
     
-    var wiFiStatusConstText: String? {
+    //var oWiFiConnected: Observable<Bool>! = Observable<Void>.
+    
+    private (set) var wiFiStatusConstText: String? {
         get {
             return wiFiStatusConstLbl.text
         }
@@ -25,7 +29,7 @@ class WiFiConnectionView: UIView {
         }
     }
     
-    var wiFiConnectedConstText: String? {
+    private (set) var wiFiConnectedConstText: String? {
         get {
             return wiFiConnectedConstLbl.text
         }
@@ -34,7 +38,7 @@ class WiFiConnectionView: UIView {
         }
     }
     
-    var statusText: String? {
+    fileprivate (set) var statusText: String? {
         get {
             return wiFiStatusLbl.text
         }
@@ -62,7 +66,7 @@ class WiFiConnectionView: UIView {
         self.wiFiConnectedConstText = wiFiConnectedConstText
         self.statusText = statusText
     }
-    func loadViewFromNib() {
+    private func loadViewFromNib() {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "WiFiConnectionView", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
@@ -73,14 +77,14 @@ class WiFiConnectionView: UIView {
         
     }
     
-    func update(connected: Bool) {
+    fileprivate func update(connected: Bool) {
         
         self.statusText = connected ? "✔︎" : "✘"
         updateColor(connected: connected)
         
     }
     
-    private func updateColor(connected: Bool) {
+    fileprivate func updateColor(connected: Bool) {
         
         let color = connected ? UIColor.wiFiConnected : UIColor.wiFiDisconnected
         
@@ -89,4 +93,32 @@ class WiFiConnectionView: UIView {
         wiFiStatusLbl.textColor = color
     }
     
+}
+
+extension Reactive where Base: WiFiConnectionView {
+    
+    var connected: Binder<Bool> {
+        return Binder(self.base) { _, connected in // _ je view (self)
+            //print("update wi-fi connection with: \(connected)")
+            self.base.update(connected: connected)
+        }
+    }
+    
+}
+
+//extension Reactive where Base: RealmBlock {
+//    var sessionLblTxt: Binder<String> {
+//        return Binder.init(self.base, binding: { (block, value) in
+//
+//        })
+//    }
+//}
+
+
+extension Reactive where Base: UILabel {
+    var sessionLblTxt: Binder<String> {
+        return Binder.init(self.base, binding: { (lbl, value) in
+            lbl.text = value + "whatever" // ....
+        })
+    }
 }

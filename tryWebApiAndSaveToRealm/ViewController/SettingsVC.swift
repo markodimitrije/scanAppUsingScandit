@@ -37,7 +37,7 @@ class SettingsVC: UITableViewController {
     }
     let roomSelected = BehaviorSubject<RealmRoom?>.init(value: nil)
     let sessionSelected = BehaviorSubject<RealmBlock?>.init(value: nil)
-    var selectedInterval = Variable<TimeInterval>.init(MyTimeInterval.waitToMostRecentSession) // posesava na odg XIB
+    var selectedInterval = BehaviorRelay<TimeInterval>.init(value: MyTimeInterval.waitToMostRecentSession) // posesava na odg XIB
     
     // input - trebalo je u INIT !!
     var codeScaned = BehaviorSubject<String>.init(value: "")
@@ -60,7 +60,7 @@ class SettingsVC: UITableViewController {
         saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside),
         cancelSettings: cancelSettingsBtn.rx.tap)
     
-    lazy fileprivate var autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
+    lazy fileprivate var autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
     
     lazy fileprivate var unsyncScansViewModel = UnsyncScansViewModel.init(syncScans: unsyncedScansView.syncBtn.rx.controlEvent(.touchUpInside))
     
@@ -98,7 +98,7 @@ class SettingsVC: UITableViewController {
                 }
 
                 return session.starts_at + " " + session.name
-                
+
             }
             .bind(to: sessionLbl.rx.text)
             .disposed(by: disposeBag)
@@ -108,20 +108,15 @@ class SettingsVC: UITableViewController {
     private func bindControlEvents() {
         // ova 2 su INPUT za settingsViewModel - start
         
-        roomSelected
-            .subscribe(onNext: { [weak self] (selectedRoom) in
-                guard let strongSelf = self else {return}
-                strongSelf.settingsViewModel.roomSelected.value = selectedRoom
-            })
+        roomSelected.asDriver(onErrorJustReturn: nil)
+            .drive(settingsViewModel.roomSelected)
             .disposed(by: disposeBag)
         
-        sessionSelected
-            .subscribe(onNext: { [weak self] (sessionSelected) in
-                guard let strongSelf = self else {return}
-                strongSelf.settingsViewModel.sessionSelected.value = sessionSelected
-            })
+        sessionSelected.asDriver(onErrorJustReturn: nil)
+            .drive(settingsViewModel.sessionSelected)
             .disposed(by: disposeBag)
-        // ova 2 su INPUT za settingsViewModel - end
+        
+        // switch povezivanje - end
         
         settingsViewModel.shouldCloseSettingsVC
             .subscribe(onNext: { [weak self] in
@@ -155,13 +150,10 @@ class SettingsVC: UITableViewController {
     private func bindReachability() {
         
         connectedToInternet()
-            //.debug("")
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] status in
-                guard let strongSelf = self else {return}
-                strongSelf.wiFiConnectionView.update(connected: status)
-            })
+            .asDriver(onErrorJustReturn: false)
+            .drive(wiFiConnectionView.rx.connected) // ovo je var tipa binder na xib-u
             .disposed(by: disposeBag)
+        
     }
     
     private func bindUnsyncedScans() {
@@ -191,9 +183,9 @@ class SettingsVC: UITableViewController {
             action: #selector(SettingsVC.datePickerValueChanged(_:)),
             for:.valueChanged)
         
-        selectedInterval
+        selectedInterval // ovo je bilo ok dok nisam ubacio picker kontrolu
             .asObservable()
-            .bind(to: autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval)
+            .bind(to: autoSelSessionViewModel.inSelTimeInterval)
             .disposed(by: disposeBag)
         
     }
@@ -201,18 +193,9 @@ class SettingsVC: UITableViewController {
     private func bindState() {
         
         roomSelected
-            .subscribe(onNext: { [weak self] room in
-                guard let strongSelf = self else {return}
-                //reloadAutoSelViewModel(forRoomId: room?.id)
-                _ = strongSelf.tableView.visibleCells.filter {
-                    strongSelf.tableView.indexPath(for: $0)?.section == 1
-                    }.map {
-                        $0.isUserInteractionEnabled = (room != nil)
-                        $0.alpha = (room != nil) ? 1.0: 0.5
-                    }
-            })
+            .asDriver(onErrorJustReturn: nil) // ovu liniju napisi u modelu...
+            .drive(tableView.rx.roomValidationSideEffects) // ovo je rx world, npr Binder na extension Reactive where Base: TableView
             .disposed(by: disposeBag)
-        
     }
     
     private func getActualCodeReport() -> CodeReport { // refactor - delete
@@ -224,36 +207,27 @@ class SettingsVC: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        hookUpIfRoomSegue(for: segue, sender: sender)
-    
-    }
-    
-    private func hookUpIfRoomSegue(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard let name = segue.identifier, name == "segueShowRooms",
             let roomsVC = segue.destination as? RoomsVC else { return }
         
-        roomsVC.selectedRealmRoom
-            .subscribe(onNext: { [weak self] (room) in
-                guard let strongSelf = self else {return}
-                
-                strongSelf.roomId = room.id // sranje, kako izvuci val iz PublishSubj? necu Variable..
-                strongSelf.roomSelected.onNext(room)
-                //strongSelf.sessionSelected.onNext(nil) // bug fix
+        roomsVC.selRoomDriver
+            .do(onNext: { room in // side-effect
+                self.roomId = room.id
             })
+            .drive(roomSelected)
             .disposed(by: disposeBag)
-        
+    
     }
     
     private func bindXibEvents() { // ovde hook-up controls koje imas na xib
         
         // mozes da viewmodel-u prosledis switch kao hook  // + treba mu i room
-        autoSelSessionViewModel = AutoSelSessionViewModel.init(roomId: roomId)
+        autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
         autoSelSessionViewModel.selectedRoom = roomSelected
         
         self.selectedInterval.asObservable()
             .subscribe(onNext: { (val) in
-                self.autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval.value = val
+                self.autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval.accept(val)
                 self.autoSelSessionViewModel.switchState.onNext(self.autoSelectSessionsView.controlSwitch!.isOn)
             }).disposed(by: disposeBag)
         
@@ -268,7 +242,6 @@ class SettingsVC: UITableViewController {
             .skipUntil(roomSelected)
             .subscribe(onNext: { [weak self] switchState in
                 guard let strongSelf = self else {return}
-                print("forwardujem switch event")
                 strongSelf.autoSelSessionViewModel.switchState.onNext(switchState) // forward..
             })
             .disposed(by: disposeBag)
@@ -282,30 +255,27 @@ class SettingsVC: UITableViewController {
         
     }
     
-    private func navigateToSessionVCAndSubscribeForSelectedSession(roomId: Int) {
-        
-        if autoSelectSessionsView.controlSwitch.isOn { return }
-        
-        guard let blocksVC = storyboard?.instantiateViewController(withIdentifier: "BlocksVC") as? BlocksVC else {return}
-        
-        blocksVC.selectedRoomId = roomId
-        navigationController?.pushViewController(blocksVC, animated: true)
-    
-        blocksVC.selectedRealmBlock
-            .subscribe(onNext: { [weak self] block in
-                guard let strongSelf = self else {return}
-                strongSelf.sessionSelected.onNext(block)
-            })
-            .disposed(by: disposeBag)
-        
-    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.section, indexPath.item) {
         //case (0, 0): print("auto segue ka rooms...")
         case (1, 0):
+            
             guard let roomId = roomId else {return}
-            navigateToSessionVCAndSubscribeForSelectedSession(roomId: roomId)
+            
+            if autoSelectSessionsView.controlSwitch.isOn { return }
+            
+            guard let blocksVC = storyboard?.instantiateViewController(withIdentifier: "BlocksVC") as? BlocksVC else {return}
+            
+            blocksVC.selectedRoomId = roomId
+            navigationController?.pushViewController(blocksVC, animated: true)
+            
+            blocksVC.selectedRealmBlock
+                .subscribe(onNext: { [weak self] block in
+                    guard let strongSelf = self else {return}
+                    strongSelf.sessionSelected.onNext(block)
+                })
+                .disposed(by: disposeBag)
+            
         default: break
         }
     }
@@ -317,8 +287,6 @@ class SettingsVC: UITableViewController {
 extension SettingsVC { // ovo treba da napises preko Rx ....
     @objc func datePickerValueChanged(_ picker: UIDatePicker) {
 //        print("datePickerValueChanged.value = \(picker.countDownDuration)")
-        self.selectedInterval.value = picker.countDownDuration
+        self.selectedInterval.accept(picker.countDownDuration)
     }
 }
-
-

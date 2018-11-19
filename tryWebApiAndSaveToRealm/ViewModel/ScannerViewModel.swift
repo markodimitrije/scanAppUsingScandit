@@ -26,7 +26,7 @@ struct ScannerViewModel {
     // OUTPUT
     var sessionName = PublishSubject<String>.init()
     var sessionInfo = PublishSubject<String>.init()
-    private (set) var oSessionId = Variable<Int>.init(-1) // err state
+    private (set) var oSessionId = BehaviorRelay<Int>.init(value: -1) // err state
     var sessionId: Int {
         return oSessionId.value
     }
@@ -49,7 +49,7 @@ struct ScannerViewModel {
             .subscribe(onNext: {  (blockName, blockInfo, blockId) in
                 self.sessionName.onNext(blockName)
                 self.sessionInfo.onNext(blockInfo)
-                self.oSessionId.value = blockId
+                self.oSessionId.accept(blockId)
             })
             .disposed(by: bag)
     }

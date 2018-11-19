@@ -22,8 +22,13 @@ class RoomsVC: UIViewController {
     let roomViewModel = RoomViewModel()
     
     fileprivate let selRealmRoom = PublishSubject<RealmRoom>()
+    
     var selectedRealmRoom: Observable<RealmRoom> { // exposed selectedRoomId
         return selRealmRoom.asObservable()
+    }
+    
+    var selRoomDriver: SharedSequence<DriverSharingStrategy, RealmRoom> {
+        return selectedRealmRoom.asDriver(onErrorJustReturn: roomViewModel.getRoom(forSelectedTableIndex: 0))
     }
 
     override func viewDidLoad() { super.viewDidLoad()
