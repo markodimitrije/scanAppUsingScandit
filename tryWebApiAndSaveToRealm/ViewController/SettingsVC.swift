@@ -57,13 +57,12 @@ class SettingsVC: UITableViewController {
     fileprivate let roomViewModel = RoomViewModel()
     
     lazy var settingsViewModel = SettingsViewModel(
-        saveSettings: saveSettingsAndExitBtn.rx.controlEvent(.touchUpInside),
-        cancelSettings: cancelSettingsBtn.rx.tap)
+                                        saveSettings: saveSettingsAndExitBtn.rx.tap,
+                                        cancelSettings: cancelSettingsBtn.rx.tap)
     
     lazy fileprivate var autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
     
-    lazy fileprivate var unsyncScansViewModel = UnsyncScansViewModel.init(syncScans: unsyncedScansView.syncBtn.rx.controlEvent(.touchUpInside))
-    
+    lazy fileprivate var unsyncScansViewModel = UnsyncScansViewModel.init(syncScans: unsyncedScansView.syncBtn.rx.tap.asDriver())
     
     override func viewDidLoad() { super.viewDidLoad()
         bindUI()
@@ -223,26 +222,14 @@ class SettingsVC: UITableViewController {
                 self.autoSelSessionViewModel.switchState.onNext(self.autoSelectSessionsView.controlSwitch!.isOn)
             }).disposed(by: disposeBag)
         
-        let switchState: Observable<Bool> = autoSelectSessionsView.controlSwitch.rx.controlEvent(.allTouchEvents)
-            .map { [weak self] _ in
-                guard let strongSelf = self else {return false}
-                return strongSelf.autoSelectSessionsView.controlSwitch!.isOn
-        }
-        switchState
-            .throttle(0.5, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .skipUntil(roomSelected)
-            .subscribe(onNext: { [weak self] switchState in
-                guard let strongSelf = self else {return}
-                strongSelf.autoSelSessionViewModel.switchState.onNext(switchState) // forward..
-            })
+        autoSelectSessionsView.controlSwitch.rx.switchActiveSequence // ovo je slabo, jer driver nije Model !!
+            .skipUntil(roomViewModel.selectedRoom)
+            .bind(to: autoSelSessionViewModel.switchState)
             .disposed(by: disposeBag)
         
         autoSelSessionViewModel.selectedSession // viewmodel-ov output
-            .subscribe(onNext: {  [weak self] (session) in
-                guard let strongSelf = self else {return}
-                strongSelf.sessionSelected.onNext(session)
-            })
+            .asDriver(onErrorJustReturn: nil)
+            .drive(sessionSelected) // steta sto nije Rx world nego sopstveni var, bind-ujes 2 puta....
             .disposed(by: disposeBag)
     }
     
@@ -251,11 +238,11 @@ class SettingsVC: UITableViewController {
         //case (0, 0): print("auto segue ka rooms...")
         case (1, 0):
             
-            guard let roomId = roomId else {return}
-            
-            if autoSelectSessionsView.controlSwitch.isOn { return }
-            
-            guard let blocksVC = storyboard?.instantiateViewController(withIdentifier: "BlocksVC") as? BlocksVC else {return}
+            guard let roomId = roomId,
+                !autoSelectSessionsView.controlSwitch.isOn,
+                let blocksVC = storyboard?.instantiateViewController(withIdentifier: "BlocksVC") as? BlocksVC else {
+                    return
+            }
             
             blocksVC.selectedRoomId = roomId
             navigationController?.pushViewController(blocksVC, animated: true)

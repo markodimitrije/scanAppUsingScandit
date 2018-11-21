@@ -14,6 +14,8 @@ import RealmSwift
 
 struct ScannerViewModel {
     
+    // INPUT
+    
     var roomSelected = PublishSubject<RealmRoom?>.init()
     var sessionSelected = PublishSubject<RealmBlock?>.init()
     
@@ -26,6 +28,10 @@ struct ScannerViewModel {
     // OUTPUT
     var sessionName = PublishSubject<String>.init()
     var sessionInfo = PublishSubject<String>.init()
+    //var sessionName: SharedSequence<DriverSharingStrategy, String>
+    //var sessionInfo: SharedSequence<DriverSharingStrategy, String>
+    var mySessionName: SharedSequence<DriverSharingStrategy, String>!
+
     private (set) var oSessionId = BehaviorRelay<Int>.init(value: -1) // err state
     var sessionId: Int {
         return oSessionId.value

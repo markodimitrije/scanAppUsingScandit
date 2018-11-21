@@ -22,6 +22,20 @@ extension Reactive where Base: UISwitch {
     }
 }
 
+extension Reactive where Base: UISwitch {
+    
+    var switchTapSequence: Observable<Void> {
+        return controlEvent(.allTouchEvents).asObservable()
+    }
+    var switchActiveSequence: Observable<Bool> {
+        return switchTapSequence.map({ (_) -> Bool in
+            return self.base.isOn
+            })
+            .throttle(0.5, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+    }
+}
+
 extension Reactive where Base: UITableView {
     
     var roomValidationSideEffects: Binder<RealmRoom?> {
@@ -57,3 +71,5 @@ extension Reactive where Base: UIButton {
         }
     }
 }
+
+

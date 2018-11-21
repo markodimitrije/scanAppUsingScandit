@@ -15,11 +15,9 @@ import RxCocoa
 
 class UnsyncScansViewModel {
     
-    let bag = DisposeBag()
+    private var syncScansTap: Driver<()>
     
-    var syncScansTap: ControlEvent<()>
-    
-    init(syncScans: ControlEvent<()>) {
+    init(syncScans: Driver<()>) {
         
         self.syncScansTap = syncScans // sacuvaj na sebi bez modifikacija
         
@@ -30,8 +28,6 @@ class UnsyncScansViewModel {
     
     // INPUT:
     
-    
-    
     // OUTPUT
     private (set) var syncControlAvailable = BehaviorSubject<Bool>.init(value: false)
     
@@ -39,16 +35,19 @@ class UnsyncScansViewModel {
     
     var syncFinished = BehaviorRelay<Bool>.init(value: false)
     
+    // interna upotreba....
+    
+    private let bag = DisposeBag()
+    
     private func bindInputWithOutput() {
         // povezi se sa ostalim inputs i emituj na svoj output
         
         syncScansTap
-            .subscribe(onNext: { [weak self] tap in
+            .drive(onNext: { [weak self] tap in
                 
                 print("okini event da izprazni codes iz Realm-a")
                 
                 guard let sSelf = self else {return}
-                
                 
                 if codesDumper == nil { // DUPLICATED !!
                     codesDumper = CodesDumper() // u svom init, zna da javlja reports web-u...
@@ -72,22 +71,34 @@ class UnsyncScansViewModel {
         // 1
         let realm = try! Realm()
         let result = realm.objects(RealmCodeReport.self)
-        Observable.collection(from: result)
-            .subscribe(onNext: { [weak self] items in
-                guard let sSelf = self else {return}
-                //print("UnsyncScansViewModel.Query returned \(items.count) items")
-                sSelf.syncScansCount.onNext(items.count) // output syncScansCount
-            })
+//        Observable.collection(from: result)
+//            .subscribe(onNext: { [weak self] items in
+//                guard let sSelf = self else {return}
+//                //print("UnsyncScansViewModel.Query returned \(items.count) items")
+//                sSelf.syncScansCount.onNext(items.count) // output syncScansCount
+//            })
+//            .disposed(by: bag)
+        //Driver.just(result.toArray()) // ovde nije narocito lose, ali sa live bazom bi bilo jer imas COPY !
+        //Driver.of(result.toArray()) // nema potrebe za ".toArray()"
+        Driver.of(result) // mnogo bolje !
+            .map {$0.count}
+            .drive(syncScansCount)
             .disposed(by: bag)
+        
         
         // 2
-        syncScansCount.asObservable()
-            .subscribe(onNext: { [weak self] count in
-                guard let sSelf = self else {return}
-                sSelf.syncControlAvailable.onNext(count != 0) // output syncControlAvailable
-            })
-            .disposed(by: bag)
+//        syncScansCount.asObservable()
+//            .subscribe(onNext: { [weak self] count in
+//                guard let sSelf = self else {return}
+//                sSelf.syncControlAvailable.onNext(count != 0) // output syncControlAvailable
+//            })
+//            .disposed(by: bag)
         
+        syncScansCount
+            .map {$0 != 0}
+            .asDriver(onErrorJustReturn: false) // netacno... a sta je uopste tacno u ovom slucaju ??
+            .drive(syncControlAvailable)
+            .disposed(by: bag)
     }
     
 }

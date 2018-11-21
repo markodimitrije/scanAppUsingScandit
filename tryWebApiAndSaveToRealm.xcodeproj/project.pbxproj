@@ -22,6 +22,7 @@
 		AD295225217B5B24002DDE32 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD295220217B5B24002DDE32 /* APIController.swift */; };
 		AD295227217B5C64002DDE32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD295226217B5C64002DDE32 /* Main.storyboard */; };
 		AD29522D217B5EB0002DDE32 /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */; };
+		AD4CC2DA21A5770A00222D5E /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4CC2D921A5770A00222D5E /* Protocols.swift */; };
 		AD4DCF02218EFFCF0054527E /* GlobalFuncs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4DCF01218EFFCF0054527E /* GlobalFuncs.swift */; };
 		AD53A01F217B577500A3F9FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */; };
 		AD5814AF2189B1AC009C593F /* CodeReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5814AE2189B1AC009C593F /* CodeReport.swift */; };
@@ -76,6 +77,7 @@
 		AD295220217B5B24002DDE32 /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		AD295226217B5C64002DDE32 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModel.swift; sourceTree = "<group>"; };
+		AD4CC2D921A5770A00222D5E /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		AD4DCF01218EFFCF0054527E /* GlobalFuncs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFuncs.swift; sourceTree = "<group>"; };
 		AD53A011217B577400A3F9FC /* tryWebApiAndSaveToRealm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tryWebApiAndSaveToRealm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD53A01E217B577500A3F9FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -213,6 +215,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		AD4CC2D821A576F200222D5E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				AD4CC2D921A5770A00222D5E /* Protocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		AD53A008217B577400A3F9FC = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +244,7 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
+				AD4CC2D821A576F200222D5E /* Protocols */,
 				ADAE9C252189F5DB00615125 /* AVCaptureSession+Rx */,
 				AD697BD621887CC3002BC579 /* ResourcesStateAndCodeReportsState */,
 				AD697BD32188622B002BC579 /* Globals */,
@@ -479,6 +490,7 @@
 				AD24E30C21807243008E35F8 /* ModelStructsAndNamespaces.swift in Sources */,
 				ADA47212217F458D0078530E /* ScannerViewModel.swift in Sources */,
 				AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */,
+				AD4CC2DA21A5770A00222D5E /* Protocols.swift in Sources */,
 				ADB273A521807EFD00345A5E /* AutoSelectSessionsView.swift in Sources */,
 				ADAE9C312189F5F500615125 /* RxAVCaptureDataOutputSynchronizerDelegate.swift in Sources */,
 				AD697BD52188623A002BC579 /* GlobalVars.swift in Sources */,
