@@ -18,11 +18,13 @@ struct SettingsViewModel {
     
     let disposeBag = DisposeBag()
     
-    var saveSettings: ControlEvent<()>
-    var cancelSettings: ControlEvent<()>
+    //var saveSettings: ControlEvent<()>
+    //var cancelSettings: ControlEvent<()>
+    var saveSettings: Driver<()>
+    var cancelSettings: Driver<()>
     
     // 1 - dependencies-init
-    init(saveSettings: ControlEvent<()>, cancelSettings: ControlEvent<()>) {
+    init(saveSettings: Driver<()>, cancelSettings: Driver<()>) {
         self.saveSettings = saveSettings
         self.cancelSettings = cancelSettings
         bindControls()
@@ -51,7 +53,7 @@ struct SettingsViewModel {
     private func bindControls() { // ovo radi za session + saveSettings
         
         let oSaveSettingsClick = saveSettings
-                                    .throttle(0.5, scheduler: MainScheduler.init())
+                                    .throttle(0.5)
                                     .asObservable()
 
         oSaveSettingsClick.withLatestFrom(oSessionSelected)
@@ -63,7 +65,7 @@ struct SettingsViewModel {
             .disposed(by: disposeBag)
         
         cancelSettings
-            .throttle(0.5, scheduler: MainScheduler.init())
+            .throttle(0.5)
             .asObservable()
             .subscribe(onNext: { tap in
                 self.shouldCloseSettingsVC.onCompleted() // neces da se nista save...

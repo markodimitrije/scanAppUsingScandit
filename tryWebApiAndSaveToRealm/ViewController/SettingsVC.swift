@@ -57,8 +57,8 @@ class SettingsVC: UITableViewController {
     fileprivate let roomViewModel = RoomViewModel()
     
     lazy var settingsViewModel = SettingsViewModel(
-                                        saveSettings: saveSettingsAndExitBtn.rx.tap,
-                                        cancelSettings: cancelSettingsBtn.rx.tap)
+                                        saveSettings: saveSettingsAndExitBtn.rx.tap.asDriver(),
+                                        cancelSettings: cancelSettingsBtn.rx.tap.asDriver())
     
     lazy fileprivate var autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
     
