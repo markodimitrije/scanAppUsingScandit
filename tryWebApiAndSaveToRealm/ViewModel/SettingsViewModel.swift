@@ -13,6 +13,7 @@ import Realm
 import RealmSwift
 import Reachability
 
+/*
 //class SettingsViewModel {
 struct SettingsViewModel {
     
@@ -74,3 +75,4 @@ struct SettingsViewModel {
     }
     
 }
+*/

@@ -28,6 +28,7 @@
 		AD5814AF2189B1AC009C593F /* CodeReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5814AE2189B1AC009C593F /* CodeReport.swift */; };
 		AD61455A2191C6600075FD39 /* SetIntervalForAutoSessionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6145582191C65F0075FD39 /* SetIntervalForAutoSessionView.xib */; };
 		AD61455B2191C6600075FD39 /* SetIntervalForAutoSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6145592191C65F0075FD39 /* SetIntervalForAutoSessionView.swift */; };
+		AD69206121A6AC0900E3C0F2 /* SettingsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD69206021A6AC0900E3C0F2 /* SettingsViewModelNew.swift */; };
 		AD697BD221885AF2002BC579 /* RealmDataPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD121885AF2002BC579 /* RealmDataPersister.swift */; };
 		AD697BD52188623A002BC579 /* GlobalVars.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD42188623A002BC579 /* GlobalVars.swift */; };
 		AD697BD821887CCE002BC579 /* ResourcesState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD697BD721887CCE002BC579 /* ResourcesState.swift */; };
@@ -85,6 +86,7 @@
 		AD5814AE2189B1AC009C593F /* CodeReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeReport.swift; sourceTree = "<group>"; };
 		AD6145582191C65F0075FD39 /* SetIntervalForAutoSessionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetIntervalForAutoSessionView.xib; sourceTree = "<group>"; };
 		AD6145592191C65F0075FD39 /* SetIntervalForAutoSessionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetIntervalForAutoSessionView.swift; sourceTree = "<group>"; };
+		AD69206021A6AC0900E3C0F2 /* SettingsViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelNew.swift; sourceTree = "<group>"; };
 		AD697BD121885AF2002BC579 /* RealmDataPersister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataPersister.swift; sourceTree = "<group>"; };
 		AD697BD42188623A002BC579 /* GlobalVars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalVars.swift; sourceTree = "<group>"; };
 		AD697BD721887CCE002BC579 /* ResourcesState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesState.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */,
 				AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */,
 				AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */,
+				AD69206021A6AC0900E3C0F2 /* SettingsViewModelNew.swift */,
 				ADA47211217F458D0078530E /* ScannerViewModel.swift */,
 				ADAE9C232189F57D00615125 /* AVSessionViewModel.swift */,
 				ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */,
@@ -215,12 +218,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		AD4CC2D821A576F200222D5E /* Protocols */ = {
+		AD4CC2D821A576F200222D5E /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				AD4CC2D921A5770A00222D5E /* Protocols.swift */,
 			);
-			path = Protocols;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		AD53A008217B577400A3F9FC = {
@@ -244,7 +247,7 @@
 		AD53A013217B577400A3F9FC /* tryWebApiAndSaveToRealm */ = {
 			isa = PBXGroup;
 			children = (
-				AD4CC2D821A576F200222D5E /* Protocols */,
+				AD4CC2D821A576F200222D5E /* Common */,
 				ADAE9C252189F5DB00615125 /* AVCaptureSession+Rx */,
 				AD697BD621887CC3002BC579 /* ResourcesStateAndCodeReportsState */,
 				AD697BD32188622B002BC579 /* Globals */,
@@ -499,6 +502,7 @@
 				AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */,
 				AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */,
 				ADB2739F218078DD00345A5E /* UnsyncedScansView.swift in Sources */,
+				AD69206121A6AC0900E3C0F2 /* SettingsViewModelNew.swift in Sources */,
 				AD4DCF02218EFFCF0054527E /* GlobalFuncs.swift in Sources */,
 				AD80F002217DE65C003CEDD0 /* ModelData.swift in Sources */,
 				AD697BD221885AF2002BC579 /* RealmDataPersister.swift in Sources */,

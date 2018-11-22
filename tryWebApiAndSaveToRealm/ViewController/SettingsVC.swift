@@ -56,9 +56,11 @@ class SettingsVC: UITableViewController {
     // MARK:- ViewModels
     fileprivate let roomViewModel = RoomViewModel()
     
-    lazy var settingsViewModel = SettingsViewModel(
-                                        saveSettings: saveSettingsAndExitBtn.rx.tap.asDriver(),
-                                        cancelSettings: cancelSettingsBtn.rx.tap.asDriver())
+//    lazy var settingsViewModel = SettingsViewModel(
+//                                        saveSettings: saveSettingsAndExitBtn.rx.tap.asDriver(),
+//                                        cancelSettings: cancelSettingsBtn.rx.tap.asDriver())
+
+    lazy var settingsViewModel = SettingsViewModel()
     
     lazy fileprivate var autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
     
@@ -78,64 +80,131 @@ class SettingsVC: UITableViewController {
     
     private func bindUI() { // glue code for selected Room
         
-        roomSelected
-            .asDriver(onErrorJustReturn: nil)
-            .map { $0?.name ?? RoomTextData.selectRoom }
+        let input = SettingsViewModel.Input.init(
+                        cancelTrigger: cancelSettingsBtn.rx.tap.asDriver(),
+                        saveSettingsTrigger: saveSettingsAndExitBtn.rx.tap.asDriver(),
+                        roomSelected: roomSelected.asDriver(onErrorJustReturn: nil),
+                        sessionSelected: sessionSelected.asDriver(onErrorJustReturn: nil),
+                        autoSelSessionSwitch: autoSelectSessionsView.controlSwitch.rx.switchActiveSequence.asDriver(onErrorJustReturn: true)
+        )
+        
+        let output = settingsViewModel.transform(input: input)
+        
+        output.roomTxt
             .drive(roomLbl.rx.text)
             .disposed(by: disposeBag)
         
-        sessionSelected // SESSION - sessionLbl
-            .map {
-                guard let session = $0 else {
-                    if self.autoSelectSessionsView.switchState { // ON
-                        return SessionTextData.noAutoSessAvailable
-                    } else {
-                        return SessionTextData.selectSessManuallyOrTryAuto
-                    }
-                }
-                return session.starts_at + " " + session.name
-            }
-            .bind(to: sessionLbl.rx.text)
+        output.sessionTxt
+            .drive(sessionLbl.rx.text)
             .disposed(by: disposeBag)
+
+        output.saveSettingsAllowed
+            .do(onNext: { allowed in
+                self.saveSettingsAndExitBtn.alpha = allowed ? 1 : 0.6
+            })
+            .drive(saveSettingsAndExitBtn.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        output.settingsCorrect.asObservable()
+            .subscribe(onNext: { allowed in
+                self.dismiss(animated: true, completion: nil) // ako radis behavior umesto bind na UI, koristi Subsc
+                if allowed {
+                    print("save data za scannerVC")
+                } else {
+                    print("cancel data scannerVC")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
+        
+//        output.shouldDismissVC.asObservable()
+//            .subscribe({ allowed in
+//                self.dismiss(animated: true, completion: nil) // ako radis behavior umesto bind na UI, koristi Subsc
+//            })
+//            .disposed(by: disposeBag)
+        
+//        _ = output.shouldDismissVC
+//            .do(onNext: { allowed in
+//                self.dismiss(animated: true, completion: nil)
+//                if allowed {
+//                    // implement me, save data for scannerVC
+//                }
+//            })
+        
+//        let dgvc = output.shouldDismissVC
+//            .do(onNext: { allowed in
+//                if allowed {
+//                    self.navigationController?.popViewController(animated: true)
+//                }
+//            })
+//
+//        output.shouldDismissVC
+//            .do(onNext: { allowed in
+//                if allowed {
+//                    self.navigationController?.popViewController(animated: true)
+//                }
+//            })
+        
+        
+//        roomSelected
+//            .asDriver(onErrorJustReturn: nil)
+//            .map { $0?.name ?? RoomTextData.selectRoom }
+//            .drive(roomLbl.rx.text)
+//            .disposed(by: disposeBag)
+        
+//        sessionSelected // SESSION - sessionLbl
+//            .map {
+//                guard let session = $0 else {
+//                    if self.autoSelectSessionsView.switchState { // ON
+//                        return SessionTextData.noAutoSessAvailable
+//                    } else {
+//                        return SessionTextData.selectSessManuallyOrTryAuto
+//                    }
+//                }
+//                return session.starts_at + " " + session.name
+//            }
+//            .bind(to: sessionLbl.rx.text)
+//            .disposed(by: disposeBag)
         
     }
 
     private func bindControlEvents() {
         // ova 2 su INPUT za settingsViewModel - start
         
-        roomSelected.asDriver(onErrorJustReturn: nil)
-            .drive(settingsViewModel.roomSelected)
-            .disposed(by: disposeBag)
+//        roomSelected.asDriver(onErrorJustReturn: nil)
+//            .drive(settingsViewModel.transform(roomSelected.asDriver(onErrorJustReturn: nil)).roomSelected)
+//            .disposed(by: disposeBag)
         
-        sessionSelected.asDriver(onErrorJustReturn: nil)
-            .drive(settingsViewModel.sessionSelected)
-            .disposed(by: disposeBag)
+//        sessionSelected.asDriver(onErrorJustReturn: nil)
+//            .drive(settingsViewModel.sessionSelected)
+//            .disposed(by: disposeBag)
         
         // switch povezivanje - end
         // shouldCloseSettingsVC dismiss behaviour - start
         
-        let shouldCloseSettingsVCDriver = settingsViewModel.shouldCloseSettingsVC
-            .asDriver(onErrorJustReturn: false)
+//        let shouldCloseSettingsVCDriver = settingsViewModel.shouldCloseSettingsVC
+//            .asDriver(onErrorJustReturn: false)
         
-        shouldCloseSettingsVCDriver
-            .drive(self.rx.shouldBeDismiss)
-            .disposed(by: disposeBag)
-        
-        shouldCloseSettingsVCDriver
-            .drive(onCompleted: { [weak self] in
-                guard let strongSelf = self else {return}
-                strongSelf.dismiss(animated: true)
-                strongSelf.roomSelected.onNext(nil)
-                strongSelf.sessionSelected.onNext(nil)
-            })
-            .disposed(by: disposeBag)
+//        shouldCloseSettingsVCDriver
+//            .drive(self.rx.shouldBeDismiss)
+//            .disposed(by: disposeBag)
+//
+//        shouldCloseSettingsVCDriver
+//            .drive(onCompleted: { [weak self] in
+//                guard let strongSelf = self else {return}
+//                strongSelf.dismiss(animated: true)
+//                strongSelf.roomSelected.onNext(nil)
+//                strongSelf.sessionSelected.onNext(nil)
+//            })
+//            .disposed(by: disposeBag)
         
         // saveSettingsAndExitBtn availability for user interaction - start
-        Observable.combineLatest(roomSelected, sessionSelected, resultSelector: { (room, session) -> Bool in // OK
-            return room != nil && session != nil
-        }).asDriver(onErrorJustReturn: false)
-            .drive(saveSettingsAndExitBtn.rx.btnIsActive)
-            .disposed(by: disposeBag)
+//        Observable.combineLatest(roomSelected, sessionSelected, resultSelector: { (room, session) -> Bool in // OK
+//            return room != nil && session != nil
+//        }).asDriver(onErrorJustReturn: false)
+//            .drive(saveSettingsAndExitBtn.rx.btnIsActive)
+//            .disposed(by: disposeBag)
     }
     
     private func bindReachability() {
