@@ -10,46 +10,53 @@ import RxSwift
 import RxCocoa
 
 final class SettingsViewModel: ViewModelType {
-//    private let post: Post // public struct Post: Codable u Domain/Entities
-//    private let useCase: PostsUseCase // public protocol PostsUseCase u Domain/UseCases
-//    private let navigator: EditPostNavigator // protocol EditPostNavigator u Scenes/EditPosts/EditPostNavigator
-    
-//    init(post: Post, useCase: PostsUseCase) {
-//        self.post = post
-//        self.useCase = useCase // ovo treba da znas sta ces da radis, use case, obrisi u bazi i slicno
-//        self.navigator = navigator // data ti je navigacija, jer znas koji vc da prikazes u kom slucaju...
-//    }
     
     func transform(input: Input) -> Output {
         
         let roomTxt = input.roomSelected.map { room -> String in
             return room?.name ?? RoomTextData.selectRoom
         }
-//        let sessionTxt = input.sessionSelected.map { block -> String in
-//            return block?.name ?? SessionTextData.noAutoSessAvailable
-//        }
-        let saveSettingsAllowed = Driver.combineLatest(input.roomSelected, input.sessionSelected) { (room, session) -> Bool in
-            return (session != nil)
+        
+        let autoSessionDriver = Driver.combineLatest(input.autoSelSessionSwitch.startWith(true), input.picker) { (switchIsOn, interval) -> RealmBlock? in
+            if switchIsOn {
+                let autoModelView = AutoSelSessionWithWaitIntervalViewModel.init(roomId: 4008)
+                autoModelView.inSelTimeInterval.onNext(interval)
+                return try! autoModelView.selectedSession.value() ?? nil
+            }
+            return nil
         }
+        
+        let finalSession = Driver.merge([input.sessionSelected, autoSessionDriver])//.debug()
+        let a = input.roomSelected.map { _ -> Void in return () }
+        let b = input.sessionSelected.map { _ -> Void in return () }
+        let c = autoSessionDriver.map { _ -> Void in return () }
+        //let d = input.autoSelSessionSwitch.map { _ -> Void in return () }
+        
+        //let composeAllEvents = Driver.merge([a,b,c,d])
+        let composeAllEvents = Driver.merge([a,b,c])
+        
+//        let saveSettingsAllowed = Driver.from([input.roomSelected, input.sessionSelected, input.autoSelSessionSwitch, input.picker]).withLatestFrom(finalSession).map { block -> Bool in
+//            return block != nil
+//        }.debug()
+
+        let saveSettingsAllowed = composeAllEvents.withLatestFrom(finalSession).map { block -> Bool in
+            return block != nil
+            }.debug()
+
         
         let cancelTap = input.cancelTrigger.map {return false}
         let saveTap = input.saveSettingsTrigger.withLatestFrom(saveSettingsAllowed)
         
         let settingsCorrect = Driver
                                 .merge([cancelTap, saveTap])
-                                .debug()
         
-        let sessionTxt = Driver.combineLatest(input.sessionSelected, input.autoSelSessionSwitch) { (session, switchState) -> String in
-            if let name = session?.name {
+        let sessionTxt = finalSession.map { block -> String in
+            if let name = block?.name {
                 return name
             } else {
-                if switchState {
-                    return SessionTextData.noAutoSelSessionsAvailable
-                } else {
-                    return SessionTextData.selectSessManuallyOrTryAuto
-                }
+                return SessionTextData.noAutoSessAvailable
             }
-        }t 
+        }
         
         return Output(roomTxt: roomTxt,
                       sessionTxt: sessionTxt,
@@ -68,7 +75,7 @@ extension SettingsViewModel {
         let roomSelected: Driver<RealmRoom?>
         let sessionSelected: Driver<RealmBlock?>
         let autoSelSessionSwitch: Driver<Bool>
-//        let picker: Driver<TimeInterval>
+        let picker: Driver<TimeInterval>
 //        let internetConnection: Driver<Bool>
 //        let unsyncScans: Driver<Int>
     }

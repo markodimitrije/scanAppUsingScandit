@@ -80,12 +80,17 @@ class SettingsVC: UITableViewController {
     
     private func bindUI() { // glue code for selected Room
         
+        let interval = setIntervalForAutoSessionView.picker.rx.controlEvent(.valueChanged).map { _ -> TimeInterval in
+            return self.setIntervalForAutoSessionView.picker.countDownDuration
+        }.asDriver(onErrorJustReturn: MyTimeInterval.waitToMostRecentSession)
+        
         let input = SettingsViewModel.Input.init(
                         cancelTrigger: cancelSettingsBtn.rx.tap.asDriver(),
                         saveSettingsTrigger: saveSettingsAndExitBtn.rx.tap.asDriver(),
                         roomSelected: roomSelected.asDriver(onErrorJustReturn: nil),
                         sessionSelected: sessionSelected.asDriver(onErrorJustReturn: nil),
-                        autoSelSessionSwitch: autoSelectSessionsView.controlSwitch.rx.switchActiveSequence.asDriver(onErrorJustReturn: true)
+                        autoSelSessionSwitch: autoSelectSessionsView.controlSwitch.rx.switchActiveSequence.asDriver(onErrorJustReturn: true),
+                        picker:interval
         )
         
         let output = settingsViewModel.transform(input: input)
@@ -103,7 +108,7 @@ class SettingsVC: UITableViewController {
                 self.saveSettingsAndExitBtn.alpha = allowed ? 1 : 0.6
             })
             .drive(saveSettingsAndExitBtn.rx.isEnabled)
-            .disposed(by: disposeBag)
+            //.disposed(by: disposeBag)
         
         output.settingsCorrect.asObservable()
             .subscribe(onNext: { allowed in
@@ -282,24 +287,24 @@ class SettingsVC: UITableViewController {
     private func bindXibEvents() { // ovde hook-up controls koje imas na xib
         
         // mozes da viewmodel-u prosledis switch kao hook  // + treba mu i room
-        autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
-        autoSelSessionViewModel.selectedRoom = roomSelected
-        
-        self.selectedInterval.asObservable()
-            .subscribe(onNext: { (val) in
-                self.autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval.accept(val)
-                self.autoSelSessionViewModel.switchState.onNext(self.autoSelectSessionsView.controlSwitch!.isOn)
-            }).disposed(by: disposeBag)
-        
-        autoSelectSessionsView.controlSwitch.rx.switchActiveSequence // ovo je slabo, jer driver nije Model !!
-            .skipUntil(roomViewModel.selectedRoom)
-            .bind(to: autoSelSessionViewModel.switchState)
-            .disposed(by: disposeBag)
-        
-        autoSelSessionViewModel.selectedSession // viewmodel-ov output
-            .asDriver(onErrorJustReturn: nil)
-            .drive(sessionSelected) // steta sto nije Rx world nego sopstveni var, bind-ujes 2 puta....
-            .disposed(by: disposeBag)
+//        autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
+//        autoSelSessionViewModel.selectedRoom = roomSelected
+//
+//        self.selectedInterval.asObservable()
+//            .subscribe(onNext: { (val) in
+//                self.autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval.accept(val)
+//                self.autoSelSessionViewModel.switchState.onNext(self.autoSelectSessionsView.controlSwitch!.isOn)
+//            }).disposed(by: disposeBag)
+//
+//        autoSelectSessionsView.controlSwitch.rx.switchActiveSequence // ovo je slabo, jer driver nije Model !!
+//            .skipUntil(roomViewModel.selectedRoom)
+//            .bind(to: autoSelSessionViewModel.switchState)
+//            .disposed(by: disposeBag)
+//
+//        autoSelSessionViewModel.selectedSession // viewmodel-ov output
+//            .asDriver(onErrorJustReturn: nil)
+//            .drive(sessionSelected) // steta sto nije Rx world nego sopstveni var, bind-ujes 2 puta....
+//            .disposed(by: disposeBag)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
