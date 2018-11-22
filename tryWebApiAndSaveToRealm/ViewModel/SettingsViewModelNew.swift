@@ -49,7 +49,7 @@ final class SettingsViewModel: ViewModelType {
                     return SessionTextData.selectSessManuallyOrTryAuto
                 }
             }
-        }
+        }t 
         
         return Output(roomTxt: roomTxt,
                       sessionTxt: sessionTxt,
