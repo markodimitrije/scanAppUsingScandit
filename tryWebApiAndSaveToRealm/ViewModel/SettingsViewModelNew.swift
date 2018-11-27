@@ -34,16 +34,11 @@ final class SettingsViewModel: ViewModelType {
         
         //let composeAllEvents = Driver.merge([a,b,c,d])
         let composeAllEvents = Driver.merge([a,b,c])
-        
-//        let saveSettingsAllowed = Driver.from([input.roomSelected, input.sessionSelected, input.autoSelSessionSwitch, input.picker]).withLatestFrom(finalSession).map { block -> Bool in
-//            return block != nil
-//        }.debug()
 
         let saveSettingsAllowed = composeAllEvents.withLatestFrom(finalSession).map { block -> Bool in
             return block != nil
             }.debug()
 
-        
         let cancelTap = input.cancelTrigger.map {return false}
         let saveTap = input.saveSettingsTrigger.withLatestFrom(saveSettingsAllowed)
         
