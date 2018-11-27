@@ -27,26 +27,14 @@ final class SettingsViewModel: ViewModelType {
             return nil
         }
         
-        
-        
-//        // mislim da treba 3 signala da combine da bih izvukao i roomId
-//        let autoSessionDriver = Driver.combineLatest(input.autoSelSessionSwitch.startWith(true), input.picker) { (switchIsOn, interval) -> RealmBlock? in
-//            if switchIsOn {
-//                let autoModelView = AutoSelSessionWithWaitIntervalViewModel.init(roomId: 4008) // hard-coded!
-//                autoModelView.inSelTimeInterval.onNext(interval)
-//                return try! autoModelView.selectedSession.value() ?? nil // pazi ovde !! try !
-//            }
-//            return nil
-//        }
-        
-        let finalSession = Driver.merge([input.sessionSelected, autoSessionDriver])//.debug()
+        let manualAndAutoSession = Driver.merge([input.sessionSelected, autoSessionDriver])//.debug()
         let a = input.roomSelected.map { _ -> Void in return () }
         let b = input.sessionSelected.map { _ -> Void in return () }
         let c = autoSessionDriver.map { _ -> Void in return () }
         
         let composeAllEvents = Driver.merge([a,b,c])
 
-        let saveSettingsAllowed = composeAllEvents.withLatestFrom(finalSession)
+        let saveSettingsAllowed = composeAllEvents.withLatestFrom(manualAndAutoSession)
             .map { block -> Bool in
                 return block != nil
             }.debug()
@@ -57,11 +45,21 @@ final class SettingsViewModel: ViewModelType {
         let settingsCorrect = Driver
                                 .merge([cancelTap, saveTap])
         
-        let sessionTxt = finalSession.map { block -> String in
+        let sessionTxt = manualAndAutoSession.map { block -> String in
             if let name = block?.name {
                 return name
             } else {
                 return SessionTextData.noAutoSessAvailable
+            }
+        }
+        
+        let saveCancelTrig = Driver.merge([input.cancelTrigger.map {return false}, input.saveSettingsTrigger.map {return true}])
+        
+        let finalSession = Driver.combineLatest(manualAndAutoSession, saveCancelTrig) { (session, tap) -> RealmBlock? in
+            if tap {
+                return session
+            } else {
+                return nil
             }
         }
         
@@ -70,7 +68,8 @@ final class SettingsViewModel: ViewModelType {
                       saveSettingsAllowed: saveSettingsAllowed,
 //                      wiFiStaticTxt: editing,
 //                      wiFiDynamicTxt: post,
-                      settingsCorrect: settingsCorrect
+                      settingsCorrect: settingsCorrect,
+                      selectedBlock: finalSession
         )
     }
 }
@@ -94,6 +93,7 @@ extension SettingsViewModel {
 //        let wiFiStaticTxt: Driver<String>
 //        let wiFiDynamicTxt: Driver<String>
         let settingsCorrect: Driver<Bool>
+        let selectedBlock: Driver<RealmBlock?>
     }
 }
 

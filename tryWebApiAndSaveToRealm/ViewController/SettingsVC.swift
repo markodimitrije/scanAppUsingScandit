@@ -35,8 +35,16 @@ class SettingsVC: UITableViewController {
             bindInterval()
         }
     }
+    
+    // INPUTS:
+    
     let roomSelected = BehaviorSubject<RealmRoom?>.init(value: nil)
+    let sessionManuallySelected = BehaviorSubject<RealmBlock?>.init(value: nil)
+    
+    // OUTPUTS:
+    
     let sessionSelected = BehaviorSubject<RealmBlock?>.init(value: nil)
+    
     var selectedInterval = BehaviorRelay<TimeInterval>.init(value: MyTimeInterval.waitToMostRecentSession) // posesava na odg XIB
     
     // input - trebalo je u INIT !!
@@ -46,6 +54,7 @@ class SettingsVC: UITableViewController {
     }
     
     var sessionId: Int {
+        //guard let block = try? sessionManuallySelected.value(),
         guard let block = try? sessionSelected.value(),
             let id = block?.id else {
             return -1 // bez veze je ovo.. BehaviorSubject... treba zamena za Variable !
@@ -88,7 +97,7 @@ class SettingsVC: UITableViewController {
                         cancelTrigger: cancelSettingsBtn.rx.tap.asDriver(),
                         saveSettingsTrigger: saveSettingsAndExitBtn.rx.tap.asDriver(),
                         roomSelected: roomSelected.asDriver(onErrorJustReturn: nil),
-                        sessionSelected: sessionSelected.asDriver(onErrorJustReturn: nil),
+                        sessionSelected: sessionManuallySelected.asDriver(onErrorJustReturn: nil),
                         autoSelSessionSwitch: autoSelectSessionsView.controlSwitch.rx.switchActiveSequence.asDriver(onErrorJustReturn: true),
                         picker:interval
         )
@@ -108,17 +117,25 @@ class SettingsVC: UITableViewController {
                 self.saveSettingsAndExitBtn.alpha = allowed ? 1 : 0.6
             })
             .drive(saveSettingsAndExitBtn.rx.isEnabled)
-            //.disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         
         output.settingsCorrect.asObservable()
             .subscribe(onNext: { allowed in
                 self.dismiss(animated: true, completion: nil) // ako radis behavior umesto bind na UI, koristi Subsc
                 if allowed {
                     print("save data za scannerVC")
+                    //print("block = \(String(describing: try! self.sessionSelected.value()))")
                 } else {
                     print("cancel data scannerVC")
+                    
                 }
             })
+            .disposed(by: disposeBag)
+        
+        // OVO JE BUG !! sessionSelected je mannualy selected sa blockVC-a !!!
+        
+        output.selectedBlock // binduj na svoj var koji ce da cita "prethodni vc"
+            .drive(self.sessionSelected)
             .disposed(by: disposeBag)
         
         
@@ -324,7 +341,8 @@ class SettingsVC: UITableViewController {
             blocksVC.selectedRealmBlock
                 .subscribe(onNext: { [weak self] block in
                     guard let strongSelf = self else {return}
-                    strongSelf.sessionSelected.onNext(block)
+                    strongSelf.sessionManuallySelected.onNext(block)
+                    strongSelf.sessionSelected.onNext(block) // moze li ovo bolje....
                 })
                 .disposed(by: disposeBag)
             

@@ -19,8 +19,6 @@ struct ScannerViewModel {
     var roomSelected = PublishSubject<RealmRoom?>.init()
     var sessionSelected = PublishSubject<RealmBlock?>.init()
     
-    let bag = DisposeBag()
-    
     init() {
         bindOutput()
     }
@@ -33,20 +31,23 @@ struct ScannerViewModel {
     var mySessionName: SharedSequence<DriverSharingStrategy, String>!
 
     private (set) var oSessionId = BehaviorRelay<Int>.init(value: -1) // err state
+    
     var sessionId: Int {
         return oSessionId.value
     }
+    
+    private let bag = DisposeBag()
     
     private func bindOutput() {
     
         Observable.combineLatest(roomSelected, sessionSelected) { (room, block) -> (String, String, Int) in
             
                 guard let room = room else {
-                    return (RoomTextData.noRoomSelected,"", -1)
+                    return (RoomTextData.noRoomSelected, "", -1)
                 }
             
                 guard let block = block else {
-                    return (SessionTextData.noActiveSession,"", -1)
+                    return (SessionTextData.noActiveSession, "", -1)
                 }
             
                 return (block.name, block.duration + ", " + room.name, block.id)

@@ -61,13 +61,13 @@
          contextName = "BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "todayBlocks.count">
+               value = "blocksSortedByDate">
             </PersistentString>
             <PersistentString
                value = "first.description">
             </PersistentString>
             <PersistentString
-               value = "blocksSortedByDate">
+               value = "todayBlocks.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -139,6 +139,14 @@
             </PersistentString>
             <PersistentString
                value = "settingsViewModel.saveSettingsAction">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #2 in SettingsViewModel.transform(input:):SettingsViewModelNew.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "autoModelView.selectedSession.value()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
