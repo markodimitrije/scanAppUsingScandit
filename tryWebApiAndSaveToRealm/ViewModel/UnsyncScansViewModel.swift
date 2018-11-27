@@ -70,29 +70,16 @@ class UnsyncScansViewModel {
         
         // 1
         let realm = try! Realm()
-        let result = realm.objects(RealmCodeReport.self)
-//        Observable.collection(from: result)
-//            .subscribe(onNext: { [weak self] items in
-//                guard let sSelf = self else {return}
-//                //print("UnsyncScansViewModel.Query returned \(items.count) items")
-//                sSelf.syncScansCount.onNext(items.count) // output syncScansCount
-//            })
-//            .disposed(by: bag)
-        //Driver.just(result.toArray()) // ovde nije narocito lose, ali sa live bazom bi bilo jer imas COPY !
-        //Driver.of(result.toArray()) // nema potrebe za ".toArray()"
-        Driver.of(result) // mnogo bolje !
-            .map {$0.count}
-            .drive(syncScansCount)
-            .disposed(by: bag)
-        
-        
-        // 2
-//        syncScansCount.asObservable()
-//            .subscribe(onNext: { [weak self] count in
-//                guard let sSelf = self else {return}
-//                sSelf.syncControlAvailable.onNext(count != 0) // output syncControlAvailable
-//            })
-//            .disposed(by: bag)
+
+        Observable.collection(from: realm.objects(RealmCodeReport.self))
+            .map({
+                return $0.toArray()
+            })
+            .asDriver(onErrorJustReturn: [])
+                .map {$0.count}
+                .debug()
+                .drive(syncScansCount)
+                .disposed(by: bag)
         
         syncScansCount
             .map {$0 != 0}
