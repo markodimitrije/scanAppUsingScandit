@@ -60,6 +60,10 @@ class SetIntervalForAutoSessionView: UIView {
         
         self.addSubview(view)
         
+        picker.datePickerMode = UIDatePicker.Mode.countDownTimer
+        picker.countDownDuration = MyTimeInterval.waitToMostRecentSession // sec 900 sec - 15 min
+        
+        
     }
     
     // MARK:- API

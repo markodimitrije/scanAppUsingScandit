@@ -17,26 +17,38 @@ final class SettingsViewModel: ViewModelType {
             return room?.name ?? RoomTextData.selectRoom
         }
         
-        let autoSessionDriver = Driver.combineLatest(input.autoSelSessionSwitch.startWith(true), input.picker) { (switchIsOn, interval) -> RealmBlock? in
+        let autoSessionDriver = Driver.combineLatest(input.roomSelected, input.autoSelSessionSwitch.startWith(true), input.picker) { (room, switchIsOn, interval) -> RealmBlock? in
+            guard let roomId = room?.id else {return nil}
             if switchIsOn {
-                let autoModelView = AutoSelSessionWithWaitIntervalViewModel.init(roomId: 4008)
+                let autoModelView = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
                 autoModelView.inSelTimeInterval.onNext(interval)
-                return try! autoModelView.selectedSession.value() ?? nil
+                return try! autoModelView.selectedSession.value() ?? nil // pazi ovde !! try !
             }
             return nil
         }
+        
+        
+        
+//        // mislim da treba 3 signala da combine da bih izvukao i roomId
+//        let autoSessionDriver = Driver.combineLatest(input.autoSelSessionSwitch.startWith(true), input.picker) { (switchIsOn, interval) -> RealmBlock? in
+//            if switchIsOn {
+//                let autoModelView = AutoSelSessionWithWaitIntervalViewModel.init(roomId: 4008) // hard-coded!
+//                autoModelView.inSelTimeInterval.onNext(interval)
+//                return try! autoModelView.selectedSession.value() ?? nil // pazi ovde !! try !
+//            }
+//            return nil
+//        }
         
         let finalSession = Driver.merge([input.sessionSelected, autoSessionDriver])//.debug()
         let a = input.roomSelected.map { _ -> Void in return () }
         let b = input.sessionSelected.map { _ -> Void in return () }
         let c = autoSessionDriver.map { _ -> Void in return () }
-        //let d = input.autoSelSessionSwitch.map { _ -> Void in return () }
         
-        //let composeAllEvents = Driver.merge([a,b,c,d])
         let composeAllEvents = Driver.merge([a,b,c])
 
-        let saveSettingsAllowed = composeAllEvents.withLatestFrom(finalSession).map { block -> Bool in
-            return block != nil
+        let saveSettingsAllowed = composeAllEvents.withLatestFrom(finalSession)
+            .map { block -> Bool in
+                return block != nil
             }.debug()
 
         let cancelTap = input.cancelTrigger.map {return false}
