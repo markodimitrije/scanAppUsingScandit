@@ -31,7 +31,6 @@ class SettingsVC: UITableViewController {
     // output
     var roomId: Int! = nil {
         didSet {
-            bindXibEvents()
             bindInterval()
         }
     }
@@ -64,10 +63,6 @@ class SettingsVC: UITableViewController {
     
     // MARK:- ViewModels
     fileprivate let roomViewModel = RoomViewModel()
-    
-//    lazy var settingsViewModel = SettingsViewModel(
-//                                        saveSettings: saveSettingsAndExitBtn.rx.tap.asDriver(),
-//                                        cancelSettings: cancelSettingsBtn.rx.tap.asDriver())
 
     lazy var settingsViewModel = SettingsViewModel()
     
@@ -77,7 +72,6 @@ class SettingsVC: UITableViewController {
     
     override func viewDidLoad() { super.viewDidLoad()
         bindUI()
-        bindControlEvents()
         bindReachability()
         bindUnsyncedScans()
 //        bindState() // ovde je rano za tableView.visibleCells !!
@@ -119,116 +113,15 @@ class SettingsVC: UITableViewController {
             .drive(saveSettingsAndExitBtn.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        output.settingsCorrect.asObservable()
-            .subscribe(onNext: { allowed in
-                self.dismiss(animated: true, completion: nil) // ako radis behavior umesto bind na UI, koristi Subsc
-                if allowed {
-                    print("save data za scannerVC")
-                    //print("block = \(String(describing: try! self.sessionSelected.value()))")
-                } else {
-                    print("cancel data scannerVC")
-                    
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        // OVO JE BUG !! sessionSelected je mannualy selected sa blockVC-a !!!
-        
         output.selectedBlock // binduj na svoj var koji ce da cita "prethodni vc"
+            .do(onNext: { _ in
+                self.dismiss(animated: true, completion: nil) // ako radis behavior umesto bind na UI, koristi Subsc
+            })
             .drive(self.sessionSelected)
             .disposed(by: disposeBag)
         
-        
-        
-//        output.shouldDismissVC.asObservable()
-//            .subscribe({ allowed in
-//                self.dismiss(animated: true, completion: nil) // ako radis behavior umesto bind na UI, koristi Subsc
-//            })
-//            .disposed(by: disposeBag)
-        
-//        _ = output.shouldDismissVC
-//            .do(onNext: { allowed in
-//                self.dismiss(animated: true, completion: nil)
-//                if allowed {
-//                    // implement me, save data for scannerVC
-//                }
-//            })
-        
-//        let dgvc = output.shouldDismissVC
-//            .do(onNext: { allowed in
-//                if allowed {
-//                    self.navigationController?.popViewController(animated: true)
-//                }
-//            })
-//
-//        output.shouldDismissVC
-//            .do(onNext: { allowed in
-//                if allowed {
-//                    self.navigationController?.popViewController(animated: true)
-//                }
-//            })
-        
-        
-//        roomSelected
-//            .asDriver(onErrorJustReturn: nil)
-//            .map { $0?.name ?? RoomTextData.selectRoom }
-//            .drive(roomLbl.rx.text)
-//            .disposed(by: disposeBag)
-        
-//        sessionSelected // SESSION - sessionLbl
-//            .map {
-//                guard let session = $0 else {
-//                    if self.autoSelectSessionsView.switchState { // ON
-//                        return SessionTextData.noAutoSessAvailable
-//                    } else {
-//                        return SessionTextData.selectSessManuallyOrTryAuto
-//                    }
-//                }
-//                return session.starts_at + " " + session.name
-//            }
-//            .bind(to: sessionLbl.rx.text)
-//            .disposed(by: disposeBag)
-        
     }
 
-    private func bindControlEvents() {
-        // ova 2 su INPUT za settingsViewModel - start
-        
-//        roomSelected.asDriver(onErrorJustReturn: nil)
-//            .drive(settingsViewModel.transform(roomSelected.asDriver(onErrorJustReturn: nil)).roomSelected)
-//            .disposed(by: disposeBag)
-        
-//        sessionSelected.asDriver(onErrorJustReturn: nil)
-//            .drive(settingsViewModel.sessionSelected)
-//            .disposed(by: disposeBag)
-        
-        // switch povezivanje - end
-        // shouldCloseSettingsVC dismiss behaviour - start
-        
-//        let shouldCloseSettingsVCDriver = settingsViewModel.shouldCloseSettingsVC
-//            .asDriver(onErrorJustReturn: false)
-        
-//        shouldCloseSettingsVCDriver
-//            .drive(self.rx.shouldBeDismiss)
-//            .disposed(by: disposeBag)
-//
-//        shouldCloseSettingsVCDriver
-//            .drive(onCompleted: { [weak self] in
-//                guard let strongSelf = self else {return}
-//                strongSelf.dismiss(animated: true)
-//                strongSelf.roomSelected.onNext(nil)
-//                strongSelf.sessionSelected.onNext(nil)
-//            })
-//            .disposed(by: disposeBag)
-        
-        // saveSettingsAndExitBtn availability for user interaction - start
-//        Observable.combineLatest(roomSelected, sessionSelected, resultSelector: { (room, session) -> Bool in // OK
-//            return room != nil && session != nil
-//        }).asDriver(onErrorJustReturn: false)
-//            .drive(saveSettingsAndExitBtn.rx.btnIsActive)
-//            .disposed(by: disposeBag)
-    }
-    
     private func bindReachability() {
         
         connectedToInternet()
@@ -299,29 +192,6 @@ class SettingsVC: UITableViewController {
             .drive(roomSelected)
             .disposed(by: disposeBag)
     
-    }
-    
-    private func bindXibEvents() { // ovde hook-up controls koje imas na xib
-        
-        // mozes da viewmodel-u prosledis switch kao hook  // + treba mu i room
-//        autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
-//        autoSelSessionViewModel.selectedRoom = roomSelected
-//
-//        self.selectedInterval.asObservable()
-//            .subscribe(onNext: { (val) in
-//                self.autoSelSessionViewModel.blockViewModel.oAutoSelSessInterval.accept(val)
-//                self.autoSelSessionViewModel.switchState.onNext(self.autoSelectSessionsView.controlSwitch!.isOn)
-//            }).disposed(by: disposeBag)
-//
-//        autoSelectSessionsView.controlSwitch.rx.switchActiveSequence // ovo je slabo, jer driver nije Model !!
-//            .skipUntil(roomViewModel.selectedRoom)
-//            .bind(to: autoSelSessionViewModel.switchState)
-//            .disposed(by: disposeBag)
-//
-//        autoSelSessionViewModel.selectedSession // viewmodel-ov output
-//            .asDriver(onErrorJustReturn: nil)
-//            .drive(sessionSelected) // steta sto nije Rx world nego sopstveni var, bind-ujes 2 puta....
-//            .disposed(by: disposeBag)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

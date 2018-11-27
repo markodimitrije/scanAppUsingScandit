@@ -37,14 +37,8 @@ final class SettingsViewModel: ViewModelType {
         let saveSettingsAllowed = composeAllEvents.withLatestFrom(manualAndAutoSession)
             .map { block -> Bool in
                 return block != nil
-            }.debug()
+            }
 
-        let cancelTap = input.cancelTrigger.map {return false}
-        let saveTap = input.saveSettingsTrigger.withLatestFrom(saveSettingsAllowed)
-        
-        let settingsCorrect = Driver
-                                .merge([cancelTap, saveTap])
-        
         let sessionTxt = manualAndAutoSession.map { block -> String in
             if let name = block?.name {
                 return name
@@ -53,14 +47,16 @@ final class SettingsViewModel: ViewModelType {
             }
         }
         
-        let saveCancelTrig = Driver.merge([input.cancelTrigger.map {return false}, input.saveSettingsTrigger.map {return true}])
+        let saveCancelTrig = Driver.merge([input.cancelTrigger.map {return false},
+                                           input.saveSettingsTrigger.map {return true}])
         
-        let finalSession = Driver.combineLatest(manualAndAutoSession, saveCancelTrig) { (session, tap) -> RealmBlock? in
-            if tap {
-                return session
-            } else {
-                return nil
-            }
+        let finalSession = Driver.combineLatest(manualAndAutoSession, saveCancelTrig) {
+            (session, tap) -> RealmBlock? in
+                if tap {
+                    return session
+                } else {
+                    return nil
+                }
         }
         
         return Output(roomTxt: roomTxt,
@@ -68,7 +64,6 @@ final class SettingsViewModel: ViewModelType {
                       saveSettingsAllowed: saveSettingsAllowed,
 //                      wiFiStaticTxt: editing,
 //                      wiFiDynamicTxt: post,
-                      settingsCorrect: settingsCorrect,
                       selectedBlock: finalSession
         )
     }
@@ -92,7 +87,6 @@ extension SettingsViewModel {
         let saveSettingsAllowed: Driver<Bool>
 //        let wiFiStaticTxt: Driver<String>
 //        let wiFiDynamicTxt: Driver<String>
-        let settingsCorrect: Driver<Bool>
         let selectedBlock: Driver<RealmBlock?>
     }
 }
