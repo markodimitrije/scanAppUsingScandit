@@ -41,6 +41,8 @@ class ScannerVC: UIViewController {
         
         //print(Realm.Configuration.defaultConfiguration.fileURL!)
         
+        UIDevice.current.isBatteryMonitoringEnabled = true
+        
         sessionConstLbl.text = SessionTextData.sessionConst
         bindUI()
         

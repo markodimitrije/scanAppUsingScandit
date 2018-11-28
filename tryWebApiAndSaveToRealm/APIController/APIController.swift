@@ -88,8 +88,6 @@ class ApiController {
             .catchErrorJustReturn((report, false))
     }
     
-    // implement me
-    
     func reportMultipleCodes(reports: [CodeReport]?) -> Observable<Bool> {
         
         guard let reports = reports else {return Observable.empty()}
@@ -111,6 +109,29 @@ class ApiController {
             return true
         }
     }
+    
+    // Session
+    
+    func reportSelectedSession(report: SessionReport?) -> Observable<(SessionReport,Bool)> {
+        
+        guard let report = report else {return Observable.empty()}
+        
+        let params = report.getPayload()
+        
+        return buildRequest(base: Domain.baseTrackerURL,
+                            method: "PUT",
+                            pathComponent: "devices/DEVICE_ID",
+                            params: params)
+            .map { data in
+                guard let object = try? JSONSerialization.jsonObject(with: data),
+                    let json = object as? [String: Any],
+                    let created = json["created"] as? Int, created == 201 else {
+                        return (report, false)
+                }
+                return (report, true)
+            }
+            .catchErrorJustReturn((report, false))
+    }
  
     
     //MARK: - Private Methods
@@ -128,12 +149,13 @@ class ApiController {
 
         let urlComponents = NSURLComponents(url: url, resolvingAgainstBaseURL: true)!
         
-        if method == "GET" {
+        if method == "GET" || method == "PUT" {
             guard let params = params as? [(String, String)] else {
                 return Observable.empty()
             }
             let queryItems = params.map { URLQueryItem(name: $0.0, value: $0.1) }
             urlComponents.queryItems = queryItems
+            
         } else {
             guard let params = params as? [String: Any] else {
                 return Observable.empty()

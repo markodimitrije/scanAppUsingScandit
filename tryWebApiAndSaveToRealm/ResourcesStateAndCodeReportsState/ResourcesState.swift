@@ -308,6 +308,30 @@ class CodeReport: Object { // Realm Entity
     
 }
 
+
+class SessionReport {
+    var location_id: Int
+    var block_id: Int
+    var battery_level: Int
+    init(location_id: Int, block_id: Int, battery_level: Int) {
+        self.location_id = location_id
+        self.block_id = block_id
+        self.battery_level = battery_level
+    }
+    
+    func getPayload() -> [(String, String)] {
+
+        return [
+            ("location_id", "\(location_id)"),
+            ("block_id", "\(block_id)"),
+            ("battery_level", "\(battery_level)")
+        ]
+    }
+}
+
+
+
+
 let mockDates: [Int: String] = [7257: "2018-11-27 13:55:00", // "Immune-mediated..."
                 7266: "2018-11-27 17:20:00", // "Emerging insights in..."
                 8612: "2018-11-27 10:40:00", // "The evolving face"

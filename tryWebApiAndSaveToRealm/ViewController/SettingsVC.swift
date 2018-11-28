@@ -26,7 +26,8 @@ class SettingsVC: UITableViewController {
     @IBOutlet weak var unsyncedScansView: UnsyncedScansView!
     @IBOutlet weak var wiFiConnectionView: WiFiConnectionView!
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
+    private let deviceStateReporter = DeviceStateReporter.init()
     
     // output
     var roomId: Int! = nil {
@@ -121,10 +122,14 @@ class SettingsVC: UITableViewController {
             .disposed(by: disposeBag)
         
         output.sessionInfo.asObservable()
-            .subscribe(onNext: { (info) in
+            .subscribe(onNext: { [weak self] (info) in
+                //guard let sSelf = self else {return}
                 guard let info = info else {return}
-                // javi nekom objektu koji treba da javi web-u.....
-                print("battery info to report = \(info)")
+                
+                let batStateManager = BatteryLevelManager.init()
+                let deviceStateReporter = DeviceStateReporter.init()
+                
+                deviceStateReporter.sessionIsSet(info: info, battery_level: Int(batStateManager.level * 100))
             })
             .disposed(by: disposeBag)
         
