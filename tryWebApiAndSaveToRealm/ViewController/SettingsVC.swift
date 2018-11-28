@@ -123,13 +123,13 @@ class SettingsVC: UITableViewController {
         
         output.sessionInfo.asObservable()
             .subscribe(onNext: { [weak self] (info) in
-                //guard let sSelf = self else {return}
+                guard let sSelf = self else {return}
                 guard let info = info else {return}
                 
-                let batStateManager = BatteryLevelManager.init()
-                let deviceStateReporter = DeviceStateReporter.init()
+                let batStateManager = BatteryManager.init()
                 
-                deviceStateReporter.sessionIsSet(info: info, battery_level: Int(batStateManager.level * 100))
+                sSelf.deviceStateReporter.sessionIsSet(info: info,
+                                                       battery_info: batStateManager.info)
             })
             .disposed(by: disposeBag)
         

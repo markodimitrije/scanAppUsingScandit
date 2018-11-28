@@ -22,17 +22,14 @@ class DeviceStateReporter {
     private let bag = DisposeBag()
     
     // API
-    func sessionIsSet(location_id: Int, block_id: Int, battery_level: Int) {
-        
-        let session = SessionReport.init(location_id: location_id, block_id: block_id, battery_level: battery_level)
-        
-        reportToWeb(session: session)
-        
-    }
     
-    func sessionIsSet(info: (location_id: Int, block_id: Int), battery_level: Int) {
+    func sessionIsSet(info: (location_id: Int, block_id: Int),
+                      battery_info: BatteryInfo) {
         
-        let session = SessionReport.init(location_id: info.location_id, block_id: info.block_id, battery_level: battery_level)
+        let session = SessionReport.init(location_id: info.location_id,
+                                         block_id: info.block_id,
+                                         battery_level: battery_info.level,
+                                         battery_status: battery_info.status)
         
         reportToWeb(session: session)
         

@@ -313,10 +313,12 @@ class SessionReport {
     var location_id: Int
     var block_id: Int
     var battery_level: Int
-    init(location_id: Int, block_id: Int, battery_level: Int) {
+    var battery_status: String
+    init(location_id: Int, block_id: Int, battery_level: Int, battery_status: String) {
         self.location_id = location_id
         self.block_id = block_id
         self.battery_level = battery_level
+        self.battery_status = battery_status
     }
     
     func getPayload() -> [(String, String)] {
@@ -324,7 +326,8 @@ class SessionReport {
         return [
             ("location_id", "\(location_id)"),
             ("block_id", "\(block_id)"),
-            ("battery_level", "\(battery_level)")
+            ("battery_level", "\(battery_level)"),
+            ("battery_status", "\(battery_status)")
         ]
     }
 }
