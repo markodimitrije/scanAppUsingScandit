@@ -6,7 +6,7 @@
 //  Copyright © 2018 Marko Dimitrijevic. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum SessionTextData {
     static let sessionConst = NSLocalizedString("Strings.Scaner.session.SessionConst", comment: "")
@@ -39,3 +39,10 @@ extension UserDefaults {
 extension String {
     static let now = Date.init(timeIntervalSinceNow: 0).toString(format: Date.defaultFormatString) ?? ""
 }
+
+let batteryStateConverter: [UIDevice.BatteryState: String] = [
+    .charging: "charging",
+    .unknown: "unknown",
+    .full: "full",
+    .unplugged: "unplugged"
+]

@@ -24,12 +24,14 @@ class DeviceStateReporter {
     // API
     
     func sessionIsSet(info: (location_id: Int, block_id: Int),
-                      battery_info: BatteryInfo) {
+                      battery_info: BatteryInfo,
+                      app_active: Bool) {
         
         let session = SessionReport.init(location_id: info.location_id,
                                          block_id: info.block_id,
                                          battery_level: battery_info.level,
-                                         battery_status: battery_info.status)
+                                         battery_status: battery_info.status,
+                                         app_active: app_active)
         
         reportToWeb(session: session)
         

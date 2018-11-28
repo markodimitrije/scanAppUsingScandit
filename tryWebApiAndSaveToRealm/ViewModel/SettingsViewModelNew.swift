@@ -60,9 +60,16 @@ final class SettingsViewModel: ViewModelType {
         }
         
         let sessionInfo = Driver.combineLatest(input.roomSelected, finalSession) { (room, session) -> (Int, Int)? in
-            guard let roomId = room?.id, let sessionId = session?.id else {return nil}
+            guard let roomId = room?.id, let sessionId = session?.id else {
+                UserDefaults.standard.set(nil, forKey: "roomId")
+                UserDefaults.standard.set(nil, forKey: "sessionId")
+                return nil}
+            UserDefaults.standard.set(roomId, forKey: "roomId")
+            UserDefaults.standard.set(sessionId, forKey: "sessionId")
             return (roomId, sessionId)
         }
+        
+        
         
         return Output(roomTxt: roomTxt,
                       sessionTxt: sessionTxt,

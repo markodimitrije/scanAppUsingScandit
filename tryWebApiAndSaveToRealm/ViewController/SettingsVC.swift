@@ -129,7 +129,8 @@ class SettingsVC: UITableViewController {
                 let batStateManager = BatteryManager.init()
                 
                 sSelf.deviceStateReporter.sessionIsSet(info: info,
-                                                       battery_info: batStateManager.info)
+                                                       battery_info: batStateManager.info,
+                                                       app_active: true) // moras biti true ako je izabrao session
             })
             .disposed(by: disposeBag)
         
