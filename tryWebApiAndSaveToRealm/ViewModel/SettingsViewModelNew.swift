@@ -59,12 +59,18 @@ final class SettingsViewModel: ViewModelType {
                 }
         }
         
+        let sessionInfo = Driver.combineLatest(input.roomSelected, finalSession) { (room, session) -> (Int, Int)? in
+            guard let roomId = room?.id, let sessionId = session?.id else {return nil}
+            return (roomId, sessionId)
+        }
+        
         return Output(roomTxt: roomTxt,
                       sessionTxt: sessionTxt,
                       saveSettingsAllowed: saveSettingsAllowed,
 //                      wiFiStaticTxt: editing,
 //                      wiFiDynamicTxt: post,
-                      selectedBlock: finalSession
+                      selectedBlock: finalSession,
+                      sessionInfo: sessionInfo
         )
     }
 }
@@ -88,6 +94,7 @@ extension SettingsViewModel {
 //        let wiFiStaticTxt: Driver<String>
 //        let wiFiDynamicTxt: Driver<String>
         let selectedBlock: Driver<RealmBlock?>
+        let sessionInfo: Driver<(Int, Int)?>
     }
 }
 

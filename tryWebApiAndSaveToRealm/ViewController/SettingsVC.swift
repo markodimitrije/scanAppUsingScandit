@@ -120,6 +120,14 @@ class SettingsVC: UITableViewController {
             .drive(self.sessionSelected)
             .disposed(by: disposeBag)
         
+        output.sessionInfo.asObservable()
+            .subscribe(onNext: { (info) in
+                guard let info = info else {return}
+                // javi nekom objektu koji treba da javi web-u.....
+                print("battery info to report = \(info)")
+            })
+            .disposed(by: disposeBag)
+        
     }
 
     private func bindReachability() {
