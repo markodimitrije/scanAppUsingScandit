@@ -64,8 +64,11 @@ final class SettingsViewModel: ViewModelType {
                 UserDefaults.standard.set(nil, forKey: "roomId")
                 UserDefaults.standard.set(nil, forKey: "sessionId")
                 return nil}
+            print("setujem UserDefaults na: \(roomId)")
+
             UserDefaults.standard.set(roomId, forKey: "roomId")
             UserDefaults.standard.set(sessionId, forKey: "sessionId")
+
             return (roomId, sessionId)
         }
         

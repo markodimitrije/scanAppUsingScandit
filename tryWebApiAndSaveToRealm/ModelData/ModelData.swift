@@ -32,6 +32,10 @@ struct MyTimeInterval {
     static let timeoutForFetchingRoomAndBlockResources = 10 // 10 seconds
 }
 
+struct MyConstants {
+    static let batteryLevelTrig: Int = 30 // percent
+}
+
 extension UserDefaults {
     static let keyResourcesDownloaded = "resourcesDownloaded"
 }
