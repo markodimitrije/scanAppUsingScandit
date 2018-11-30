@@ -41,7 +41,7 @@ class DeviceStateReporter {
         
         ApiController.shared.reportSelectedSession(report: session)
             .subscribe(onNext: { (report, success) in
-                print("DeviceStateReporter.sessionIsSet: \(report), success \(success)")
+//                print("DeviceStateReporter.sessionIsSet: \(report), success \(success)")
             })
             .disposed(by: bag)
         

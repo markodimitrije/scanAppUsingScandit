@@ -83,7 +83,7 @@ class AlertStateReporter {
     var roomId: BehaviorRelay<Int?> = BehaviorRelay.init(value: nil)
     var sessionId: BehaviorRelay<Int?> = BehaviorRelay.init(value: nil)
     
-    init(monitor: AlertStateMonitorViewModel) {
+    init(monitor: AlertStateMonitorViewModel, webAPI: ApiController) {
         
         Observable.combineLatest(roomId,
                                  sessionId,
@@ -100,9 +100,9 @@ class AlertStateReporter {
                                     
             }.subscribe(onNext: { report in
                 
-                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
+//                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
                 
-                _ = ApiController.shared
+                _ = webAPI
                     .reportSelectedSession(report: report) // ne reagujem da odg, a nije lose da ima UserDefaults i da onda javlja stalno...
             })
             .disposed(by: bag)

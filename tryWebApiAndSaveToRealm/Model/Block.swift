@@ -116,5 +116,10 @@ class RealmBlock: Object {
     override static func ignoredProperties() -> [String] {
         return ["subtitle", "external_type", "code", "chairperson", "block_category_id", "imported_id", "has_presentation_on_timeline", "has_available_presentation", "", "has_dialog", "survey", "sponsor_id", "topic_id", "tags", "featured"]
     }
+    
+    static func getBlock(withId id: Int, withRealm realm: Realm) -> RealmBlock? {
+        
+        return realm.objects(RealmBlock.self).filter("id = %@", id).first
+    }
 
 }

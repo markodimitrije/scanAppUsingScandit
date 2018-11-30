@@ -65,7 +65,7 @@ class SettingsVC: UITableViewController {
     // MARK:- ViewModels
     fileprivate let roomViewModel = RoomViewModel()
 
-    lazy var settingsViewModel = SettingsViewModel()
+    lazy var settingsViewModel = SettingsViewModel(dataAccess: DataAccess.shared)
     
     lazy fileprivate var autoSelSessionViewModel = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
     

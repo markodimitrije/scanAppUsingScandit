@@ -11,6 +11,12 @@ import RxCocoa
 
 final class SettingsViewModel: ViewModelType {
     
+    var dataAccess: DataAccess
+    
+    init(dataAccess: DataAccess) {
+        self.dataAccess = dataAccess
+    }
+    
     func transform(input: Input) -> Output {
         
         let roomTxt = input.roomSelected.map { room -> String in
@@ -61,13 +67,11 @@ final class SettingsViewModel: ViewModelType {
         
         let sessionInfo = Driver.combineLatest(input.roomSelected, finalSession) { (room, session) -> (Int, Int)? in
             guard let roomId = room?.id, let sessionId = session?.id else {
-                UserDefaults.standard.set(nil, forKey: "roomId")
-                UserDefaults.standard.set(nil, forKey: "sessionId")
+                self.dataAccess.userSelection = (nil, nil)
                 return nil}
-            print("setujem UserDefaults na: \(roomId)")
+//            print("setujem UserDefaults na: \(roomId)")
 
-            UserDefaults.standard.set(roomId, forKey: "roomId")
-            UserDefaults.standard.set(sessionId, forKey: "sessionId")
+            self.dataAccess.userSelection = (roomId, sessionId)
 
             return (roomId, sessionId)
         }

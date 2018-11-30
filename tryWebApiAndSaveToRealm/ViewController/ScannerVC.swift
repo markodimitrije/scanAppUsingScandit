@@ -20,7 +20,7 @@ class ScannerVC: UIViewController {
     @IBOutlet weak var sessionNameLbl: UILabel!
     @IBOutlet weak var sessionTimeAndRoomLbl: UILabel!
     
-    private var scanerViewModel = ScannerViewModel.init()
+    lazy private var scanerViewModel = ScannerViewModel.init(dataAccess: DataAccess.shared)
     
     let avSessionViewModel = AVSessionViewModel()
     var previewLayer: AVCaptureVideoPreviewLayer!
@@ -78,13 +78,16 @@ class ScannerVC: UIViewController {
     // uzeo si data sa drugih VCs i zapamtio u svom modelu
     private func hookUpInputs(on settingsVC: SettingsVC) {
         
-        settingsVC.roomSelected.asDriver(onErrorJustReturn: nil) //output sa settingVC-evog output-a
-            .drive(scanerViewModel.roomSelected) // pogoni moj modelView input
-            .disposed(by: disposeBag)
+//        let asa = Driver.from([scanerViewModel.roomSelected, scanerViewModel.sessionSelected])
+//        dataAccess.output.asDriver(onErrorJustReturn: (nil, nil)).drive(asa)
         
-        settingsVC.sessionSelected.asDriver(onErrorJustReturn: nil).debug()
-            .drive(scanerViewModel.sessionSelected)
-            .disposed(by: disposeBag)
+//        settingsVC.roomSelected.asDriver(onErrorJustReturn: nil) //output sa settingVC-evog output-a
+//            .drive(scanerViewModel.roomSelected) // pogoni moj modelView input
+//            .disposed(by: disposeBag)
+//
+//        settingsVC.sessionSelected.asDriver(onErrorJustReturn: nil).debug()
+//            .drive(scanerViewModel.sessionSelected)
+//            .disposed(by: disposeBag)
         
     }
     
