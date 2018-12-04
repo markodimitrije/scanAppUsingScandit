@@ -137,7 +137,7 @@ class BlockViewModel {
     
     private func autoSessionIsAvailable(inLessThan interval: TimeInterval) -> Bool { // implement me
         
-        let now = NOW // mock date !
+        let now = NOW // to test on NOW <-
         
         guard let firstAvailableSession = mostRecentSessionBlock else {
             return false

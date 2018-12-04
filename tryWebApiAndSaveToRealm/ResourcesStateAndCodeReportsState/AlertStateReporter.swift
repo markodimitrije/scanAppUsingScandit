@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class AlertStateMonitorViewModel {
+class AlertStateMonitor {
     
     // OUTPUT
     var deviceReport = DeviceReport.init()
@@ -34,22 +34,22 @@ class AlertStateMonitorViewModel {
     }
     
     @objc func batteryLevelDidChange(_ notification: Notification) {
-        print("AlertStateMonitorViewModel/batteryLevelDidChange = \(UIDevice.current.batteryLevel)")
+        print("AlertStateMonitor/batteryLevelDidChange = \(UIDevice.current.batteryLevel)")
         deviceReport.batteryLevel.accept(Int( 100 * UIDevice.current.batteryLevel ))
     }
     
     @objc func batteryStateDidChange(_ notification: Notification) {
-        print("AlertStateMonitorViewModel/batteryStateDidChange = \(UIDevice.current.batteryState)")
+        print("AlertStateMonitor/batteryStateDidChange = \(UIDevice.current.batteryState)")
         deviceReport.batteryState.accept(_batteryState)
     }
     
     @objc func appDidEnterForeground(_ notification: Notification) {
-        print("AlertStateMonitorViewModel/appDidEnterForeground is called")
+        print("AlertStateMonitor/appDidEnterForeground is called")
         deviceReport.appInForeground.accept(true)
     }
     
     @objc func appWillResignActive(_ notification: Notification) {
-        print("AlertStateMonitorViewModel/appWillResignActive is called")
+        print("AlertStateMonitor/appWillResignActive is called")
         deviceReport.appInForeground.accept(false)
     }
     
@@ -83,7 +83,7 @@ class AlertStateReporter {
     var roomId: BehaviorRelay<Int?> = BehaviorRelay.init(value: nil)
     var sessionId: BehaviorRelay<Int?> = BehaviorRelay.init(value: nil)
     
-    init(monitor: AlertStateMonitorViewModel, webAPI: ApiController) {
+    init(monitor: AlertStateMonitor, webAPI: ApiController) {
         
         Observable.combineLatest(roomId,
                                  sessionId,
@@ -100,7 +100,7 @@ class AlertStateReporter {
                                     
             }.subscribe(onNext: { report in
                 
-//                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
+                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
                 
                 _ = webAPI
                     .reportSelectedSession(report: report) // ne reagujem da odg, a nije lose da ima UserDefaults i da onda javlja stalno...
