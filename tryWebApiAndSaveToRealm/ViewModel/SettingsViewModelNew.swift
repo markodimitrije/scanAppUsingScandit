@@ -23,7 +23,9 @@ final class SettingsViewModel: ViewModelType {
             return room?.name ?? RoomTextData.selectRoom
         }
         
-        let autoSessionDriver = Driver.combineLatest(input.roomSelected, input.autoSelSessionSwitch.startWith(true), input.picker) { (room, switchIsOn, interval) -> RealmBlock? in
+        let autoSessionDriver = Driver.combineLatest(input.roomSelected.startWith(nil),
+                                                     input.autoSelSessionSwitch.startWith(true),
+                                                     input.picker.startWith(MyTimeInterval.waitToMostRecentSession)) { (room, switchIsOn, interval) -> RealmBlock? in
             guard let roomId = room?.id else {return nil}
             if switchIsOn {
                 let autoModelView = AutoSelSessionWithWaitIntervalViewModel.init(roomId: roomId)
