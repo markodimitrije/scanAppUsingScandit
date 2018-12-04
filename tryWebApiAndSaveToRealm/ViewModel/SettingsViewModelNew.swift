@@ -69,14 +69,11 @@ final class SettingsViewModel: ViewModelType {
             guard let roomId = room?.id, let sessionId = session?.id else {
                 self.dataAccess.userSelection = (nil, nil)
                 return nil}
-//            print("setujem UserDefaults na: \(roomId)")
 
             self.dataAccess.userSelection = (roomId, sessionId)
 
             return (roomId, sessionId)
         }
-        
-        
         
         return Output(roomTxt: roomTxt,
                       sessionTxt: sessionTxt,

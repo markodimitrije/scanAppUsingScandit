@@ -60,20 +60,20 @@ class AlertStateMonitorViewModel {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
-}
-
-struct DeviceReport {
-    
-    var batteryLevel: BehaviorRelay<Int>!
-    var batteryState: BehaviorRelay<String>!
-    var appInForeground: BehaviorRelay<Bool>!
-    
-    init() { // init-ujem sa actual vals + losiji scenario za appInForeground..
-        //print("emitujem batLevel = \(Int(100*UIDevice.current.batteryLevel))")
-        batteryLevel = BehaviorRelay<Int>.init(value: Int(100*UIDevice.current.batteryLevel))
-        batteryState = BehaviorRelay<String>.init(value: batteryStateConverter[UIDevice.current.batteryState] ?? "")
-        appInForeground = BehaviorRelay<Bool>.init(value: false)
+    struct DeviceReport {
+        
+        var batteryLevel: BehaviorRelay<Int>!
+        var batteryState: BehaviorRelay<String>!
+        var appInForeground: BehaviorRelay<Bool>!
+        
+        init() { // init-ujem sa actual vals + losiji scenario za appInForeground..
+            //print("emitujem batLevel = \(Int(100*UIDevice.current.batteryLevel))")
+            batteryLevel = BehaviorRelay<Int>.init(value: Int(100*UIDevice.current.batteryLevel))
+            batteryState = BehaviorRelay<String>.init(value: batteryStateConverter[UIDevice.current.batteryState] ?? "")
+            appInForeground = BehaviorRelay<Bool>.init(value: false)
+        }
     }
+    
 }
 
 // NECU DA IMA INPUT-OUTPUT JER SU INPUT OBICNO USER_ACTIONS< A OVDE JE SVE SISTEM PARAMS (BATT, CHARGE ...)
@@ -100,7 +100,7 @@ class AlertStateReporter {
                                     
             }.subscribe(onNext: { report in
                 
-//                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
+                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
                 
                 _ = webAPI
                     .reportSelectedSession(report: report) // ne reagujem da odg, a nije lose da ima UserDefaults i da onda javlja stalno...

@@ -26,8 +26,6 @@ class UserSelectionManager: NSObject {
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        //print("UserSelectionManager.observeValue is called for keypath = \(keyPath!)")
-        
         if let roomId = keyPath, roomId == "roomId" {
             _location.accept(UserDefaults.standard.value(forKey: "roomId") as? Int)
         } else if let sessionId = keyPath, sessionId == "sessionId" {
