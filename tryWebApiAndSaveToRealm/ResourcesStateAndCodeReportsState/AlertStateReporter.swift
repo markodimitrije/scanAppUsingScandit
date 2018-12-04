@@ -100,7 +100,7 @@ class AlertStateReporter {
                                     
             }.subscribe(onNext: { report in
                 
-                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
+//                print("AlertStateReporter.javi web-u ovaj report = \(report.description)")
                 
                 _ = webAPI
                     .reportSelectedSession(report: report) // ne reagujem da odg, a nije lose da ima UserDefaults i da onda javlja stalno...

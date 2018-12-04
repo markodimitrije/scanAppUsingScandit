@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in ScannerViewModel.bindOutput():ScannerViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "block.name">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ApiController.reportSingleCode(report:):APIController.swift">
          <PersistentStrings>
             <PersistentString
@@ -61,13 +69,13 @@
          contextName = "BlockViewModel.mostRecentSessionBlock.getter:BlockViewModel.swift">
          <PersistentStrings>
             <PersistentString
-               value = "blocksSortedByDate">
+               value = "todayBlocks.count">
             </PersistentString>
             <PersistentString
                value = "first.description">
             </PersistentString>
             <PersistentString
-               value = "todayBlocks.count">
+               value = "blocksSortedByDate">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

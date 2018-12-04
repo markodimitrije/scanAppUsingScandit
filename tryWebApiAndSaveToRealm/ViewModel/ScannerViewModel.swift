@@ -14,7 +14,7 @@ import RealmSwift
 
 struct ScannerViewModel {
     
-    var dataAccess: DataAccess
+    var dataAccess: DataAccess!
     
     init(dataAccess: DataAccess) {
         self.dataAccess = dataAccess
@@ -36,6 +36,7 @@ struct ScannerViewModel {
     private func bindOutput() {
     
         dataAccess.output
+            .delay(0.05, scheduler: MainScheduler.instance) // HACK - ovaj signal emituje pre nego je izgradjen UI
             .map({ (room, block) -> (String, String, Int) in
                 guard let room = room else {
                     return (RoomTextData.noRoomSelected, "", -1)

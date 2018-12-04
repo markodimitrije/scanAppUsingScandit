@@ -34,8 +34,6 @@ class DataAccess: NSObject {
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        print("imam change = \(change)")
-        
         guard let keyPath = keyPath else {return}
         guard let realm = try? Realm.init() else {return}
         
