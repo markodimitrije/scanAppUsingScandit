@@ -344,8 +344,8 @@ class SessionReport {
 
 
 
-let mockDates: [Int: String] = [7257: "2018-11-27 13:55:00", // "Immune-mediated..."
-                7266: "2018-11-27 17:20:00", // "Emerging insights in..."
-                8612: "2018-11-27 10:40:00", // "The evolving face"
-                7480: "2018-11-27 23:55:00", // "ERA-EDTA & CSN"
-                7330: "2018-11-27 10:10:00"] // "Challenges in"
+let mockDates: [Int: String] = [7257: "2018-12-04 13:55:00", // "Immune-mediated..."
+                7266: "2018-12-04 17:20:00", // "Emerging insights in..."
+                8612: "2018-12-04 20:40:00", // "The evolving face"
+                7480: "2018-12-04 23:55:00", // "ERA-EDTA & CSN"
+                7330: "2018-12-05 10:10:00"] // "Challenges in"

@@ -57,7 +57,7 @@ class SettingsVC: UITableViewController {
         //guard let block = try? sessionManuallySelected.value(),
         guard let block = try? sessionSelected.value(),
             let id = block?.id else {
-            return -1 // bez veze je ovo.. BehaviorSubject... treba zamena za Variable !
+            return -1 // bez veze je ovo..
         }
         return id
     }

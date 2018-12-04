@@ -181,7 +181,7 @@ class ScannerVC: UIViewController {
             }
         }
         
-        codeReporter.codeReport.value = getActualCodeReport()
+        codeReporter.codeReport.accept(getActualCodeReport())
         
     }
     

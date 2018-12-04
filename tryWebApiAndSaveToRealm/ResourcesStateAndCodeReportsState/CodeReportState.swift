@@ -35,14 +35,11 @@ class CodeReportsState { // ovo je trebalo da zoves viewModel-om !
     
     // INPUT
     
-    //let codeReport = BehaviorRelay<CodeReport?>.init(value: nil)
-    let codeReport = Variable<CodeReport?>.init(nil)
+    let codeReport = BehaviorRelay<CodeReport?>.init(value: nil)
     
     // OUTPUT
     
-    let webNotified = Variable<(CodeReport, Bool)?>.init(nil)
-    
-    //let webNotified = BehaviorRelay<(CodeReport, Bool)?>.init(value: nil)
+    let webNotified = BehaviorRelay<(CodeReport, Bool)?>.init(value: nil)
     
     init() {
         
@@ -63,7 +60,8 @@ class CodeReportsState { // ovo je trebalo da zoves viewModel-om !
                 obs
                     .subscribe(onNext: { (code, success) in
                         
-                        sSelf.webNotified.value = (code, success) // postavi na svoj Output
+                        //sSelf.webNotified.value = (code, success) // postavi na svoj Output
+                        sSelf.webNotified.accept((code, success)) // postavi na svoj Output
                         
                         if !success {
                             sSelf.codeReportFailed(code) // izmestac code

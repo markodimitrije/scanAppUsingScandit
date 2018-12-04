@@ -18,9 +18,9 @@ class CodesDumper {
     
     var timer: Observable<Int>?
     
-    var isRunning = Variable(false) // timer
+    var isRunning = BehaviorRelay.init(value: false) // timer
     
-    var timerFired = Variable(()) // timer events
+    var timerFired = BehaviorRelay.init(value: ()) // timer events
     
     var timeToSendReport: Observable<Bool> {
         return timerFired
@@ -29,8 +29,8 @@ class CodesDumper {
                     .withLatestFrom(connectedToInternet()) // temp OFF
     }
     
-    var codeReportsDeleted: Variable<Bool> = {
-        return Variable.init(RealmDataPersister.shared.getCodeReports().isEmpty)
+    var codeReportsDeleted: BehaviorRelay<Bool> = {
+        return BehaviorRelay.init(value: RealmDataPersister.shared.getCodeReports().isEmpty)
     }()
     
     init() { print("CodesDumper.INIT, fire every 8 sec or on wi-fi changed")
@@ -45,7 +45,7 @@ class CodesDumper {
     
     // Output
     
-    var oCodesDumped = Variable<Bool>.init(false)
+    var oCodesDumped = BehaviorRelay<Bool>.init(value: false)
     
     // MARK:- Private
     
@@ -62,12 +62,11 @@ class CodesDumper {
             .debug("timer")
             .subscribe({[weak self] _ in
                 guard let sSelf = self else {return}
-                
-                sSelf.timerFired.value = () // onNext
+                sSelf.timerFired.accept(())
             })
             .disposed(by: bag)
         
-        isRunning.value = true // one time pokreni timer
+        isRunning.accept(true) // one time pokreni timer
         
     }
     
@@ -88,7 +87,8 @@ class CodesDumper {
                             
                             RealmDataPersister.shared.deleteCodeReports(codeReports)
                                 .subscribe(onNext: { deleted in
-                                    sSelf.codeReportsDeleted.value = deleted
+                                    
+                                    sSelf.codeReportsDeleted.accept(deleted)
                                 })
                                 .disposed(by: sSelf.bag)
                         } else {
@@ -108,8 +108,8 @@ class CodesDumper {
                 guard let sSelf = self else {return}
                 if success { print("all good, ugasi timer!")
                     
-                    sSelf.isRunning.value = false // ugasi timer, uspesno si javio i obrisao Realm
-                    sSelf.oCodesDumped.value = true
+                    sSelf.isRunning.accept(false)  // ugasi timer, uspesno si javio i obrisao Realm
+                    sSelf.oCodesDumped.accept(true)
                 }
             })
             .disposed(by: bag)

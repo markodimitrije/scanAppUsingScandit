@@ -20,8 +20,6 @@ class BlocksVC: UIViewController {
     
     var selectedRoomId: Int! // ovo ce ti setovati segue // moze li preko Observable ?
     
-    let disposeBag = DisposeBag()
-    
     lazy var blockViewModel = BlockViewModel(roomId: selectedRoomId)
     
     fileprivate let selRealmBlock = PublishSubject<RealmBlock>()
@@ -29,7 +27,7 @@ class BlocksVC: UIViewController {
         return selRealmBlock.asObservable()
     }
     
-    var selectedInterval = Variable.init(MyTimeInterval.waitToMostRecentSession)
+    var selectedInterval = BehaviorRelay.init(value: MyTimeInterval.waitToMostRecentSession)
     
     override func viewDidLoad() { super.viewDidLoad()
         bindUI()
@@ -67,10 +65,12 @@ class BlocksVC: UIViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] seconds in
                 guard let sSelf = self else {return}
-                sSelf.selectedInterval.value = seconds
+                sSelf.selectedInterval.accept(seconds)
             })
             .disposed(by: disposeBag)
     }
+    
+    private let disposeBag = DisposeBag()
     
     //deinit { print("deinit/ BlocksVC") }
     
