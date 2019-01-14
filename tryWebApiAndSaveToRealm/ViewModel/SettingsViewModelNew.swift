@@ -46,14 +46,6 @@ final class SettingsViewModel: ViewModelType {
             .map { block -> Bool in
                 return block != nil
             }
-
-//        let sessionTxt = manualAndAutoSession.map { block -> String in ovo radi manje-vise.....
-//            if let name = block?.name {
-//                return name
-//            } else {
-//                return SessionTextData.noAutoSessAvailable
-//            }
-//        }
         
         let sessionTxt = Driver.combineLatest(manualAndAutoSession.startWith(nil),
                                         input.autoSelSessionSwitch.startWith(true)) { (block, state) -> String in
@@ -67,14 +59,6 @@ final class SettingsViewModel: ViewModelType {
                                                 }
                                             }
         }
-
-//        let sessionTxt = manualAndAutoSession.map { block -> String in
-//            if let name = block?.name {
-//                return name
-//            } else {
-//                return SessionTextData.noAutoSessAvailable
-//            }
-//        }
         
         let saveCancelTrig = Driver.merge([input.cancelTrigger.map {return false},
                                            input.saveSettingsTrigger.map {return true}])
