@@ -106,7 +106,7 @@ class RealmBlock: Object {
         self.sponsor_id = RealmOptional.init(block.sponsor_id)
         self.topic_id = RealmOptional.init(block.topic_id)
         
-        owner = RealmRoom.getRoom(withId: self.id, withRealm: realm)
+        owner = RealmRoom.getRoom(withId: self.location_id, withRealm: realm)
     }
     
     override static func primaryKey() -> String? {

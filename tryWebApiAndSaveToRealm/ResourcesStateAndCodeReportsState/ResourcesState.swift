@@ -122,10 +122,10 @@ class ResourcesState {
                 
                 if realmIsEmpty {
                     
-//                    strongSelf.fetchRoomsAndSaveToRealm()
-//                    strongSelf.fetchSessionsAndSaveToRealm()
-                    strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
-                    strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
+                    strongSelf.fetchRoomsAndSaveToRealm()
+                    strongSelf.fetchSessionsAndSaveToRealm()
+//                    strongSelf.fetchRoomsAndSaveToRealm_MOCK() // MOCK
+//                    strongSelf.fetchSessionsAndSaveToRealm_MOCK() // MOCK
                     
                 }
             })

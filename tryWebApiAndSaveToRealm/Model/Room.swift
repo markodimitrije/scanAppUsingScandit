@@ -43,7 +43,7 @@ class RealmRoom: Object {
     @objc dynamic var updated_at: String = ""
     var party_id = RealmOptional<Int>()
     
-    var blocks = List<RealmBlock>()
+    //var blocks = List<RealmBlock>()
     
     func updateWith(room: Room) {
         self.id = room.id

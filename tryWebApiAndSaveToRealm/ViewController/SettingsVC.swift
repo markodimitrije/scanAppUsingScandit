@@ -225,6 +225,7 @@ class SettingsVC: UITableViewController {
             blocksVC.selectedRealmBlock
                 .subscribe(onNext: { [weak self] block in
                     guard let strongSelf = self else {return}
+                    print("room for selected block = \(block.owner!)")
                     strongSelf.sessionManuallySelected.onNext(block)
                     strongSelf.sessionSelected.onNext(block) // moze li ovo bolje....
                 })
