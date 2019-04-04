@@ -49,7 +49,7 @@ class ScannerVC: UIViewController {
         
         // scaner functionality
         //bindAVSession()
-        bindBarCode()
+        //bindBarCode()
         
     }
     
@@ -102,17 +102,17 @@ class ScannerVC: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func bindBarCode() {
-        
-        avSessionViewModel.oCode
-            .subscribe(onNext: { [weak self] (barCodeValue) in
-                guard let sSelf = self else {return}
-                
-                sSelf.found(code: barCodeValue)
-            })
-            .disposed(by: disposeBag)
-        
-    }
+//    private func bindBarCode() {
+//
+//        avSessionViewModel.oCode
+//            .subscribe(onNext: { [weak self] (barCodeValue) in
+//                guard let sSelf = self else {return}
+//
+//                sSelf.found(code: barCodeValue)
+//            })
+//            .disposed(by: disposeBag)
+//
+//    }
     
     private func failed() { print("failed.....")
 
@@ -136,24 +136,19 @@ class ScannerVC: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func found(code: String) { // ovo mozes da report VM-u kao append novi code
+    func found(code: String, picker: SBSBarcodePicker) { // ovo mozes da report VM-u kao append novi code
         
         if scanerViewModel.sessionId != -1 {
-            codeSuccessfull(code: code)
+            scanditSuccessfull(code: code, picker: picker)
         } else {
             failedDueToNoSettings()
         }
         
     }
     
-    private func codeSuccessfull(code: String) {
+    private func scanditSuccessfull(code: String, picker: SBSBarcodePicker) {
         
-        avSessionViewModel.captureSession.stopRunning()
-        
-        if self.scannerView.subviews.contains(where: {$0.tag == 20}) {
-//            print("vec prikazuje arrow, izadji...")
-            return
-        } // already arr
+        if self.scannerView.subviews.contains(where: {$0.tag == 20}) { return } // already arr on screen...
         
         scanedCode.onNext(code)
         
@@ -162,7 +157,7 @@ class ScannerVC: UIViewController {
         delay(2.0) { // ovoliko traje anim kada prikazujes arrow
             DispatchQueue.main.async {
                 self.scannerView.subviews.first(where: {$0.tag == 20})?.removeFromSuperview()
-                self.avSessionViewModel.captureSession.startRunning()
+                picker.resumeScanning()
             }
         }
         
@@ -225,28 +220,13 @@ extension ScannerVC: SBSScanDelegate {
     // every app that uses the Scandit Barcode Scanner and this is where the custom application logic
     // goes. In the example below, we are just showing an alert view with the result.
     func barcodePicker(_ picker: SBSBarcodePicker, didScan session: SBSScanSession) {
-        // Call pauseScanning on the session (and on the session queue) to immediately pause scanning
-        // and close the camera. This is the preferred way to pause scanning barcodes from the
-        // SBSScanDelegate as it is made sure that no new codes are scanned.
-        // When calling pauseScanning on the picker, another code may be scanned before pauseScanning
-        // has completely paused the scanning process.
+
         session.pauseScanning()
         
         let code = session.newlyRecognizedCodes[0]
-        // The barcodePicker(_:didScan:) delegate method is invoked from a picker-internal queue. To
-        // display the results in the UI, you need to dispatch to the main queue. Note that it's not
-        // allowed to use SBSScanSession in the dispatched block as it's only allowed to access the
-        // SBSScanSession inside the barcodePicker(_:didScan:) callback. It is however safe to
-        // use results returned by session.newlyRecognizedCodes etc.
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Scanned code \(code.symbologyName)",
-                message: code.data,
-                preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { _ in
-                picker.resumeScanning()
-            }
-            alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.found(code: code.symbologyName, picker: picker)
         }
     }
 }
