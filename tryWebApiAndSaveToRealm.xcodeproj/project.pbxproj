@@ -47,6 +47,7 @@
 		AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFB217DCE27003CEDD0 /* Block.swift */; };
 		AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */; };
 		AD80F002217DE65C003CEDD0 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD80F001217DE65C003CEDD0 /* ModelData.swift */; };
+		AD968B882255F6AB007475DA /* ScanditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD968B872255F6AB007475DA /* ScanditVC.swift */; };
 		AD993AAF217B9D2000803BE2 /* BlocksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AAE217B9D2000803BE2 /* BlocksVC.swift */; };
 		AD993AB3217BAA8800803BE2 /* BlockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */; };
 		AD993AB5217BC6C000803BE2 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD993AB4217BC6C000803BE2 /* SettingsVC.swift */; };
@@ -118,6 +119,7 @@
 		AD80EFFB217DCE27003CEDD0 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
 		AD80F001217DE65C003CEDD0 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		AD968B872255F6AB007475DA /* ScanditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanditVC.swift; sourceTree = "<group>"; };
 		AD993AAE217B9D2000803BE2 /* BlocksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocksVC.swift; sourceTree = "<group>"; };
 		AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockViewModel.swift; sourceTree = "<group>"; };
 		AD993AB4217BC6C000803BE2 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				AD29521F217B5B23002DDE32 /* RoomsVC.swift */,
+				AD968B872255F6AB007475DA /* ScanditVC.swift */,
 				AD80EFFD217DD87D003CEDD0 /* ScannerVC.swift */,
 				AD993AAE217B9D2000803BE2 /* BlocksVC.swift */,
 				AD993AB4217BC6C000803BE2 /* SettingsVC.swift */,
@@ -557,6 +560,7 @@
 				ADAE9C2E2189F5F500615125 /* Global.swift in Sources */,
 				AD80EFFE217DD87D003CEDD0 /* ScannerVC.swift in Sources */,
 				AD9FE5B221AEB17C00D6A4B6 /* BatteryStateManager.swift in Sources */,
+				AD968B882255F6AB007475DA /* ScanditVC.swift in Sources */,
 				AD9FE5B621AEDE4700D6A4B6 /* AlertStateReporter.swift in Sources */,
 				AD24E30A21806C4A008E35F8 /* WiFiConnectionView.swift in Sources */,
 				AD80EFFA217DCDEA003CEDD0 /* Room.swift in Sources */,
