@@ -15,7 +15,7 @@
 import UIKit
 import ScanditBarcodeScanner
 
-class ViewController: UIViewController {
+class ScanditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: SBSScanDelegate {
+extension ScanditViewController: SBSScanDelegate {
     // This delegate method of the SBSScanDelegate protocol needs to be implemented by
     // every app that uses the Scandit Barcode Scanner and this is where the custom application logic
     // goes. In the example below, we are just showing an alert view with the result.
