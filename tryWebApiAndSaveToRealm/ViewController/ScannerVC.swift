@@ -203,10 +203,11 @@ class ScannerVC: UIViewController {
         
         // Create the barcode picker with the settings just created
         let barcodePicker = SBSBarcodePicker(settings:settings)
+        barcodePicker.view.frame = self.scannerView.bounds
         
         // Add the barcode picker as a child view controller
         addChild(barcodePicker)
-        view.addSubview(barcodePicker.view)
+        self.scannerView.addSubview(barcodePicker.view)
         barcodePicker.didMove(toParent: self)
         
         // Set the allowed interface orientations. The value UIInterfaceOrientationMaskAll is the
