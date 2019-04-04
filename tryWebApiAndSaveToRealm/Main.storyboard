@@ -210,14 +210,6 @@
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="va8-MP-olz"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSm-gc-DDq">
-                                        <rect key="frame" x="189" y="359" width="31" height="30"/>
-                                        <state key="normal" title="read"/>
-                                        <connections>
-                                            <action selector="readFromRealm:" destination="e5d-ka-5Kd" eventType="touchUpInside" id="089-w6-GLK"/>
-                                            <action selector="readFromRealmWithSender:" destination="e5d-ka-5Kd" eventType="touchUpInside" id="8Fu-8E-71T"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -225,14 +217,12 @@
                                     <constraint firstItem="IqP-ec-QlF" firstAttribute="top" secondItem="Za6-Cr-zEr" secondAttribute="bottom" constant="40" id="E1o-aB-2eo"/>
                                     <constraint firstItem="rRb-3x-EAo" firstAttribute="leading" secondItem="Za6-Cr-zEr" secondAttribute="trailing" constant="16" id="JKl-WN-1R4"/>
                                     <constraint firstItem="IqP-ec-QlF" firstAttribute="centerX" secondItem="06H-9q-0RX" secondAttribute="centerX" id="LLU-Ae-PU0"/>
-                                    <constraint firstItem="FSm-gc-DDq" firstAttribute="centerX" secondItem="06H-9q-0RX" secondAttribute="centerX" id="LSl-QM-SKO"/>
                                     <constraint firstItem="Za6-Cr-zEr" firstAttribute="top" secondItem="06H-9q-0RX" secondAttribute="top" constant="16" id="OXT-nT-HpU"/>
                                     <constraint firstItem="rRb-3x-EAo" firstAttribute="top" secondItem="06H-9q-0RX" secondAttribute="top" constant="8" id="Sut-EF-2Vb"/>
                                     <constraint firstAttribute="bottom" secondItem="0tL-pJ-k21" secondAttribute="bottom" constant="20" id="Yxp-z0-gpM"/>
                                     <constraint firstItem="IqP-ec-QlF" firstAttribute="leading" secondItem="06H-9q-0RX" secondAttribute="leading" constant="8" id="aUy-h8-bK1"/>
                                     <constraint firstItem="Za6-Cr-zEr" firstAttribute="leading" secondItem="06H-9q-0RX" secondAttribute="leading" constant="16" id="bFL-zI-Okr"/>
                                     <constraint firstAttribute="trailing" secondItem="IqP-ec-QlF" secondAttribute="trailing" constant="8" id="f7p-AI-d8G"/>
-                                    <constraint firstItem="FSm-gc-DDq" firstAttribute="centerY" secondItem="06H-9q-0RX" secondAttribute="centerY" id="jxO-fh-zy8"/>
                                     <constraint firstItem="0tL-pJ-k21" firstAttribute="leading" secondItem="06H-9q-0RX" secondAttribute="leading" id="u2T-mQ-Dr3"/>
                                     <constraint firstAttribute="trailing" secondItem="0tL-pJ-k21" secondAttribute="trailing" id="yZd-Jd-j6V"/>
                                 </constraints>
