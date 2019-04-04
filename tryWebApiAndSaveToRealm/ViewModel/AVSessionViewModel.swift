@@ -71,7 +71,7 @@ class AVSessionViewModel {
             captureSession.addOutput(metadataOutput)
             
             metadataOutput.setMetadataObjectsDelegate(delegate, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.upce, .code128, .ean8, .ean13, .itf14]
+            metadataOutput.metadataObjectTypes = [.upce, .code128, .ean8, .ean13, .itf14, .interleaved2of5, .dataMatrix, .qr]
             
         } else {
             oSession.onError(AVCaptureSessionError.cantAddOutputToSession)
