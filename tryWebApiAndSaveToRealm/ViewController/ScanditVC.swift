@@ -16,7 +16,7 @@ import UIKit
 import ScanditBarcodeScanner
 
 class ScanditViewController: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScanner()

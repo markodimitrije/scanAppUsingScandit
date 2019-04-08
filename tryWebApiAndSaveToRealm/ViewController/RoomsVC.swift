@@ -13,7 +13,7 @@ import Realm
 import RealmSwift
 import RxRealmDataSources
 
-class RoomsVC: UIViewController {
+class RoomsVC: UIViewController {    
 
     @IBOutlet weak var tableView: UITableView!
     

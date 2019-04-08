@@ -14,7 +14,7 @@ import RealmSwift
 import ScanditBarcodeScanner
 
 class ScannerVC: UIViewController {
-    
+
     @IBOutlet weak var scannerView: UIView!
     @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var sessionConstLbl: UILabel!
@@ -47,6 +47,10 @@ class ScannerVC: UIViewController {
         sessionConstLbl.text = SessionTextData.sessionConst
         bindUI()
         
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
     }
     
     private func bindUI() { // glue code for selected Room
