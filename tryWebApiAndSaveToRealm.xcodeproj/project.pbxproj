@@ -72,6 +72,7 @@
 		ADB273A621807EFD00345A5E /* AutoSelectSessionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADB273A421807EFD00345A5E /* AutoSelectSessionsView.xib */; };
 		ADB64DA1217E23C00094EC45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ADB64DA0217E23C00094EC45 /* Localizable.strings */; };
 		ADBCCB472180973E009D7753 /* AutoSelSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */; };
+		ADDAFFB3225B92B600BA2152 /* Main_iphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADDAFFB2225B92B600BA2152 /* Main_iphone.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -145,6 +146,7 @@
 		ADB273A421807EFD00345A5E /* AutoSelectSessionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AutoSelectSessionsView.xib; sourceTree = "<group>"; };
 		ADB64DA0217E23C00094EC45 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSelSessionViewModel.swift; sourceTree = "<group>"; };
+		ADDAFFB2225B92B600BA2152 /* Main_iphone.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main_iphone.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +308,7 @@
 				AD29521C217B5B23002DDE32 /* AppDelegate.swift */,
 				ADAE9C38218B08EA00615125 /* Assets.xcassets */,
 				AD295226217B5C64002DDE32 /* Main.storyboard */,
+				ADDAFFB2225B92B600BA2152 /* Main_iphone.storyboard */,
 				AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */,
 				AD53A020217B577500A3F9FC /* Info.plist */,
 				ADB64DA0217E23C00094EC45 /* Localizable.strings */,
@@ -455,6 +458,7 @@
 				AD6C784722551142003CAFF6 /* LICENSE-2.0.txt in Resources */,
 				ADAE9C39218B08EA00615125 /* Assets.xcassets in Resources */,
 				ADB273A621807EFD00345A5E /* AutoSelectSessionsView.xib in Resources */,
+				ADDAFFB3225B92B600BA2152 /* Main_iphone.storyboard in Resources */,
 				AD24E30821806C3A008E35F8 /* WiFiConnectionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
