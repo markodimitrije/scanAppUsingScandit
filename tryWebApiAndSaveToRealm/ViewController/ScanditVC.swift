@@ -29,7 +29,7 @@ class ScanditViewController: UIViewController {
         
         // Create the scan settings and enabling some symbologies
         let settings = SBSScanSettings.default()
-        let symbologies: Set<SBSSymbology> = [.ean8, .ean13, .qr]
+        let symbologies: Set<SBSSymbology> = [.ean8, .ean13, .qr, .aztec, .fiveDigitAddOn, .twoDigitAddOn, .itf]
         for symbology in symbologies {
             settings.setSymbology(symbology, enabled: true)
         }
