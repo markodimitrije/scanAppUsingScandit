@@ -14,6 +14,7 @@ Strings.Scaner.session.noAutoSelSessionsAvailable = "No automatic selection sess
 
 Strings.Scaner.session.noAutoSessionAvailable = "No automatic session available";
 Strings.Scaner.session.selSessionManuallyOrTryAuto = "Select session manually or try automatic";
+Strings.Scaner.session.selSessionManually = "Select session manually";
 
 Strings.Scaner.room.SelectRoom = "Select room";
 Strings.Scaner.room.noRoomSelected = "No room selected";

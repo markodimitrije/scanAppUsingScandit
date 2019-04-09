@@ -55,7 +55,7 @@ final class SettingsViewModel: ViewModelType {
                                                 if state {
                                                     return SessionTextData.noAutoSessAvailable
                                                 } else {
-                                                    return "choose manulallu"
+                                                    return SessionTextData.selectSessionManually
                                                 }
                                             }
         }

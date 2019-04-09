@@ -16,6 +16,7 @@ enum SessionTextData {
     static let noAutoSelSessionsAvailable = NSLocalizedString("Strings.Scaner.session.noAutoSelSessionsAvailable", comment: "")
     static let selectSessManuallyOrTryAuto = NSLocalizedString("Strings.Scaner.session.selSessionManuallyOrTryAuto", comment: "")
     static let noAutoSessAvailable = NSLocalizedString("Strings.Scaner.session.noAutoSessionAvailable", comment: "")
+    static let selectSessionManually = NSLocalizedString("Strings.Scaner.session.selSessionManually", comment: "")
     
 }
 

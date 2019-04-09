@@ -209,7 +209,6 @@
                                         <rect key="frame" x="16" y="8" width="291" height="120"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="bPn-1W-XSZ" firstAttribute="leading" secondItem="ylu-J8-AOn" secondAttribute="leading" constant="16" id="26C-KZ-1Iv"/>
                                     <constraint firstAttribute="trailing" secondItem="8NO-wm-8LO" secondAttribute="trailing" constant="8" id="Beb-fA-v5c"/>
