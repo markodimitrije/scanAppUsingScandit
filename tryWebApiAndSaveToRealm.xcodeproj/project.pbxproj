@@ -218,7 +218,6 @@
 		AD295228217B5E6F002DDE32 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				7C5AC5A3225CD35500495C9E /* AppDelegate.swift */,
 				AD29522C217B5EB0002DDE32 /* RoomViewModel.swift */,
 				AD993AB2217BAA8800803BE2 /* BlockViewModel.swift */,
 				AD993AB6217BC79400803BE2 /* SettingsViewModel.swift */,
@@ -307,6 +306,7 @@
 				AD295229217B5E77002DDE32 /* ViewController */,
 				AD295228217B5E6F002DDE32 /* ViewModel */,
 				ADAE9C38218B08EA00615125 /* Assets.xcassets */,
+				7C5AC5A3225CD35500495C9E /* AppDelegate.swift */,
 				AD295226217B5C64002DDE32 /* Main.storyboard */,
 				ADDAFFB2225B92B600BA2152 /* Main_iphone.storyboard */,
 				AD53A01D217B577500A3F9FC /* LaunchScreen.storyboard */,
