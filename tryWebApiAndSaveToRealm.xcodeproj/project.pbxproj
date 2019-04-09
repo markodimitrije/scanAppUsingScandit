@@ -73,7 +73,6 @@
 		ADB64DA1217E23C00094EC45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ADB64DA0217E23C00094EC45 /* Localizable.strings */; };
 		ADBCCB472180973E009D7753 /* AutoSelSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */; };
 		ADDAFFB3225B92B600BA2152 /* Main_iphone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADDAFFB2225B92B600BA2152 /* Main_iphone.storyboard */; };
-		ADDAFFB5225B9F3900BA2152 /* BaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDAFFB4225B9F3900BA2152 /* BaseClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -148,7 +147,6 @@
 		ADB64DA0217E23C00094EC45 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		ADBCCB462180973E009D7753 /* AutoSelSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoSelSessionViewModel.swift; sourceTree = "<group>"; };
 		ADDAFFB2225B92B600BA2152 /* Main_iphone.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main_iphone.storyboard; sourceTree = "<group>"; };
-		ADDAFFB4225B9F3900BA2152 /* BaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,7 +267,6 @@
 			isa = PBXGroup;
 			children = (
 				AD4CC2D921A5770A00222D5E /* Protocols.swift */,
-				ADDAFFB4225B9F3900BA2152 /* BaseClass.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -555,7 +552,6 @@
 				AD191487218EEFC000CD5B2F /* CodesDumper.swift in Sources */,
 				AD191489218EF09300CD5B2F /* CodeReportState.swift in Sources */,
 				AD80EFFC217DCE27003CEDD0 /* Block.swift in Sources */,
-				ADDAFFB5225B9F3900BA2152 /* BaseClass.swift in Sources */,
 				AD9FE5B421AEBA2C00D6A4B6 /* DeviceStateReporter.swift in Sources */,
 				ADAE9C332189F5F500615125 /* RxAVCapturePhotoCaptureDelegate.swift in Sources */,
 				AD24E30C21807243008E35F8 /* ModelStructsAndNamespaces.swift in Sources */,
